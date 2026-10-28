@@ -1,0 +1,20 @@
+<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="btnGradH" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#fff6c8"/>
+      <stop offset="100%" stop-color="#ffd23f"/>
+    </linearGradient>
+    <linearGradient id="btnShineH" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="hoverGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect x="6" y="6" width="288" height="96" rx="48" fill="#ffd23f" opacity="0.5" filter="url(#hoverGlow)"/>
+  <rect x="6" y="4" width="288" height="96" rx="48" fill="url(#btnGradH)" stroke="#8a6300" stroke-width="5"/>
+  <rect x="20" y="12" width="260" height="42" rx="21" fill="url(#btnShineH)"/>
+</svg>

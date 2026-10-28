@@ -1,0 +1,55 @@
+{
+  "name": "Training Grounds",
+  "description": "A beginner-friendly arena with an open center, minimal obstacles, and gentle sightlines to help new players learn movement and dashing.",
+  "width": 1600,
+  "height": 900,
+
+  "spawnPoints": [
+    { "id": 1, "x": 100, "y": 100 },
+    { "id": 2, "x": 1500, "y": 100 },
+    { "id": 3, "x": 100, "y": 800 },
+    { "id": 4, "x": 1500, "y": 800 }
+  ],
+
+  "walls": [
+    { "x": 0, "y": 0, "width": 1600, "height": 20 },
+    { "x": 0, "y": 880, "width": 1600, "height": 20 },
+    { "x": 0, "y": 0, "width": 20, "height": 900 },
+    { "x": 1580, "y": 0, "width": 20, "height": 900 },
+    { "x": 300, "y": 200, "width": 200, "height": 20 },
+    { "x": 1100, "y": 200, "width": 200, "height": 20 },
+    { "x": 300, "y": 680, "width": 200, "height": 20 },
+    { "x": 1100, "y": 680, "width": 200, "height": 20 },
+    { "x": 750, "y": 100, "width": 20, "height": 150 },
+    { "x": 750, "y": 650, "width": 20, "height": 150 },
+    { "x": 500, "y": 430, "width": 150, "height": 20 },
+    { "x": 950, "y": 430, "width": 150, "height": 20 }
+  ],
+
+  "obstacles": [
+    { "type": "box", "x": 400, "y": 400, "width": 60, "height": 60 },
+    { "type": "box", "x": 1140, "y": 400, "width": 60, "height": 60 },
+    { "type": "pillar", "x": 800, "y": 250, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 800, "y": 600, "width": 40, "height": 40 },
+    { "type": "barrier", "x": 600, "y": 150, "width": 100, "height": 20 },
+    { "type": "barrier", "x": 900, "y": 730, "width": 100, "height": 20 },
+    { "type": "box", "x": 250, "y": 450, "width": 60, "height": 60 },
+    { "type": "box", "x": 1290, "y": 450, "width": 60, "height": 60 }
+  ],
+
+  "powerUpSpawns": [
+    { "type": "speed", "x": 800, "y": 450 },
+    { "type": "shield", "x": 400, "y": 250 },
+    { "type": "doubleDash", "x": 1200, "y": 250 },
+    { "type": "freeze", "x": 800, "y": 750 }
+  ],
+
+  "safeZones": [
+    { "x": 100, "y": 100, "radius": 50 },
+    { "x": 1500, "y": 100, "radius": 50 },
+    { "x": 100, "y": 800, "radius": 50 },
+    { "x": 1500, "y": 800, "radius": 50 }
+  ],
+
+  "teleports": []
+}

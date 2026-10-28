@@ -1,0 +1,63 @@
+<svg viewBox="0 0 500 650" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rainbowBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff5a5a"/>
+      <stop offset="18%" stop-color="#ffb84d"/>
+      <stop offset="36%" stop-color="#fff066"/>
+      <stop offset="54%" stop-color="#5be07a"/>
+      <stop offset="72%" stop-color="#5abfff"/>
+      <stop offset="100%" stop-color="#b06bff"/>
+    </linearGradient>
+    <linearGradient id="bossShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="crownGem" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#ff4d9b"/>
+      <stop offset="100%" stop-color="#c0006e"/>
+    </radialGradient>
+    <filter id="epicGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Epic golden glow -->
+  <ellipse cx="250" cy="290" rx="200" ry="230" fill="#ffe27a" opacity="0.4" filter="url(#epicGlow)"/>
+
+  <!-- String -->
+  <path d="M250 500 Q235 535 255 565 Q275 595 250 620" stroke="#8a5a2b" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M232 478 L250 505 L268 478 Z" fill="#b06bff"/>
+
+  <!-- Balloon body (giant, rainbow, gold outline) -->
+  <ellipse cx="250" cy="280" rx="175" ry="210" fill="url(#rainbowBody)" stroke="#ffd23f" stroke-width="8"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="185" cy="190" rx="65" ry="90" fill="url(#bossShine)"/>
+
+  <!-- Crown -->
+  <g transform="translate(250,60)">
+    <path d="M-70 40 L-70 0 L-40 25 L0 -30 L40 25 L70 0 L70 40 Z" fill="#ffd23f" stroke="#a86b00" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="-70" y="38" width="140" height="18" rx="4" fill="#ffd23f" stroke="#a86b00" stroke-width="4"/>
+    <circle cx="0" cy="15" r="10" fill="url(#crownGem)"/>
+    <circle cx="-40" cy="25" r="7" fill="url(#crownGem)"/>
+    <circle cx="40" cy="25" r="7" fill="url(#crownGem)"/>
+  </g>
+
+  <!-- Boss face -->
+  <circle cx="200" cy="290" r="14" fill="#3a1a00"/>
+  <circle cx="300" cy="290" r="14" fill="#3a1a00"/>
+  <circle cx="205" cy="284" r="4" fill="#ffffff"/>
+  <circle cx="305" cy="284" r="4" fill="#ffffff"/>
+  <path d="M210 335 Q250 365 290 335" stroke="#3a1a00" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <!-- +25 badge -->
+  <circle cx="250" cy="410" r="42" fill="#ffffff" opacity="0.9" stroke="#ffd23f" stroke-width="4"/>
+  <text x="250" y="424" font-family="Arial, sans-serif" font-size="34" font-weight="bold" fill="#a86b00" text-anchor="middle">+25</text>
+</svg>

@@ -1,0 +1,25 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <g stroke-width="1">
+    <rect x="40" y="40" width="16" height="8" fill="#ff4d4d" transform="rotate(25 48 44)"/>
+    <rect x="90" y="30" width="14" height="14" fill="#4ade4a" transform="rotate(-15 97 37)"/>
+    <circle cx="140" cy="55" r="7" fill="#3aa8ff"/>
+    <rect x="180" y="35" width="16" height="8" fill="#ffd23f" transform="rotate(40 188 39)"/>
+    <circle cx="230" cy="50" r="6" fill="#b06bff"/>
+
+    <rect x="60" y="110" width="14" height="14" fill="#ffd23f" transform="rotate(20 67 117)"/>
+    <circle cx="120" cy="120" r="7" fill="#ff4d4d"/>
+    <rect x="170" y="100" width="16" height="8" fill="#4ade4a" transform="rotate(-30 178 104)"/>
+    <circle cx="220" cy="130" r="6" fill="#3aa8ff"/>
+    <rect x="250" y="100" width="14" height="14" fill="#ff8fb3" transform="rotate(15 257 107)"/>
+
+    <rect x="45" y="190" width="16" height="8" fill="#b06bff" transform="rotate(-20 53 194)"/>
+    <circle cx="100" cy="200" r="7" fill="#ffd23f"/>
+    <rect x="150" y="185" width="14" height="14" fill="#3aa8ff" transform="rotate(35 157 192)"/>
+    <circle cx="200" cy="210" r="6" fill="#ff4d4d"/>
+    <rect x="240" y="195" width="16" height="8" fill="#4ade4a" transform="rotate(10 248 199)"/>
+
+    <circle cx="80" cy="260" r="6" fill="#ff8fb3"/>
+    <rect x="130" y="250" width="14" height="14" fill="#ffd23f" transform="rotate(-25 137 257)"/>
+    <circle cx="190" cy="265" r="7" fill="#4ade4a"/>
+  </g>
+</svg>

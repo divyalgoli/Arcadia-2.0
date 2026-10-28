@@ -1,0 +1,15 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="soft-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#263238" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <circle cx="64" cy="66" r="54" fill="#FFFFFF" filter="url(#soft-shadow)"/>
+  <circle cx="64" cy="66" r="54" fill="none" stroke="#FF7A00" stroke-width="5"/>
+  
+  <circle cx="64" cy="68" r="30" fill="#FFFFFF" stroke="#FF7A00" stroke-width="5"/>
+  <line x1="64" y1="68" x2="64" y2="50" stroke="#263238" stroke-width="5" stroke-linecap="round"/>
+  <line x1="64" y1="68" x2="78" y2="76" stroke="#263238" stroke-width="5" stroke-linecap="round"/>
+  <rect x="58" y="32" width="12" height="8" rx="3" fill="#E35F00"/>
+
+</svg>

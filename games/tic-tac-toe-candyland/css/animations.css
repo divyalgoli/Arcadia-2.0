@@ -1,0 +1,70 @@
+@keyframes wobble{
+  0%,100%{transform:rotate(-4deg);}
+  50%{transform:rotate(4deg);}
+}
+.wobble{animation:wobble 2.2s ease-in-out infinite;}
+.wobble.delay1{animation-delay:.3s;}
+
+@keyframes spinSlow{ from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+.spin-slow{animation:spinSlow 6s linear infinite;}
+.spin-slow-rev{animation:spinSlow 6s linear infinite reverse;}
+
+@keyframes cellPulse{
+  from{box-shadow: inset 0 0 0 rgba(255,255,255,0);}
+  to{box-shadow: inset 0 0 18px rgba(255,255,255,0.9);}
+}
+
+@keyframes streakPop{
+  0%{opacity:0; transform:translate(-50%,10px) scale(.8);}
+  15%{opacity:1; transform:translate(-50%,0) scale(1.05);}
+  25%{transform:translate(-50%,0) scale(1);}
+  80%{opacity:1;}
+  100%{opacity:0; transform:translate(-50%,-10px) scale(.9);}
+}
+
+@keyframes trophyBounce{
+  from{transform:translateY(0) rotate(-4deg);}
+  to{transform:translateY(-10px) rotate(4deg);}
+}
+
+@keyframes floatUp{
+  from{ transform:translateY(110vh) rotate(0deg); opacity:.9;}
+  to{ transform:translateY(-10vh) rotate(360deg); opacity:.9;}
+}
+.floater{
+  position:absolute;
+  bottom:0;
+  font-size:1.6rem;
+  animation-name:floatUp;
+  animation-timing-function:linear;
+  animation-iteration-count:infinite;
+}
+
+@keyframes confettiFall{
+  from{ transform:translateY(-10vh) rotate(0deg); opacity:1;}
+  to{ transform:translateY(110vh) rotate(720deg); opacity:.9;}
+}
+.confetti-piece{
+  position:absolute;
+  top:0;
+  width:10px;height:14px;
+  animation-name:confettiFall;
+  animation-timing-function:ease-in;
+}
+
+@keyframes popIn{
+  0%{ transform:scale(0); }
+  70%{ transform:scale(1.2); }
+  100%{ transform:scale(1); }
+}
+.pop-in{animation:popIn .28s ease-out;}
+
+@keyframes sparkleLine{
+  0%{ filter:hue-rotate(0deg) brightness(1);}
+  100%{ filter:hue-rotate(360deg) brightness(1.15);}
+}
+.win-cell{animation: cellPulse .6s ease infinite alternate, sparkleLine 1.5s linear infinite;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important;}
+}

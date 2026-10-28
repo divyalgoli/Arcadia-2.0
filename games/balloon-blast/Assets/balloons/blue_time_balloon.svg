@@ -1,0 +1,49 @@
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="blueBody" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#bfe8ff"/>
+      <stop offset="45%" stop-color="#3aa8ff"/>
+      <stop offset="100%" stop-color="#0056a8"/>
+    </radialGradient>
+    <linearGradient id="blueShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blueGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Blue glow -->
+  <ellipse cx="200" cy="220" rx="155" ry="185" fill="#5cc4ff" opacity="0.4" filter="url(#blueGlow)"/>
+
+  <!-- String -->
+  <path d="M200 400 Q190 430 205 455 Q220 480 200 500" stroke="#8a5a2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M188 385 L200 405 L212 385 Z" fill="#0056a8"/>
+
+  <!-- Balloon body -->
+  <ellipse cx="200" cy="220" rx="140" ry="170" fill="url(#blueBody)" stroke="#003b73" stroke-width="4"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="150" cy="150" rx="55" ry="75" fill="url(#blueShine)"/>
+
+  <!-- Clock icon -->
+  <circle cx="200" cy="220" r="46" fill="#ffffff" stroke="#0056a8" stroke-width="5"/>
+  <line x1="200" y1="220" x2="200" y2="192" stroke="#0056a8" stroke-width="5" stroke-linecap="round"/>
+  <line x1="200" y1="220" x2="220" y2="228" stroke="#0056a8" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="200" cy="220" r="4" fill="#0056a8"/>
+  <!-- tick marks -->
+  <circle cx="200" cy="180" r="2.5" fill="#0056a8"/>
+  <circle cx="240" cy="220" r="2.5" fill="#0056a8"/>
+  <circle cx="200" cy="260" r="2.5" fill="#0056a8"/>
+  <circle cx="160" cy="220" r="2.5" fill="#0056a8"/>
+
+  <!-- +5s label -->
+  <text x="200" y="320" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#ffffff" text-anchor="middle">+5s</text>
+</svg>

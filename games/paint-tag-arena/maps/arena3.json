@@ -1,0 +1,69 @@
+{
+  "name": "Reactor Core",
+  "description": "A symmetrical, circular-feeling arena built around a high-risk pillar-ringed reactor core, with long chase paths around the edges and teleport pads linking opposite sides.",
+  "width": 1600,
+  "height": 900,
+
+  "spawnPoints": [
+    { "id": 1, "x": 150, "y": 150 },
+    { "id": 2, "x": 1450, "y": 150 },
+    { "id": 3, "x": 150, "y": 750 },
+    { "id": 4, "x": 1450, "y": 750 }
+  ],
+
+  "walls": [
+    { "x": 100, "y": 0, "width": 1400, "height": 20 },
+    { "x": 100, "y": 880, "width": 1400, "height": 20 },
+    { "x": 0, "y": 100, "width": 20, "height": 700 },
+    { "x": 1580, "y": 100, "width": 20, "height": 700 },
+    { "x": 20, "y": 20, "width": 80, "height": 20 },
+    { "x": 20, "y": 20, "width": 20, "height": 80 },
+    { "x": 1500, "y": 20, "width": 80, "height": 20 },
+    { "x": 1560, "y": 20, "width": 20, "height": 80 },
+    { "x": 20, "y": 800, "width": 80, "height": 20 },
+    { "x": 20, "y": 720, "width": 20, "height": 80 },
+    { "x": 1500, "y": 800, "width": 80, "height": 20 },
+    { "x": 1560, "y": 720, "width": 20, "height": 80 },
+    { "x": 350, "y": 200, "width": 350, "height": 20 },
+    { "x": 900, "y": 200, "width": 350, "height": 20 },
+    { "x": 350, "y": 680, "width": 350, "height": 20 },
+    { "x": 900, "y": 680, "width": 350, "height": 20 }
+  ],
+
+  "obstacles": [
+    { "type": "pillar", "x": 780, "y": 430, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 900, "y": 430, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 840, "y": 326, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 720, "y": 326, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 660, "y": 430, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 720, "y": 534, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 840, "y": 534, "width": 40, "height": 40 },
+    { "type": "box", "x": 150, "y": 450, "width": 60, "height": 60 },
+    { "type": "box", "x": 1390, "y": 450, "width": 60, "height": 60 },
+    { "type": "barrier", "x": 700, "y": 100, "width": 200, "height": 20 },
+    { "type": "barrier", "x": 700, "y": 780, "width": 200, "height": 20 }
+  ],
+
+  "powerUpSpawns": [
+    { "type": "speed", "x": 800, "y": 150 },
+    { "type": "shield", "x": 800, "y": 750 },
+    { "type": "doubleDash", "x": 150, "y": 450 },
+    { "type": "freeze", "x": 1450, "y": 450 },
+    { "type": "speed", "x": 800, "y": 450 },
+    { "type": "shield", "x": 400, "y": 300 }
+  ],
+
+  "safeZones": [
+    { "x": 150, "y": 150, "radius": 50 },
+    { "x": 1450, "y": 150, "radius": 50 },
+    { "x": 150, "y": 750, "radius": 50 },
+    { "x": 1450, "y": 750, "radius": 50 }
+  ],
+
+  "teleports": [
+    { "id": 1, "fromX": 50, "fromY": 450, "toX": 1550, "toY": 450 },
+    { "id": 2, "fromX": 1550, "fromY": 450, "toX": 50, "toY": 450 },
+    { "id": 3, "fromX": 800, "fromY": 50, "toX": 800, "toY": 850 },
+    { "id": 4, "fromX": 800, "fromY": 850, "toX": 800, "toY": 50 }
+  ]
+}

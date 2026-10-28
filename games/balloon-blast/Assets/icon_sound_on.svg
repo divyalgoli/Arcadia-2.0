@@ -1,0 +1,12 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="soundOnBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#b6ffb0"/>
+      <stop offset="100%" stop-color="#128012"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#soundOnBg)" stroke="#0a5c0a" stroke-width="5"/>
+  <path d="M40 50 H50 L64 38 V82 L50 70 H40 Z" fill="#ffffff" stroke="#0a5c0a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M74 48 Q84 60 74 72" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M82 40 Q98 60 82 80" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
+</svg>

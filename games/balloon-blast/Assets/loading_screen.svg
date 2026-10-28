@@ -1,0 +1,87 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="loadSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4fb8ff"/>
+      <stop offset="100%" stop-color="#d6f3ff"/>
+    </linearGradient>
+    <radialGradient id="lRed" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ff9a9a"/><stop offset="100%" stop-color="#c40000"/>
+    </radialGradient>
+    <radialGradient id="lGreen" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#b6ffb0"/><stop offset="100%" stop-color="#128012"/>
+    </radialGradient>
+    <radialGradient id="lGold" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff6c8"/><stop offset="100%" stop-color="#a86b00"/>
+    </radialGradient>
+    <radialGradient id="lBlue" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#bfe8ff"/><stop offset="100%" stop-color="#0056a8"/>
+    </radialGradient>
+    <radialGradient id="lPurple" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#e3c8ff"/><stop offset="100%" stop-color="#4b0082"/>
+    </radialGradient>
+    <radialGradient id="lPink" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ffe0ec"/><stop offset="100%" stop-color="#d13d6e"/>
+    </radialGradient>
+    <linearGradient id="logoFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="60%" stop-color="#ffd23f"/>
+      <stop offset="100%" stop-color="#e0a300"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect x="0" y="0" width="1600" height="900" fill="url(#loadSky)"/>
+
+  <!-- Clouds -->
+  <g fill="#ffffff" opacity="0.95">
+    <ellipse cx="200" cy="150" rx="90" ry="40"/>
+    <ellipse cx="270" cy="130" rx="65" ry="32"/>
+    <ellipse cx="1350" cy="180" rx="90" ry="40"/>
+    <ellipse cx="1420" cy="160" rx="65" ry="32"/>
+    <ellipse cx="1250" cy="700" rx="80" ry="34"/>
+    <ellipse cx="300" cy="720" rx="80" ry="34"/>
+  </g>
+
+  <!-- Floating balloons scattered around -->
+  <g>
+    <ellipse cx="220" cy="380" rx="55" ry="68" fill="url(#lRed)" stroke="#7a0000" stroke-width="3"/>
+    <path d="M220 448 Q212 470 224 486" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="380" cy="260" rx="48" ry="60" fill="url(#lGreen)" stroke="#0a5c0a" stroke-width="3"/>
+    <path d="M380 320 Q372 340 384 356" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="1250" cy="330" rx="52" ry="65" fill="url(#lGold)" stroke="#7a4a00" stroke-width="3"/>
+    <path d="M1250 395 Q1242 415 1254 431" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="1400" cy="480" rx="46" ry="58" fill="url(#lBlue)" stroke="#003b73" stroke-width="3"/>
+    <path d="M1400 538 Q1392 558 1404 574" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="120" cy="600" rx="46" ry="58" fill="url(#lPurple)" stroke="#33005c" stroke-width="3"/>
+    <path d="M120 658 Q112 678 124 694" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="1480" cy="720" rx="50" ry="62" fill="url(#lPink)" stroke="#a8104a" stroke-width="3"/>
+    <path d="M1480 782 Q1472 802 1484 818" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="700" cy="180" rx="42" ry="52" fill="url(#lGreen)" stroke="#0a5c0a" stroke-width="3"/>
+    <path d="M700 232 Q693 250 704 264" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+
+    <ellipse cx="950" cy="210" rx="46" ry="58" fill="url(#lRed)" stroke="#7a0000" stroke-width="3"/>
+    <path d="M950 268 Q942 288 954 304" stroke="#8a5a2b" stroke-width="3" fill="none"/>
+  </g>
+
+  <!-- Logo -->
+  <g transform="translate(800,430)" text-anchor="middle">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="130" font-weight="900"
+          fill="url(#logoFill)" stroke="#7a4a00" stroke-width="6" paint-order="stroke">BALLOON</text>
+    <text x="0" y="120" font-family="Arial, sans-serif" font-size="130" font-weight="900"
+          fill="#ff4d4d" stroke="#7a0000" stroke-width="6" paint-order="stroke">BLAST</text>
+  </g>
+
+  <!-- Loading dots -->
+  <g fill="#ffffff">
+    <circle cx="740" cy="650" r="14"/>
+    <circle cx="800" cy="650" r="14" opacity="0.7"/>
+    <circle cx="860" cy="650" r="14" opacity="0.4"/>
+  </g>
+  <text x="800" y="710" font-family="Arial, sans-serif" font-size="30" fill="#ffffff" text-anchor="middle" font-weight="bold">Loading...</text>
+</svg>

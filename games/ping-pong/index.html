@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Ping Pong — Local 2 Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="home-wrap">
+      <div class="home-left">
+        <h1 class="logo-title">Ping<br>Pong</h1>
+        <p class="tagline">Fast, local two-player table tennis. Grab a friend, share the keyboard (or the screen), and rally to 11.</p>
+        <nav class="menu">
+          <button class="menu-btn primary" data-nav="game"><span class="ico">▶</span> Play Game</button>
+          <button class="menu-btn" data-nav="instructions"><span class="ico">ℹ</span> Game Instructions</button>
+          <button class="menu-btn" data-nav="leaderboard"><span class="ico">🏆</span> Leaderboard</button>
+          <button class="menu-btn" data-nav="settings"><span class="ico">⚙</span> Settings</button>
+          <button class="menu-btn" id="exitBtn"><span class="ico">⏻</span> Exit</button>
+        </nav>
+      </div>
+      <div class="home-right">
+        <div class="hero-stage" id="heroStage"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTRUCTIONS ============ -->
+  <section class="screen" id="screen-instructions">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Game Instructions</h2>
+      </div>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:720px;">
+        <div class="card">
+          <h3>🖥️ Desktop controls</h3>
+          <div class="control-row"><span class="who">Player 1</span> <span class="kbd">W</span> up · <span class="kbd">S</span> down <span class="pill" style="background:var(--paddle-a)">Left paddle</span></div>
+          <div class="control-row"><span class="who">Player 2</span> <span class="kbd">↑</span> up · <span class="kbd">↓</span> down <span class="pill" style="background:var(--paddle-b)">Right paddle</span></div>
+          <div class="control-row"><span class="who">Anytime</span> <span class="kbd">Space</span> pause / resume</div>
+        </div>
+        <div class="card">
+          <h3>📱 Touch controls</h3>
+          <p>On tablet or mobile, each player drags a finger up and down on their own half of the table — left half moves the left paddle, right half moves the right paddle.</p>
+        </div>
+        <div class="card">
+          <h3>🏓 Rules of play</h3>
+          <ul>
+            <li>The ball serves automatically toward a random side after every point.</li>
+            <li>Hit the ball back with your paddle before it passes you — miss it and the other player scores.</li>
+            <li>Where the ball strikes your paddle changes its angle: hit with the edge to add spin.</li>
+            <li>First player to reach <strong>11 points</strong> wins the match.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERBOARD ============ -->
+  <section class="screen" id="screen-leaderboard">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Leaderboard</h2>
+      </div>
+      <button class="icon-btn" id="clearLbBtn" title="Clear session results">🗑</button>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:600px;">
+        <div class="card">
+          <h3>🏆 This session's results</h3>
+          <p style="margin-top:-8px;">Match wins recorded since you opened the app.</p>
+          <div id="lbList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section class="screen" id="screen-settings">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Settings</h2>
+      </div>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:600px;">
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Ball speed</div>
+              <div class="setting-sub" id="speedLabel">Medium</div>
+            </div>
+            <input type="range" id="speedSlider" min="1" max="3" step="1" value="2">
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Paddle size</div>
+              <div class="setting-sub" id="paddleLabel">Medium</div>
+            </div>
+            <input type="range" id="paddleSlider" min="1" max="3" step="1" value="2">
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Sound effects</div>
+              <div class="setting-sub">Hit and score beeps</div>
+            </div>
+            <button class="switch" id="soundSwitch" aria-label="Toggle sound"></button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>👤 Player names</h3>
+          <div class="control-row" style="gap:14px;">
+            <span class="who" style="color:var(--paddle-a-dark)">Player 1</span>
+            <input id="nameA" maxlength="12" value="Player 1" style="flex:1; min-width:120px; border:2px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:inherit; font-weight:700; background:var(--panel-2); color:var(--text);">
+          </div>
+          <div class="control-row" style="gap:14px;">
+            <span class="who" style="color:var(--paddle-b-dark)">Player 2</span>
+            <input id="nameB" maxlength="12" value="Player 2" style="flex:1; min-width:120px; border:2px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:inherit; font-weight:700; background:var(--panel-2); color:var(--text);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section class="screen" id="screen-game">
+    <div class="game-topbar">
+      <button class="icon-btn" id="gameBackBtn" aria-label="Back to menu">←</button>
+      <div class="score-panel">
+        <div class="score-side a">
+          <div class="p-name" id="hudNameA">Player 1</div>
+          <div class="score-num" id="scoreA">0</div>
+        </div>
+        <div class="score-mid">–</div>
+        <div class="score-side b">
+          <div class="p-name" id="hudNameB">Player 2</div>
+          <div class="score-num" id="scoreB">0</div>
+        </div>
+      </div>
+      <button class="icon-btn" id="pauseBtn" aria-label="Pause">⏸</button>
+    </div>
+    <div class="game-stage-wrap">
+      <div class="game-stage" id="gameStage">
+        <canvas id="gameCanvas"></canvas>
+        <div class="touch-zones">
+          <div id="zoneLeft"></div>
+          <div id="zoneRight"></div>
+        </div>
+        <div class="countdown-num" id="countdownNum"></div>
+        <div class="hint-banner" id="hintBanner">W/S and ↑/↓ to move · Space to pause</div>
+        <div class="rotate-hint" id="rotateHint">🔄 Rotate your device for a wider table</div>
+
+        <div class="overlay" id="pauseOverlay">
+          <div class="overlay-card">
+            <h2>Paused</h2>
+            <p>Take a breather.</p>
+            <div class="overlay-actions">
+              <button class="btn accent" id="resumeBtn">Resume</button>
+              <button class="btn" id="pauseHomeBtn">Home</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="overlay" id="winOverlay">
+          <div class="overlay-card">
+            <h2 id="winTitle">Player 1 Wins!</h2>
+            <p id="winSub">11 – 7</p>
+            <div class="overlay-actions">
+              <button class="btn accent" id="rematchBtn">Rematch</button>
+              <button class="btn" id="winHomeBtn">Home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../../js/firebase-config.js"></script>
+<script src="../../js/arcadia-cloud.js"></script>
+<script src="../../js/arcadia-shell.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

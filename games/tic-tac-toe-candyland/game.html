@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Playing - Candy Land Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/game.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="game-page">
+
+  <header class="game-header">
+    <button class="icon-btn" id="back-btn"><img src="assets/icons/back.svg" alt="Back"></button>
+
+    <div class="score-card player1">
+      <span class="score-symbol">🍭</span>
+      <span class="score-name" id="p1-name">Player 1</span>
+      <span class="score-num" id="p1-score">0</span>
+    </div>
+
+    <div class="turn-indicator" id="turn-indicator">🍭's Turn</div>
+
+    <div class="score-card player2">
+      <span class="score-symbol">🍬</span>
+      <span class="score-name" id="p2-name">Player 2</span>
+      <span class="score-num" id="p2-score">0</span>
+    </div>
+
+    <button class="icon-btn" id="restart-btn"><img src="assets/icons/restart.svg" alt="Restart"></button>
+  </header>
+
+  <main class="board-wrap">
+    <div class="board" id="board">
+      <!-- 9 cells injected by board.js -->
+    </div>
+  </main>
+
+  <div class="streak-banner" id="streak-banner"></div>
+
+  <div class="modal hidden" id="pause-modal">
+    <div class="modal-card">
+      <h3>Paused 🍬</h3>
+      <button class="candy-btn small" id="resume-btn">Resume</button>
+      <button class="candy-btn small" id="quit-btn">Quit to Home</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/arcadia-cloud.js"></script>
+    <script src="../../js/arcadia-shell.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/winCheck.js"></script>
+  <script src="js/difficulty.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/moves.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

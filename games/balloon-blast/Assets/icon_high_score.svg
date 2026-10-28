@@ -1,0 +1,15 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="starBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fff6c8"/>
+      <stop offset="100%" stop-color="#a86b00"/>
+    </radialGradient>
+    <linearGradient id="starFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="100%" stop-color="#e0a300"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#starBg)" stroke="#7a4a00" stroke-width="5"/>
+  <path d="M60 30 L68 50 L90 52 L73 66 L79 88 L60 76 L41 88 L47 66 L30 52 L52 50 Z"
+        fill="url(#starFill)" stroke="#7a4a00" stroke-width="3" stroke-linejoin="round"/>
+</svg>

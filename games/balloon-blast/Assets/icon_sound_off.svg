@@ -1,0 +1,11 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="soundOffBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#d8d8d8"/>
+      <stop offset="100%" stop-color="#6b6b6b"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#soundOffBg)" stroke="#3a3a3a" stroke-width="5"/>
+  <path d="M40 50 H50 L64 38 V82 L50 70 H40 Z" fill="#ffffff" stroke="#3a3a3a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M76 48 L96 72 M96 48 L76 72" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+</svg>

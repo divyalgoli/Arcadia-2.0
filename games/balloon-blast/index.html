@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Balloon Blast</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body>
+
+  <!-- ============================================= -->
+  <!-- ANIMATED BACKGROUND (shared across all screens) -->
+  <!-- ============================================= -->
+  <div class="app-background" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="cloud cloud--1"></div>
+    <div class="cloud cloud--2"></div>
+    <div class="cloud cloud--3"></div>
+    <div class="cloud cloud--4"></div>
+    <div class="sun-glow"></div>
+    <div class="mountains">
+      <div class="mountain mountain--back"></div>
+      <div class="mountain mountain--front"></div>
+    </div>
+    <div class="grass"></div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- HOME SCREEN -->
+  <!-- ============================================= -->
+  <section id="home-screen" class="screen active" aria-label="Home Screen">
+
+    <!-- Decorative floating balloons -->
+    <div class="floating-balloons" aria-hidden="true">
+      <div class="balloon balloon--pink"><div class="balloon-string"></div></div>
+      <div class="balloon balloon--purple"><div class="balloon-string"></div></div>
+      <div class="balloon balloon--yellow"><div class="balloon-string"></div></div>
+      <div class="balloon balloon--sky"><div class="balloon-string"></div></div>
+      <div class="balloon balloon--pink balloon--small"><div class="balloon-string"></div></div>
+      <div class="balloon balloon--purple balloon--small"><div class="balloon-string"></div></div>
+    </div>
+
+    <div class="home-content">
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <h1 class="game-logo">
+          <span class="logo-word logo-word--balloon">Balloon</span>
+          <span class="logo-word logo-word--blast">Blast<span class="logo-dot">!</span></span>
+        </h1>
+        <p class="logo-subtitle">Pop. Score. Repeat.</p>
+      </div>
+
+      <!-- Main menu -->
+      <nav class="main-menu" aria-label="Main Menu">
+        <button class="btn btn--primary btn--large" id="play-btn">
+          <span class="btn-icon">▶</span> Play
+        </button>
+        <button class="btn btn--secondary" id="settings-open-btn">
+          <span class="btn-icon">⚙</span> Settings
+        </button>
+        <button class="btn btn--ghost" id="exit-btn">
+          <span class="btn-icon">✕</span> Exit
+        </button>
+      </nav>
+
+      <p class="version-tag">v1.0.0</p>
+    </div>
+
+    <footer class="home-footer">
+      <p>Made with <span class="heart">♥</span> by <strong>Friends Team</strong> &mdash; © 2026</p>
+    </footer>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- SETTINGS MODAL -->
+  <!-- ============================================= -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal glass-panel modal--settings">
+      <button class="modal-close-btn" id="settings-close-btn" aria-label="Close">✕</button>
+      <h2 class="modal-title">Settings</h2>
+
+      <div class="settings-list">
+
+        <!-- Music Toggle -->
+        <div class="settings-row">
+          <span class="settings-row-label">Music</span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Sound Toggle -->
+        <div class="settings-row">
+          <span class="settings-row-label">Sound Effects</span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="settings-row">
+          <span class="settings-row-label">Difficulty</span>
+          <div class="segmented-control">
+            <button class="segment" data-value="easy">Easy</button>
+            <button class="segment segment--active" data-value="normal">Normal</button>
+            <button class="segment" data-value="hard">Hard</button>
+          </div>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="settings-row">
+          <span class="settings-row-label">Theme</span>
+          <div class="theme-selector">
+            <button class="theme-swatch theme-swatch--sky" title="Sky Theme" aria-label="Sky Theme"></button>
+            <button class="theme-swatch theme-swatch--sunset" title="Sunset Theme" aria-label="Sunset Theme"></button>
+            <button class="theme-swatch theme-swatch--candy" title="Candy Theme" aria-label="Candy Theme"></button>
+          </div>
+        </div>
+
+        <!-- Reset High Score -->
+        <div class="settings-row">
+          <span class="settings-row-label">High Score</span>
+          <button class="btn btn--danger btn--small" id="reset-highscore-btn">Reset</button>
+        </div>
+
+      </div>
+
+      <button class="btn btn--primary" id="settings-close-bottom-btn">Done</button>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- LOADING SPINNER (shown during transitions) -->
+  <!-- ============================================= -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading...</p>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- TOOLTIP EXAMPLE (reusable pattern) -->
+  <!-- ============================================= -->
+  <!--
+    Usage: wrap any element with class="tooltip-wrap" and add
+    a child span.tooltip-text to show a styled tooltip on hover/focus.
+    Example:
+    <span class="tooltip-wrap">
+      ⓘ<span class="tooltip-text">Combo resets if you miss a balloon</span>
+    </span>
+  -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="../../js/firebase-config.js"></script>
+        <script src="../../js/arcadia-cloud.js"></script>
+        <script src="../../js/arcadia-shell.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/balloons.js"></script>
+    <script src="js/difficulty.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/movement.js"></script>
+    <script src="js/collision.js"></script>
+    <script src="js/scoring.js"></script>
+    <script src="js/powerups.js"></script>
+    <script src="js/boss.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

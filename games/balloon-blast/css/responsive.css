@@ -1,0 +1,33 @@
+/* Tablet */
+@media (max-width: 900px) {
+  .home-content { padding: 36px 32px; }
+  .top-bar, .bottom-bar { padding: 12px 16px; }
+  .game-area { height: 60vh; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .game-logo { font-size: 2.4rem; gap: 6px; }
+  .home-content { padding: 28px 20px; gap: 28px; }
+  .main-menu { max-width: 100%; }
+
+  .top-bar { flex-direction: column; gap: 10px; border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+  .stat-group--center { order: 3; }
+  .top-bar-actions { order: 2; }
+
+  .bottom-bar { flex-direction: row; justify-content: space-between; padding: 10px 14px; }
+  .bottom-label { font-size: 0.6rem; }
+
+  .modal { padding: 28px 20px; }
+  .score-summary { flex-direction: column; }
+
+  .balloon { width: 60px; height: 74px; }
+  .balloon--small { width: 40px; height: 50px; }
+}
+
+/* Small mobile */
+@media (max-width: 380px) {
+  .stat-card { min-width: 56px; padding: 4px 10px; }
+  .stat-value { font-size: 1.05rem; }
+  .btn--large { padding: 14px 24px; font-size: 1.05rem; }
+}

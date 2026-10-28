@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Gravity Run</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body>
+<div id="app">
+
+  <div id="rotate-device-overlay">
+    <div class="rotate-icon">📱🔄</div>
+    <p>Please rotate your device to LANDSCAPE to play Gravity Run!</p>
+  </div>
+
+  <canvas id="game-canvas"></canvas>
+
+  <!-- ============ MAIN MENU ============ -->
+  <section id="screen-menu" class="screen active">
+    <div class="menu-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+    <button id="btn-leaderboard" class="corner-btn" title="Leaderboard">🏆</button>
+    <a href="../../index.html" class="corner-btn" title="Back to Hub" style="right:82px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">🏠</a>
+    <div class="menu-content">
+      <div class="logo">
+        <span class="logo-icon">🦖</span>
+        <h1>GRAVITY RUN</h1>
+      </div>
+      <div class="menu-buttons">
+        <button id="btn-2p" class="menu-btn primary">2 PLAYER</button>
+        <button id="btn-cpu" class="menu-btn secondary">VS COMPUTER</button>
+        <button id="btn-settings" class="menu-btn ghost">SETTINGS</button>
+        <button id="btn-howto" class="menu-btn ghost">HOW TO PLAY</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NAME ENTRY ============ -->
+  <section id="screen-name" class="screen panel-screen">
+    <button id="name-back" class="back-btn">← BACK</button>
+    <div class="panel-card">
+      <h2 id="name-title" class="panel-title">WHO'S RACING?</h2>
+      <div id="name-p1-wrap" class="name-field">
+        <label for="name-p1">Player 1 name</label>
+        <input id="name-p1" type="text" maxlength="14" placeholder="Player 1" />
+      </div>
+      <div id="name-p2-wrap" class="name-field">
+        <label for="name-p2">Player 2 name</label>
+        <input id="name-p2" type="text" maxlength="14" placeholder="Player 2" />
+      </div>
+      <button id="name-start" class="big-btn">START MATCH</button>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="screen-settings" class="screen panel-screen">
+    <button id="settings-back" class="back-btn">← BACK</button>
+    <div class="panel-card">
+      <h2 class="panel-title">SETTINGS</h2>
+      <div class="setting-row">
+        <span>Music</span>
+        <label class="switch">
+          <input type="checkbox" id="music-toggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO PLAY ============ -->
+  <section id="screen-howto" class="screen panel-screen">
+    <button id="howto-back" class="back-btn">← BACK</button>
+    <div class="panel-card">
+      <h2 class="panel-title">HOW TO PLAY</h2>
+      <div id="howto-track"></div>
+      <div class="next-row">
+        <button id="howto-next" class="big-btn">NEXT</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERBOARD ============ -->
+  <section id="screen-leaderboard" class="screen panel-screen">
+    <button id="lb-back" class="back-btn">← BACK</button>
+    <div class="panel-card">
+      <h2 class="panel-title">LEADERBOARD</h2>
+      <div id="lb-list" class="lb-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <section id="screen-game" class="screen">
+    <div id="zone-left" class="tap-zone left"></div>
+    <div id="zone-right" class="tap-zone right"></div>
+
+    <div id="hud">
+      <div class="score-capsule">
+        <span id="score-p1" class="score-num p1">0</span>
+        <span id="round-label" class="round-chip">ROUND 1 / 3</span>
+        <span id="score-p2" class="score-num p2">0</span>
+      </div>
+    </div>
+    <button id="pause-btn" title="Pause">⏸</button>
+
+    <div id="round-banner"><span id="round-banner-title"></span></div>
+    <div id="countdown"></div>
+
+    <div id="point-popup-p1" class="point-popup">+1</div>
+    <div id="point-popup-p2" class="point-popup">+1</div>
+
+    <div id="pause-overlay">
+      <h2>PAUSED</h2>
+      <div class="pause-buttons">
+        <button id="resume-btn" class="big-btn">RESUME</button>
+        <button id="quit-btn" class="menu-btn ghost">QUIT TO MENU</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MATCH RESULT ============ -->
+  <section id="screen-result" class="screen">
+    <h1 id="result-title">YOU WON!</h1>
+    <p id="result-score">Player 1 3 — 1 Player 2</p>
+    <div class="result-buttons">
+      <button id="result-again" class="big-btn">PLAY AGAIN</button>
+      <button id="result-menu" class="menu-btn ghost">MAIN MENU</button>
+    </div>
+  </section>
+
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../../js/firebase-config.js"></script>
+<script src="../../js/arcadia-cloud.js"></script>
+<script src="../../js/arcadia-shell.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

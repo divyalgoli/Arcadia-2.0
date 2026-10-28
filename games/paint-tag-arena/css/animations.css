@@ -1,0 +1,462 @@
+/* ================================================================
+   PAINT TAG ARENA — ANIMATIONS STYLESHEET
+   Scope: every @keyframes definition and the classes/selectors
+   that apply them. Pure CSS. No JavaScript.
+================================================================= */
+
+/* ----------------------------------------------------------------
+   FADE
+------------------------------------------------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.main-menu,
+.game-header,
+.game-main,
+.game-footer {
+  animation: fadeIn 0.6s ease both;
+}
+
+/* ----------------------------------------------------------------
+   SLIDE / POP-IN
+------------------------------------------------------------------- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.menu-glass-panel {
+  animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.player-card-1 {
+  animation: slideRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.player-card-2 {
+  animation: slideLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.game-header {
+  animation: slideDown 0.5s ease both;
+}
+
+.bottom-bar {
+  animation: slideUp 0.5s ease 0.1s both;
+}
+
+/* ----------------------------------------------------------------
+   PULSE / BREATHING (gentle scale bounce, no glow)
+------------------------------------------------------------------- */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes breathing {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+.timer-value {
+  display: inline-block;
+}
+
+.timer {
+  animation: timerPulse 1.4s ease-in-out infinite;
+}
+
+.round-value {
+  animation: breathing 3s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------------
+   TIMER PULSE (playful scale bounce instead of glow)
+------------------------------------------------------------------- */
+@keyframes timerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes textGlow {
+  0%, 100% { transform: scale(1) rotate(-1deg); }
+  50% { transform: scale(1.03) rotate(1deg); }
+}
+
+.game-logo,
+.modal-title {
+  animation: textGlow 3.2s ease-in-out infinite;
+  display: inline-block;
+}
+
+/* ----------------------------------------------------------------
+   BORDER BOUNCE / ARENA FLICKER (replaces neon glow flicker)
+------------------------------------------------------------------- */
+@keyframes neonGlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: var(--color-ink); }
+  50% { border-color: var(--color-orange); }
+}
+
+@keyframes glowFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.arena {
+  animation: borderGlow 4s ease-in-out infinite;
+}
+
+.player-avatar .avatar-ring {
+  animation: neonGlow 2.4s ease-in-out infinite;
+}
+
+.logo-mark {
+  animation: glowFlicker 3s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------------
+   FLOATING (paint blobs bobbing gently)
+------------------------------------------------------------------- */
+@keyframes floating {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-14px) rotate(6deg); }
+}
+
+.player-card {
+  animation-name: slideRight, floating;
+  animation-duration: 0.5s, 4s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-delay: 0s, 0.5s;
+  animation-fill-mode: both, none;
+}
+
+.floating-shape {
+  animation: floating 7s ease-in-out infinite;
+}
+
+.shape-1 { animation-duration: 8s; }
+.shape-2 { animation-duration: 10s; animation-direction: reverse; }
+.shape-3 { animation-duration: 6.5s; }
+.shape-4 { animation-duration: 12s; animation-direction: reverse; }
+
+/* ----------------------------------------------------------------
+   CLOUD DRIFT / SKY WASH MOVEMENT
+------------------------------------------------------------------- */
+@keyframes rotateGlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bgGradientMove {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+  50% { background-position: 6% 2%, -5% -3%, 4% -2%; }
+  100% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+}
+
+.bg-gradient-move {
+  background-size: 140% 140%;
+  animation: bgGradientMove 30s ease-in-out infinite;
+}
+
+.arena-corner {
+  animation: flagWave 2.4s ease-in-out infinite;
+}
+
+@keyframes flagWave {
+  0%, 100% { transform: skewY(0deg); }
+  50% { transform: skewY(4deg); }
+}
+
+.corner-tr, .corner-br {
+  animation-name: flagWaveFlip;
+}
+
+@keyframes flagWaveFlip {
+  0%, 100% { transform: scaleX(-1) skewY(0deg); }
+  50% { transform: scaleX(-1) skewY(4deg); }
+}
+
+/* ----------------------------------------------------------------
+   FLOATING PAINT DROPLETS
+------------------------------------------------------------------- */
+@keyframes particleMove {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { transform: translate(var(--px, 40px), -160px) scale(1); opacity: 0; }
+}
+
+.particle {
+  animation: particleMove 9s linear infinite;
+}
+
+.particle-1 { top: 80%; left: 12%; --px: 20px; animation-delay: 0s; }
+.particle-2 { top: 70%; left: 34%; --px: -30px; animation-delay: 1.2s; }
+.particle-3 { top: 85%; left: 58%; --px: 15px; animation-delay: 2.4s; }
+.particle-4 { top: 75%; left: 76%; --px: -20px; animation-delay: 3.6s; }
+.particle-5 { top: 90%; left: 90%; --px: 25px; animation-delay: 4.8s; }
+
+/* ----------------------------------------------------------------
+   BUTTON HOVER / CLICK / BOUNCE — with a small paint-splatter kick
+------------------------------------------------------------------- */
+@keyframes buttonBounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.12); }
+  60% { transform: scale(0.94); }
+  80% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.btn:hover {
+  transform: translateY(-3px) scale(1.04);
+}
+
+.btn:active {
+  animation: buttonBounce 0.4s ease;
+}
+
+.icon-btn:active {
+  animation: buttonBounce 0.35s ease;
+}
+
+/* ----------------------------------------------------------------
+   LOADING PAINT-ROLLER SPIN
+------------------------------------------------------------------- */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* ----------------------------------------------------------------
+   COUNTDOWN ANIMATION
+------------------------------------------------------------------- */
+@keyframes countdownPop {
+  0% { transform: scale(1.5) rotate(-6deg); opacity: 0; }
+  60% { transform: scale(0.92) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.round-counter {
+  animation: countdownPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ----------------------------------------------------------------
+   ENERGY BAR FILL
+------------------------------------------------------------------- */
+@keyframes energyFill {
+  from { width: 0%; }
+}
+
+.energy-p1 {
+  animation: energyFill 1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.energy-p2 {
+  animation: energyFill 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+}
+
+.cooldown-p1,
+.cooldown-p2 {
+  animation: energyFill 0.9s ease-out both;
+}
+
+/* ----------------------------------------------------------------
+   SCORE POP
+------------------------------------------------------------------- */
+@keyframes scorePop {
+  0% { transform: scale(1) rotate(0deg); }
+  40% { transform: scale(1.35) rotate(-6deg); }
+  70% { transform: scale(0.95) rotate(4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.score-value:hover {
+  animation: scorePop 0.5s ease;
+}
+
+/* ----------------------------------------------------------------
+   PANEL SHEEN (soft light sweep instead of glass reflection)
+------------------------------------------------------------------- */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.loading-bar-fill {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-orange) 0%,
+    var(--color-yellow) 25%,
+    var(--color-white) 40%,
+    var(--color-yellow) 55%,
+    var(--color-orange) 100%
+  );
+  background-size: 250% 100%;
+  animation: shimmer 2.2s linear infinite;
+}
+
+@keyframes glassReflection {
+  0% { transform: translateX(-120%) skewX(-15deg); }
+  100% { transform: translateX(220%) skewX(-15deg); }
+}
+
+.menu-glass-panel::before,
+.modal-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: glassReflection 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.menu-glass-panel,
+.modal-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------------
+   HOVER LIFT — cards bounce up playfully on hover
+------------------------------------------------------------------- */
+.character-card,
+.leaderboard-row,
+.powerup-slot {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.character-card:hover,
+.leaderboard-row:hover,
+.powerup-slot:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ----------------------------------------------------------------
+   MODAL OPENING / CLOSING — pops in like a paint balloon
+------------------------------------------------------------------- */
+@keyframes modalOpen {
+  from { opacity: 0; transform: scale(0.85) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes modalClose {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.85) translateY(10px); }
+}
+
+.modal-overlay:not(.hidden) {
+  animation: fadeIn 0.25s ease both;
+}
+
+.modal-overlay:not(.hidden) .modal-panel {
+  animation: modalOpen 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ----------------------------------------------------------------
+   ANIMATED SHADOWS (soft breathing shadow instead of neon pulse)
+------------------------------------------------------------------- */
+@keyframes shadowPulse {
+  0%, 100% { box-shadow: var(--shadow-lg); }
+  50% { box-shadow: 0 10px 0 rgba(38, 50, 56, 0.14), 0 24px 54px rgba(38, 50, 56, 0.22); }
+}
+
+.menu-glass-panel {
+  animation-name: slideUp, shadowPulse;
+  animation-duration: 0.6s, 5s;
+  animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-delay: 0s, 0.6s;
+  animation-fill-mode: both, none;
+}
+
+/* ----------------------------------------------------------------
+   CLOUD-SHADOW SWEEP ACROSS THE ARENA
+------------------------------------------------------------------- */
+@keyframes lightSweep {
+  0% { left: -30%; }
+  100% { left: 130%; }
+}
+
+.arena-light-sweep {
+  animation: lightSweep 5s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------------
+   LOADING TEXT DOTS
+------------------------------------------------------------------- */
+@keyframes dotsBlink {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.dots {
+  display: inline-block;
+  animation: dotsBlink 1.4s steps(1) infinite;
+}
+
+/* ----------------------------------------------------------------
+   PLAYFUL WOBBLE (Game Over / countdown headline — replaces glitch)
+------------------------------------------------------------------- */
+@keyframes glitchShift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-2px, 1px) rotate(-1.5deg); }
+  50% { transform: translate(2px, -1px) rotate(1.5deg); }
+  75% { transform: translate(-1px, 2px) rotate(-1deg); }
+}
+
+.glitch-text {
+  animation: glitchShift 0.6s ease-in-out infinite;
+}
+
+/* ----------------------------------------------------------------
+   NAV LINK UNDERLINE (Animated Borders)
+------------------------------------------------------------------- */
+@keyframes borderSweep {
+  0% { background-position: -100% 0; }
+  100% { background-position: 100% 0; }
+}
+
+.icon-btn:hover {
+  animation: iconBounce 0.6s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(-2px) scale(1.05); }
+  50% { transform: translateY(-5px) scale(1.08); }
+}

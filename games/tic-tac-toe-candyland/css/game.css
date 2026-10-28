@@ -1,0 +1,107 @@
+.game-page{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+}
+
+.game-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.5rem;
+  padding:1rem 1rem .5rem;
+  position:relative;
+  z-index:2;
+}
+
+.score-card{
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+  background:var(--candy-cream);
+  border-radius:999px;
+  padding:.4rem .8rem;
+  font-weight:700;
+  box-shadow:var(--shadow-soft);
+  min-width:0;
+}
+.score-symbol{font-size:1.3rem;}
+.score-name{font-size:.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:70px;}
+.score-num{font-family:'Baloo 2',sans-serif; font-size:1.1rem;}
+
+.turn-indicator{
+  font-family:'Baloo 2', sans-serif;
+  font-weight:700;
+  background:var(--candy-yellow);
+  padding:.5rem 1rem;
+  border-radius:999px;
+  box-shadow:var(--shadow-soft);
+  white-space:nowrap;
+}
+
+.board-wrap{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+  position:relative;
+  z-index:2;
+}
+
+.board{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  grid-template-rows:repeat(3, 1fr);
+  gap:.75rem;
+  width:min(90vw, 420px);
+  height:min(90vw, 420px);
+  background:var(--candy-cream);
+  padding:.75rem;
+  touch-action:manipulation;
+  border-radius:2rem;
+  box-shadow:var(--shadow-soft);
+  border:6px dashed var(--candy-pink);
+  position:relative;
+}
+
+.cell{
+  background:#fff;
+  border-radius:1.2rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:min(12vw, 3rem);
+  cursor:pointer;
+  border:3px solid rgba(122,74,58,0.08);
+  box-shadow: inset 0 -4px 0 rgba(122,74,58,0.06);
+  transition: transform .1s ease, background .2s ease;
+  user-select:none;
+}
+.cell:hover:not(.filled){
+  background: #fff4fb;
+  transform:scale(1.03);
+}
+.cell.filled{cursor:default;}
+.cell.win-cell{
+  background: var(--candy-yellow);
+  animation: cellPulse .6s ease infinite alternate;
+}
+
+.streak-banner{
+  position:fixed;
+  top:5rem; left:50%;
+  transform:translateX(-50%);
+  font-family:'Baloo 2', sans-serif;
+  font-weight:700;
+  background:var(--candy-mint);
+  padding:.6rem 1.2rem;
+  border-radius:999px;
+  box-shadow:var(--shadow-soft);
+  opacity:0;
+  pointer-events:none;
+  z-index:30;
+}
+.streak-banner.show{
+  animation: streakPop 1.4s ease forwards;
+}

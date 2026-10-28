@@ -1,0 +1,22 @@
+@media (max-width: 480px){
+  .title-word{font-size:2.2rem;}
+  .title-sub{font-size:1rem;}
+  .hero-symbols{font-size:2.4rem;}
+  .candy-btn{font-size:.9rem; padding:.7rem 1.1rem;}
+  .candy-btn.big{font-size:1.1rem; padding:.9rem 1.6rem;}
+
+  .game-header{flex-wrap:wrap;}
+  .turn-indicator{order:3; width:100%; text-align:center; margin-top:.4rem;}
+  .score-name{max-width:50px;}
+
+  .board{width:92vw; height:92vw;}
+  .cell{font-size:11vw;}
+
+  .result-wrap{padding:2rem 1.25rem;}
+  .result-scoreboard{flex-direction:row; gap:.6rem;}
+  .rs-card{padding:.75rem 1rem; min-width:80px;}
+}
+
+@media (min-width: 900px){
+  .board{width:440px; height:440px;}
+}

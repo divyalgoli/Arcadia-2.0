@@ -1,0 +1,52 @@
+<svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cupGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="35%" stop-color="#ffd23f"/>
+      <stop offset="70%" stop-color="#e0a300"/>
+      <stop offset="100%" stop-color="#a86b00"/>
+    </linearGradient>
+    <linearGradient id="baseGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffe27a"/>
+      <stop offset="100%" stop-color="#a86b00"/>
+    </linearGradient>
+    <linearGradient id="cupShine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sparkles -->
+  <g fill="#fff6c8" stroke="#f4a300" stroke-width="1">
+    <path d="M70 80 L78 100 L98 108 L78 116 L70 136 L62 116 L42 108 L62 100 Z"/>
+    <path d="M330 120 L336 134 L350 140 L336 146 L330 160 L324 146 L310 140 L324 134 Z"/>
+    <path d="M310 60 L314 70 L324 74 L314 78 L310 88 L306 78 L296 74 L306 70 Z"/>
+  </g>
+
+  <!-- Handles -->
+  <path d="M115 150 C60 150 55 220 115 235" fill="none" stroke="url(#cupGold)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M285 150 C340 150 345 220 285 235" fill="none" stroke="url(#cupGold)" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- Cup body -->
+  <path d="M120 110 H280 C280 210 250 260 200 260 C150 260 120 210 120 110 Z" fill="url(#cupGold)" stroke="#7a4a00" stroke-width="5"/>
+  <!-- Cup rim -->
+  <rect x="112" y="95" width="176" height="26" rx="13" fill="url(#cupGold)" stroke="#7a4a00" stroke-width="5"/>
+  <!-- Shine -->
+  <path d="M150 115 Q140 190 175 245" fill="none" stroke="url(#cupShine)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Star emblem -->
+  <path d="M200 145 L210 168 L235 170 L216 186 L222 210 L200 197 L178 210 L184 186 L165 170 L190 168 Z"
+        fill="#ffffff" opacity="0.9"/>
+
+  <!-- Stem -->
+  <rect x="185" y="258" width="30" height="45" fill="url(#baseGold)" stroke="#7a4a00" stroke-width="4"/>
+
+  <!-- Ribbons -->
+  <path d="M170 300 L155 350 L200 335 L245 350 L230 300 Z" fill="#ff4d4d" stroke="#8a0000" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="200" cy="300" r="26" fill="#ffd23f" stroke="#a86b00" stroke-width="4"/>
+  <circle cx="200" cy="300" r="14" fill="#fff3b0"/>
+
+  <!-- Base -->
+  <rect x="140" y="303" width="120" height="24" rx="6" fill="url(#baseGold)" stroke="#7a4a00" stroke-width="5"/>
+  <rect x="120" y="327" width="160" height="30" rx="8" fill="url(#baseGold)" stroke="#7a4a00" stroke-width="5"/>
+</svg>

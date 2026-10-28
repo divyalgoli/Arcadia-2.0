@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <title>Settings - Memory Card Game</title>
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <header class="settings-header">
+            <h1>⚙️ Settings</h1>
+            <p class="subtitle">Customize Your Game Experience</p>
+        </header>
+
+        <button id="backBtn" class="btn btn-back">← Back to Game</button>
+
+        <div class="settings-grid">
+            <!-- Theme Section -->
+            <section class="settings-section">
+                <div class="section-header">
+                    <h2>🎨 Appearance</h2>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="themeToggle" class="setting-label">Dark Mode</label>
+                        <p class="setting-description">Toggle between light and dark theme</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Sound Section -->
+            <section class="settings-section">
+                <div class="section-header">
+                    <h2>🔊 Sound & Music</h2>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="soundToggle" class="setting-label">Sound Effects</label>
+                        <p class="setting-description">Card flip, match, and win sounds</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="soundToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="musicToggle" class="setting-label">Background Music</label>
+                        <p class="setting-description">Ambient background music during gameplay</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="musicToggle" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Difficulty Section -->
+            <section class="settings-section">
+                <div class="section-header">
+                    <h2>🎯 Difficulty</h2>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="difficultySelect" class="setting-label">Game Difficulty</label>
+                        <p class="setting-description">Choose your preferred difficulty level</p>
+                    </div>
+                    <select id="difficultySelect" class="difficulty-select">
+                        <option value="easy">Easy</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Data Section -->
+            <section class="settings-section danger-zone">
+                <div class="section-header">
+                    <h2>🗑️ Data Management</h2>
+                </div>
+                <p class="section-description">These actions cannot be undone</p>
+                <div class="button-group">
+                    <button id="resetDataBtn" class="btn btn-danger">Reset All Data</button>
+                    <button id="exportDataBtn" class="btn btn-secondary">Export Data</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmationModal" class="modal hidden">
+            <div class="modal-content">
+                <h3 id="confirmTitle">Confirm Action</h3>
+                <p id="confirmMessage">Are you sure?</p>
+                <div class="modal-buttons">
+                    <button id="confirmYes" class="btn btn-danger">Yes, Delete</button>
+                    <button id="confirmNo" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

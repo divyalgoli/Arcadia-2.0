@@ -1,0 +1,40 @@
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldBody" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#fff6c8"/>
+      <stop offset="30%" stop-color="#ffd23f"/>
+      <stop offset="65%" stop-color="#f4a300"/>
+      <stop offset="100%" stop-color="#a86b00"/>
+    </linearGradient>
+    <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- String -->
+  <path d="M200 400 Q190 430 205 455 Q220 480 200 500" stroke="#8a5a2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M188 385 L200 405 L212 385 Z" fill="#a86b00"/>
+
+  <!-- Balloon body -->
+  <ellipse cx="200" cy="220" rx="140" ry="170" fill="url(#goldBody)" stroke="#8a5a00" stroke-width="4"/>
+
+  <!-- Metallic diagonal shine bands -->
+  <path d="M110 120 Q160 90 220 110 L200 150 Q150 140 120 165 Z" fill="#ffffff" opacity="0.35"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="150" cy="150" rx="50" ry="70" fill="url(#goldShine)"/>
+
+  <!-- Sparkles -->
+  <g fill="#fff6c8" stroke="#f4a300" stroke-width="1">
+    <path d="M90 90 L98 108 L116 116 L98 124 L90 142 L82 124 L64 116 L82 108 Z"/>
+    <path d="M300 260 L305 272 L317 277 L305 282 L300 294 L295 282 L283 277 L295 272 Z"/>
+    <path d="M280 130 L284 140 L294 144 L284 148 L280 158 L276 148 L266 144 L276 140 Z"/>
+  </g>
+
+  <!-- +5 badge -->
+  <circle cx="200" cy="220" r="34" fill="#ffffff" opacity="0.9"/>
+  <text x="200" y="232" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#a86b00" text-anchor="middle">+5</text>
+</svg>

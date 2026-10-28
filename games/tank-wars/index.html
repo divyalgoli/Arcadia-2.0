@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Tank Wars - 2-Player Arena</title>
+  <meta name="description" content="A premium 2-Player Tank Wars game with custom weapons, 5 maps, and power-ups.">
+  <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- Main Game Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Sound Toggle -->
+    <button id="btn-sound-toggle" class="sound-toggle-btn" title="Toggle Sound">🔊</button>
+
+    <!-- In-Game HUD Overlay -->
+    <div id="hud-overlay">
+      <div class="hud-top-bar">
+        <!-- Player 1 HUD Card -->
+        <div class="glass-panel player-hud-card p1">
+          <div class="player-avatar">P1</div>
+          <div class="player-info">
+            <div class="player-name-row">
+              <span id="p1-name-display" class="player-name">Player 1</span>
+              <span id="p1-hp-text" class="hp-text">100 HP</span>
+            </div>
+            <div class="hp-bar-outer">
+              <div id="p1-hp-bar" class="hp-bar-inner" style="width: 100%;"></div>
+            </div>
+            <div style="display: flex; gap: 4px;">
+              <span id="p1-weapon-badge" class="hud-badge">💥 Cannon [∞]</span>
+              <span id="p1-powerup-badge" class="hud-badge">No Buff</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center Match Title & Timer -->
+        <div class="match-header-center">
+          <div class="game-title-hud">TANK WARS</div>
+          <div id="hud-round-score" class="vs-badge">SCORE: 0 - 0</div>
+          <div id="hud-match-timer" style="font-family: var(--font-display); font-size: 1.4rem; color: var(--accent-gold); margin-top: 2px;">00:00</div>
+        </div>
+
+        <!-- Player 2 HUD Card -->
+        <div class="glass-panel player-hud-card p2">
+          <div class="player-avatar">P2</div>
+          <div class="player-info">
+            <div class="player-name-row">
+              <span id="p2-name-display" class="player-name">Player 2</span>
+              <span id="p2-hp-text" class="hp-text">100 HP</span>
+            </div>
+            <div class="hp-bar-outer">
+              <div id="p2-hp-bar" class="hp-bar-inner" style="width: 100%;"></div>
+            </div>
+            <div style="display: flex; gap: 4px; flex-direction: row-reverse;">
+              <span id="p2-weapon-badge" class="hud-badge">💥 Cannon [∞]</span>
+              <span id="p2-powerup-badge" class="hud-badge">No Buff</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Pause Button -->
+      <div class="hud-bottom-bar">
+        <button id="btn-pause-hud" class="glass-btn btn-pause">⏸ PAUSE</button>
+      </div>
+    </div>
+
+    <!-- Mobile Touch Controls -->
+    <div id="mobile-controls-overlay">
+      <div class="touch-player-zone p1-zone">
+        <div id="p1-joystick-base" class="joystick-base">
+          <div id="p1-joystick-stick" class="joystick-stick"></div>
+        </div>
+        <button id="p1-fire-btn" class="touch-fire-btn">FIRE</button>
+      </div>
+      <div class="touch-player-zone p2-zone">
+        <div id="p2-joystick-base" class="joystick-base">
+          <div id="p2-joystick-stick" class="joystick-stick"></div>
+        </div>
+        <button id="p2-fire-btn" class="touch-fire-btn">FIRE</button>
+      </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen-overlay">
+      <div class="glass-panel menu-card">
+        <div>
+          <h1 class="menu-logo-title">TANK WARS</h1>
+          <p class="menu-subtitle">2-Player Combat Arena</p>
+        </div>
+        <div class="menu-buttons-group">
+          <button id="btn-play-game" class="glass-btn primary-btn">⚔ BATTLE SETUP</button>
+          <button id="btn-how-to-play" class="glass-btn">📜 HOW TO PLAY</button>
+          <a href="../../index.html" class="glass-btn" id="btn-exit-portal" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">🏠 BACK TO ARCADIA</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Player Setup Screen Modal -->
+    <div id="player-setup-modal" class="screen-overlay hidden">
+      <div class="glass-panel menu-card" style="max-width: 580px;">
+        <h2 class="menu-logo-title" style="font-size: 2.6rem;">MATCH SETUP</h2>
+        
+        <div class="setup-grid">
+          <div class="input-group">
+            <label>PLAYER 1 NAME (BLUE)</label>
+            <input type="text" id="input-p1-name" class="text-input" value="Commander Alex" maxlength="14">
+          </div>
+          <div class="input-group">
+            <label>PLAYER 2 NAME (ORANGE)</label>
+            <input type="text" id="input-p2-name" class="text-input" value="General Sam" maxlength="14">
+          </div>
+        </div>
+
+        <div class="input-group" style="width: 100%;">
+          <label>MATCH TYPE</label>
+          <select id="select-match-mode" class="select-input">
+            <option value="BO3" selected>Best of 3 Rounds (First to 2 Wins)</option>
+            <option value="BO5">Best of 5 Rounds (First to 3 Wins)</option>
+            <option value="ENDLESS">Endless Battle (Unlimited Rounds)</option>
+          </select>
+        </div>
+
+        <div class="input-group" style="width: 100%;">
+          <label>SELECT MAP (5 ARENAS)</label>
+          <div class="map-carousel">
+            <div class="map-select-card selected" data-map-id="desert">
+              <div class="map-icon">🏜️</div>
+              <div class="map-title">Desert Outpost</div>
+            </div>
+            <div class="map-select-card" data-map-id="snow">
+              <div class="map-icon">❄️</div>
+              <div class="map-title">Snow Base</div>
+            </div>
+            <div class="map-select-card" data-map-id="jungle">
+              <div class="map-icon">🌿</div>
+              <div class="map-title">Jungle Arena</div>
+            </div>
+            <div class="map-select-card" data-map-id="factory">
+              <div class="map-icon">🏭</div>
+              <div class="map-title">Factory Zone</div>
+            </div>
+            <div class="map-select-card" data-map-id="lava">
+              <div class="map-icon">🌋</div>
+              <div class="map-title">Lava Core</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; width: 100%;">
+          <button id="btn-back-setup" class="glass-btn" style="flex: 1;">BACK</button>
+          <button id="btn-start-battle" class="glass-btn primary-btn" style="flex: 2;">⚔ START BATTLE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="screen-overlay hidden">
+      <div class="glass-panel menu-card" style="max-width: 560px;">
+        <h2 class="menu-logo-title" style="font-size: 2.4rem;">HOW TO PLAY</h2>
+        <div class="modal-content-scroll">
+          <div class="controls-grid">
+            <div class="control-card">
+              <div class="control-card-title p1"><span>🛡</span> PLAYER 1</div>
+              <div class="control-row"><span>Move:</span><div><span class="key-badge">W</span><span class="key-badge">A</span><span class="key-badge">S</span><span class="key-badge">D</span></div></div>
+              <div class="control-row"><span>Shoot:</span><span class="key-badge">SPACE</span></div>
+            </div>
+            <div class="control-card">
+              <div class="control-card-title p2"><span>⚔</span> PLAYER 2</div>
+              <div class="control-row"><span>Move:</span><div><span class="key-badge">↑</span><span class="key-badge">←</span><span class="key-badge">↓</span><span class="key-badge">→</span></div></div>
+              <div class="control-row"><span>Shoot:</span><span class="key-badge">ENTER</span></div>
+            </div>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px;">
+            🎁 Pick up glowing <strong>Power-Ups</strong> (Repair ❤️, Shield 🛡, Speed ⚡, Rockets 🚀, Lasers ⚡, Mines 💣) to dominate the field!
+          </div>
+        </div>
+        <button id="btn-close-instructions" class="glass-btn">BACK</button>
+      </div>
+    </div>
+
+    <!-- Pause Menu -->
+    <div id="pause-menu" class="screen-overlay hidden">
+      <div class="glass-panel menu-card">
+        <h2 class="menu-logo-title" style="font-size: 2.8rem;">GAME PAUSED</h2>
+        <div class="menu-buttons-group">
+          <button id="btn-resume-game" class="glass-btn primary-btn">▶ RESUME</button>
+          <button id="btn-restart-pause" class="glass-btn">🔄 RESTART MATCH</button>
+          <button id="btn-exit-hub-pause" class="glass-btn">EXIT TO HUB</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winner Screen Overlay with Post-Match Analytics -->
+    <div id="winner-screen" class="screen-overlay hidden">
+      <div class="glass-panel menu-card" style="max-width: 540px;">
+        <div class="winner-badge-icon">🏆</div>
+        <div>
+          <h2 id="winner-name-text" class="winner-name-title">PLAYER 1 VICTORIOUS!</h2>
+          <p class="winner-subtitle">Match Complete</p>
+        </div>
+
+        <!-- Analytics Table -->
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>STATISTIC</th>
+              <th style="color: var(--p1-color);">PLAYER 1</th>
+              <th style="color: var(--p2-color);">PLAYER 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ROUNDS WON</td>
+              <td id="stat-p1-rounds">0</td>
+              <td id="stat-p2-rounds">0</td>
+            </tr>
+            <tr>
+              <td>DAMAGE DEALT</td>
+              <td id="stat-p1-dmg">0</td>
+              <td id="stat-p2-dmg">0</td>
+            </tr>
+            <tr>
+              <td>SHOTS FIRED</td>
+              <td id="stat-p1-shots">0</td>
+              <td id="stat-p2-shots">0</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;">
+          <button id="btn-play-again" class="glass-btn primary-btn">⚔ PLAY AGAIN</button>
+          <button id="btn-change-map" class="glass-btn">🗺️ CHANGE MAP</button>
+          <button id="btn-exit-to-hub" class="glass-btn" style="grid-column: span 2;">EXIT TO HUB</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Orientation Warning -->
+    <div id="portrait-warning">
+      <div class="rotate-icon">📱🔄</div>
+      <h2 style="font-family: var(--font-display); font-size: 2rem; color: var(--accent-gold);">PLEASE ROTATE YOUR DEVICE</h2>
+      <p style="color: var(--text-muted);">Tank Wars is optimized for landscape mode.</p>
+    </div>
+  </div>
+
+  <!-- Game Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/arcadia-cloud.js"></script>
+    <script src="../../js/arcadia-shell.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/weapon.js"></script>
+  <script src="js/powerup.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/particle.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/bullet.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

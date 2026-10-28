@@ -1,0 +1,48 @@
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="heartBody" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ffe0ec"/>
+      <stop offset="45%" stop-color="#ff8fb3"/>
+      <stop offset="100%" stop-color="#d13d6e"/>
+    </radialGradient>
+    <linearGradient id="heartShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="heartGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Soft glow -->
+  <ellipse cx="200" cy="220" rx="150" ry="180" fill="#ffb6d0" opacity="0.4" filter="url(#heartGlow)"/>
+
+  <!-- String -->
+  <path d="M200 400 Q190 430 205 455 Q220 480 200 500" stroke="#8a5a2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M188 385 L200 405 L212 385 Z" fill="#d13d6e"/>
+
+  <!-- Balloon body -->
+  <ellipse cx="200" cy="220" rx="140" ry="170" fill="url(#heartBody)" stroke="#a8104a" stroke-width="4"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="150" cy="150" rx="55" ry="75" fill="url(#heartShine)"/>
+
+  <!-- Heart symbol -->
+  <path d="M200 260
+           C 165 225, 130 200, 130 168
+           C 130 145, 150 130, 170 130
+           C 185 130, 195 138, 200 150
+           C 205 138, 215 130, 230 130
+           C 250 130, 270 145, 270 168
+           C 270 200, 235 225, 200 260 Z"
+        fill="#ffffff" stroke="#d13d6e" stroke-width="4"/>
+
+  <!-- +1 life label -->
+  <text x="200" y="330" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ffffff" text-anchor="middle">+1 Life</text>
+</svg>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Result - Candy Land Tic Tac Toe</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/result.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="result-page">
+
+  <div class="confetti-layer" id="confetti-layer"></div>
+
+  <main class="result-wrap">
+    <img src="assets/icons/trophy.svg" class="trophy-icon" alt="Trophy" id="trophy-icon">
+    <h1 class="result-title" id="result-title">🍭 Wins!</h1>
+    <p class="result-sub" id="result-sub">Sweet victory!</p>
+
+    <div class="result-scoreboard">
+      <div class="rs-card">
+        <span class="rs-symbol">🍭</span>
+        <span class="rs-name" id="r-p1-name">Player 1</span>
+        <span class="rs-num" id="r-p1-score">0</span>
+      </div>
+      <div class="rs-card">
+        <span class="rs-symbol">🍬</span>
+        <span class="rs-name" id="r-p2-name">Player 2</span>
+        <span class="rs-num" id="r-p2-score">0</span>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <button class="candy-btn big" id="rematch-btn">Play Again 🎉</button>
+      <button class="candy-btn" id="home-btn">Home 🏠</button>
+    </div>
+  </main>
+
+  <script src="js/storage.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

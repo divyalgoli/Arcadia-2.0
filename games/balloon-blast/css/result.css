@@ -1,0 +1,19 @@
+.modal--result { text-align: center; }
+
+.trophy-wrap { position: relative; display: inline-block; margin-bottom: 8px; }
+.trophy-icon { font-size: 4.5rem; display: inline-block; }
+.trophy-glow { position: absolute; inset: -20px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,201,60,0.6) 0%, rgba(255,201,60,0) 70%); }
+
+.modal-subtitle { font-family: var(--font-alt); color: var(--ink-soft); margin-bottom: 24px; }
+
+.score-summary { display: flex; gap: 16px; margin-bottom: 28px; }
+.score-box { flex: 1; background: rgba(255,255,255,0.6); border-radius: var(--radius-md); padding: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+.score-box--best { background: linear-gradient(160deg, rgba(255,217,61,0.5), rgba(255,201,60,0.3)); }
+.score-box-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--ink-soft); font-weight: 700; margin-bottom: 4px; }
+.score-box-value { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; color: var(--purple-dark); }
+
+.modal-actions { display: flex; flex-direction: column; gap: 12px; }
+.btn--share { align-self: center; }

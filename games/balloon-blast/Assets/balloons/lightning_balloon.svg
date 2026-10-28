@@ -1,0 +1,42 @@
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="lightBody" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#fffbb0"/>
+      <stop offset="45%" stop-color="#ffe93a"/>
+      <stop offset="100%" stop-color="#d19a00"/>
+    </radialGradient>
+    <linearGradient id="lightShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="electricGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Electric arcs -->
+  <g stroke="#8fd8ff" stroke-width="3" fill="none" opacity="0.85" filter="url(#electricGlow)">
+    <path d="M60 150 L85 165 L65 180 L95 200"/>
+    <path d="M340 260 L315 245 L335 230 L305 210"/>
+    <path d="M100 330 L120 315 L105 300 L130 285"/>
+  </g>
+
+  <!-- String -->
+  <path d="M200 400 Q190 430 205 455 Q220 480 200 500" stroke="#8a5a2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M188 385 L200 405 L212 385 Z" fill="#d19a00"/>
+
+  <!-- Balloon body -->
+  <ellipse cx="200" cy="220" rx="140" ry="170" fill="url(#lightBody)" stroke="#a87a00" stroke-width="4"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="150" cy="150" rx="55" ry="75" fill="url(#lightShine)"/>
+
+  <!-- Lightning bolt symbol -->
+  <path d="M215 130 L165 235 L195 235 L180 320 L245 205 L210 205 Z" fill="#ffffff" stroke="#d19a00" stroke-width="4" stroke-linejoin="round"/>
+</svg>

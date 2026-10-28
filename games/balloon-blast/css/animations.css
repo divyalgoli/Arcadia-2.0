@@ -1,0 +1,67 @@
+/* Entry animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+@keyframes dropIn { from { opacity: 0; transform: translate(-50%, -30px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+/* Motion */
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-30px) rotate(2deg); } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(130vw); } }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Emphasis */
+@keyframes glow { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+@keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.85; } }
+
+/* --- Apply animations to elements --- */
+.screen { animation: fadeIn 0.5s var(--ease-smooth); }
+.home-content { animation: scaleIn 0.6s var(--ease-bounce); }
+.modal-overlay { animation: fadeIn 0.3s var(--ease-smooth); }
+.modal { animation: scaleIn 0.4s var(--ease-bounce); }
+.achievement-popup { animation: dropIn 0.5s var(--ease-bounce); }
+
+.cloud--1 { animation: drift 38s linear infinite; }
+.cloud--2 { animation: drift 50s linear infinite 4s; }
+.cloud--3 { animation: drift 60s linear infinite 10s; }
+.cloud--4 { animation: drift 44s linear infinite 20s; }
+.sun-glow { animation: pulse 5s ease-in-out infinite; }
+
+.balloon--pink { animation: float 7s ease-in-out infinite; }
+.balloon--purple { animation: float 8s ease-in-out infinite 1s; }
+.balloon--yellow { animation: float 6.5s ease-in-out infinite 2s; }
+.balloon--sky { animation: float 7.5s ease-in-out infinite 0.5s; }
+.floating-balloons .balloon--pink.balloon--small { animation: float 5s ease-in-out infinite; }
+.floating-balloons .balloon--purple.balloon--small { animation: float 5.5s ease-in-out infinite 1.5s; }
+.logo-dot { animation: pulse 1.6s ease-in-out infinite; }
+.home-footer .heart { animation: pulse 1.2s ease-in-out infinite; }
+
+.combo-pill { animation: pulse 1.5s ease-in-out infinite; }
+.life-icon { animation: pulse 2s ease-in-out infinite; }
+.level-progress-fill { transition: width 0.4s var(--ease-smooth); }
+
+.trophy-icon { animation: bounce 1.4s ease-in-out infinite; }
+.trophy-glow { animation: glow 2s ease-in-out infinite; }
+.achievement-icon { animation: pulse 1s ease-in-out infinite; }
+.spinner { animation: spin 0.9s linear infinite; }
+
+/* Button interactions */
+.btn { transition: transform 0.15s var(--ease-bounce), box-shadow 0.2s var(--ease-smooth), filter 0.2s; }
+.btn:hover { transform: translateY(-3px); filter: brightness(1.06); }
+.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.18), 0 4px 10px rgba(0,0,0,0.12); }
+.btn--ghost:active { transform: translateY(1px); }
+
+.icon-btn { transition: transform 0.15s var(--ease-bounce), background 0.2s; }
+.icon-btn:hover { background: rgba(255,255,255,0.5); transform: scale(1.08); }
+.icon-btn:active { transform: scale(0.94); }
+
+.theme-swatch { transition: transform 0.2s var(--ease-bounce); }
+.theme-swatch:hover { transform: scale(1.15); }
+
+.modal-close-btn { transition: background 0.2s, transform 0.15s; }
+.modal-close-btn:hover { background: rgba(0,0,0,0.15); transform: rotate(90deg); }
+
+.segment { transition: all 0.2s var(--ease-smooth); }
+.segment:hover { background: var(--white); color: var(--purple-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+
+.toggle-slider { transition: background 0.3s var(--ease-smooth); }
+.toggle-slider::before { transition: transform 0.3s var(--ease-bounce); }

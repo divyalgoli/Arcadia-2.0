@@ -1,0 +1,10 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="playBg" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#7dffb0"/>
+      <stop offset="100%" stop-color="#1fae4a"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="54" fill="url(#playBg)" stroke="#0e6b2c" stroke-width="5"/>
+  <path d="M46 38 L88 60 L46 82 Z" fill="#ffffff" stroke="#0e6b2c" stroke-width="3" stroke-linejoin="round"/>
+</svg>

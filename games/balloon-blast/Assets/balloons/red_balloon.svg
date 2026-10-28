@@ -1,0 +1,35 @@
+<svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="redBody" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#ff9a9a"/>
+      <stop offset="45%" stop-color="#ff4d4d"/>
+      <stop offset="100%" stop-color="#c40000"/>
+    </radialGradient>
+    <linearGradient id="redShine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- String -->
+  <path d="M200 400 Q190 430 205 455 Q220 480 200 500" stroke="#8a5a2b" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Knot -->
+  <path d="M188 385 L200 405 L212 385 Z" fill="#c40000"/>
+
+  <!-- Balloon body -->
+  <ellipse cx="200" cy="220" rx="140" ry="170" fill="url(#redBody)" stroke="#8a0000" stroke-width="4"/>
+
+  <!-- Glossy highlight -->
+  <ellipse cx="150" cy="150" rx="55" ry="75" fill="url(#redShine)"/>
+
+  <!-- Cute face -->
+  <circle cx="165" cy="230" r="10" fill="#3a0000"/>
+  <circle cx="235" cy="230" r="10" fill="#3a0000"/>
+  <circle cx="168" cy="226" r="3" fill="#ffffff"/>
+  <circle cx="238" cy="226" r="3" fill="#ffffff"/>
+  <path d="M175 260 Q200 280 225 260" stroke="#3a0000" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Blush -->
+  <ellipse cx="140" cy="255" rx="12" ry="7" fill="#ff7a7a" opacity="0.6"/>
+  <ellipse cx="260" cy="255" rx="12" ry="7" fill="#ff7a7a" opacity="0.6"/>
+</svg>

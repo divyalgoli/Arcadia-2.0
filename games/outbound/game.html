@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>OUTBOUND — shaped arrow puzzles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #dbe3dc; --bg-2: #cfd9d1; --surface: #f4f6f2;
+    --ink: #1f332e; --ink-soft: #4c5d57;
+    --accent: #e2725b; --accent-soft: #f0b6a8;
+    --success: #3e7c63; --danger: #b0483a; --line: #b7c4be;
+  }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; min-height:100vh;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(31,51,46,0.08) 1px, transparent 0) 0 0/22px 22px,
+      linear-gradient(160deg, var(--bg), var(--bg-2));
+    color: var(--ink); font-family:'Inter', sans-serif;
+    display:flex; justify-content:center; -webkit-tap-highlight-color: transparent;
+  }
+  .app{ width:min(540px, 96vw); padding:26px 18px 40px; display:flex; flex-direction:column; align-items:center; gap:16px; }
+  .topnav{ width:100%; display:flex; justify-content:space-between; align-items:center; padding:4px 2px 0; }
+  .topnav a{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; color:var(--ink-soft); text-decoration:none; display:flex; align-items:center; gap:6px; }
+  .topnav a:hover{ color:var(--ink); }
+  .topnav a svg{ width:12px; height:12px; }
+  .brand{ display:flex; flex-direction:column; align-items:center; gap:2px; }
+  .brand h1{ font-family:'Space Grotesk', sans-serif; font-weight:700; letter-spacing:0.1em; font-size:clamp(24px,6vw,32px); margin:0; }
+  .brand span{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.08em; color:var(--ink-soft); text-transform:uppercase; }
+
+  .panel-card{ width:100%; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:12px; }
+  .tabs{ display:flex; gap:8px; }
+  .tab{ flex:1; font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.05em; padding:10px 8px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink-soft); cursor:pointer; text-align:center; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+  .tab.active{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  .row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .text-input{ flex:1; font-family:'Inter',sans-serif; font-size:15px; padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); }
+  .btn{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:12px; letter-spacing:0.05em; border:none; border-radius:10px; padding:10px 14px; cursor:pointer; background:var(--ink); color:var(--surface); transition: transform .15s ease, background .2s ease; white-space:nowrap; }
+  .btn.secondary{ background:#fff; color:var(--ink); border:1px solid var(--line); }
+  .btn:disabled{ background:var(--line); cursor:not-allowed; }
+  .btn:not(:disabled):hover{ transform: translateY(-1px); }
+  .hint-row{ font-size:12px; color:var(--ink-soft); margin:0; }
+
+  .length-picker, .size-picker{ display:flex; gap:6px; }
+  .len-opt, .size-opt{ flex:1; font-family:'IBM Plex Mono', monospace; font-size:11px; text-align:center; padding:8px 6px; border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink-soft); cursor:pointer; }
+  .len-opt.active, .size-opt.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  canvas#paintCanvas{ max-width:100%; height:auto; background:#fff; border-radius:14px; border:1px solid var(--line); touch-action:none; cursor:crosshair; display:block; margin:0 auto; }
+
+  .hud{ width:100%; display:flex; justify-content:space-between; align-items:center; font-family:'Space Grotesk', sans-serif; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 16px; }
+  .hud-item{ display:flex; flex-direction:column; align-items:center; gap:2px; min-width:56px; }
+  .hud-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; color:var(--ink-soft); text-transform:uppercase; }
+  .hud-value{ font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:18px; }
+  .lives{ display:flex; gap:4px; }
+  .life-dot{ width:10px; height:10px; border-radius:2px; background:var(--danger); transform:rotate(45deg); transition:opacity .25s ease, transform .25s ease; }
+  .life-dot.spent{ background:var(--line); opacity:0.5; transform:rotate(45deg) scale(0.6); }
+
+  .board-wrap{ width:100%; display:flex; justify-content:center; }
+  .board{ display:grid; position:relative; }
+
+  .piece{ position:relative; display:flex; align-items:center; justify-content:center; cursor:pointer; color: var(--ink); transition: transform .22s ease, opacity .28s ease, color .15s ease; padding:1px; }
+  .piece svg{ width:100%; height:100%; display:block; overflow:visible; }
+  .piece:hover{ color: var(--accent); }
+  .piece.hinting{ color: var(--accent); filter: drop-shadow(0 0 5px var(--accent-soft)); }
+  .piece.shake{ animation: shake .32s ease; color: var(--danger); }
+  @keyframes shake{ 0%,100%{transform:translateX(0);} 25%{transform:translateX(-4px);} 75%{transform:translateX(4px);} }
+  .piece.gone{ pointer-events:none; }
+  .piece.fly-up{ transform: translateY(-160%); opacity:0; }
+  .piece.fly-down{ transform: translateY(160%); opacity:0; }
+  .piece.fly-left{ transform: translateX(-160%); opacity:0; }
+  .piece.fly-right{ transform: translateX(160%); opacity:0; }
+
+  .toolbar{ width:100%; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+
+  .overlay{ position:fixed; inset:0; background:rgba(31,51,46,0.55); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .25s ease; z-index:10; }
+  .overlay.show{ opacity:1; pointer-events:auto; }
+  .panel{ background:var(--surface); border-radius:20px; padding:28px 26px; width:min(300px,84vw); text-align:center; box-shadow:0 20px 50px -20px rgba(0,0,0,.4); }
+  .panel h2{ font-family:'Space Grotesk', sans-serif; margin:0 0 8px; font-size:22px; }
+  .panel p{ font-size:14px; color:var(--ink-soft); margin:0 0 20px; }
+  .panel.win h2{ color: var(--success); }
+  .panel.lose h2{ color: var(--danger); }
+  .panel-btn{ font-family:'IBM Plex Mono', monospace; font-weight:600; letter-spacing:0.05em; border:none; border-radius:12px; padding:12px 20px; cursor:pointer; background:var(--ink); color:var(--surface); font-size:13px; margin:4px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="topnav">
+    <a href="index.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> HOME</a>
+    <span></span>
+  </div>
+
+  <div class="brand">
+    <h1>OUTBOUND</h1>
+    <span>clear the grid — every arrow finds its way out</span>
+  </div>
+
+  <div class="panel-card" id="shapePanel">
+    <p class="hint-row">Choose the shape of today's board.</p>
+    <div class="tabs">
+      <div class="tab active" data-mode="arrow">ARROW</div>
+      <div class="tab" data-mode="draw">DRAW YOUR OWN</div>
+    </div>
+
+    <div id="drawControls" style="display:none;">
+      <p class="hint-row">Paint the board shape solid — anywhere you color becomes playable tiles.</p>
+      <canvas id="paintCanvas" width="432" height="576"></canvas>
+      <div class="row" style="margin-top:10px;">
+        <button class="btn secondary" id="clearPaintBtn">CLEAR</button>
+        <button class="btn" id="usePaintBtn">USE THIS SHAPE</button>
+      </div>
+    </div>
+
+    <div class="row" id="arrowControls">
+      <button class="btn" id="useArrowBtn">GENERATE PUZZLE</button>
+    </div>
+
+    <p class="hint-row">Board size</p>
+    <div class="size-picker">
+      <div class="size-opt" data-size="small">SMALL</div>
+      <div class="size-opt active" data-size="large">LARGE</div>
+      <div class="size-opt" data-size="huge">HUGE</div>
+    </div>
+
+    <p class="hint-row">Arrow length</p>
+    <div class="length-picker">
+      <div class="len-opt" data-len="short">SHORT</div>
+      <div class="len-opt" data-len="medium">MEDIUM</div>
+      <div class="len-opt active" data-len="long">LONG</div>
+    </div>
+  </div>
+
+  <div class="hud" id="gameHud" style="display:none;">
+    <div class="hud-item"><span class="hud-label">Level</span><span class="hud-value" id="levelValue">1</span></div>
+    <div class="hud-item"><span class="hud-label">Lives</span><div class="lives" id="livesRow"></div></div>
+    <button class="btn secondary" id="hintBtn">HINT (3)</button>
+  </div>
+
+  <div class="board-wrap"><div class="board" id="board"></div></div>
+
+  <div class="toolbar" id="gameToolbar" style="display:none;">
+    <button class="btn secondary" id="changeShapeBtn">CHANGE SHAPE</button>
+  </div>
+</div>
+
+<div class="overlay" id="winOverlay">
+  <div class="panel win"><h2>Cleared!</h2><p id="winText">Board's empty.</p><button class="panel-btn" id="nextLevelBtn">NEXT PUZZLE</button></div>
+</div>
+<div class="overlay" id="loseOverlay">
+  <div class="panel lose"><h2>Out of lives</h2><p>That arrangement got the better of you. Fresh shuffle, same shape.</p><button class="panel-btn" id="retryBtn">TRY AGAIN</button></div>
+</div>
+
+<script>
+(function(){
+  const START_LIVES = 3, START_HINTS = 3;
+  const LEN_RANGES = { short:[1,3], medium:[2,4], long:[3,7] };
+  const BOARD_SIZES = {
+    small: { cols:18, rows:24, cell:24 },
+    large: { cols:28, rows:38, cell:16 },
+    huge:  { cols:38, rows:52, cell:12 },
+  };
+
+  const boardEl = document.getElementById('board');
+  const paintCanvas = document.getElementById('paintCanvas');
+  const pctx = paintCanvas.getContext('2d');
+
+  let mode = 'arrow';
+  let lenPreset = 'long';
+  let sizePreset = 'large';
+  let COLS, ROWS, CELL, W, H;
+  let insideGrid = null;
+  let pieces, pieceIdGrid, cellEls, lives, hints, locked, level = 1;
+
+  function applyBoardSize(){
+    const s = BOARD_SIZES[sizePreset];
+    COLS = s.cols; ROWS = s.rows; CELL = s.cell;
+    W = COLS*CELL; H = ROWS*CELL;
+    paintCanvas.width = W; paintCanvas.height = H;
+    pctx.fillStyle = '#fff'; pctx.fillRect(0,0,W,H);
+  }
+
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      mode = tab.dataset.mode;
+      document.getElementById('drawControls').style.display = mode==='draw' ? 'block' : 'none';
+      document.getElementById('arrowControls').style.display = mode==='arrow' ? 'flex' : 'none';
+      if(mode==='draw') initPaintCanvas();
+    });
+  });
+  document.querySelectorAll('.len-opt').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      document.querySelectorAll('.len-opt').forEach(o=>o.classList.remove('active'));
+      opt.classList.add('active');
+      lenPreset = opt.dataset.len;
+    });
+  });
+  document.querySelectorAll('.size-opt').forEach(opt=>{
+    opt.addEventListener('click', ()=>{
+      document.querySelectorAll('.size-opt').forEach(o=>o.classList.remove('active'));
+      opt.classList.add('active');
+      sizePreset = opt.dataset.size;
+      applyBoardSize();
+      if(mode==='draw') initPaintCanvas();
+    });
+  });
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+    return arr;
+  }
+
+  // ---------- shape rasterizing ----------
+  function sampleInsideGrid(ctx){
+    const data = ctx.getImageData(0,0,W,H).data;
+    const inside = Array.from({length:ROWS},()=>new Array(COLS).fill(false));
+    for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++){
+      const x = Math.floor(c*CELL + CELL/2), y = Math.floor(r*CELL + CELL/2);
+      const i = (y*W + x)*4;
+      inside[r][c] = data[i]<120 && data[i+1]<120 && data[i+2]<120;
+    }
+    return inside;
+  }
+  function rasterArrow(){
+    const off = document.createElement('canvas'); off.width=W; off.height=H;
+    const o = off.getContext('2d');
+    o.fillStyle='#fff'; o.fillRect(0,0,W,H);
+    const pts = [[0.5,0.02],[0.85,0.28],[0.62,0.28],[0.62,0.98],[0.38,0.98],[0.38,0.28],[0.15,0.28]];
+    o.beginPath();
+    pts.forEach(([px,py],i)=>{ const x=px*W,y=py*H; i===0?o.moveTo(x,y):o.lineTo(x,y); });
+    o.closePath(); o.fillStyle='#000'; o.fill();
+    return sampleInsideGrid(o);
+  }
+  function initPaintCanvas(){ pctx.fillStyle='#fff'; pctx.fillRect(0,0,W,H); }
+  function paintAt(x,y){ pctx.fillStyle='#000'; pctx.beginPath(); pctx.arc(x,y,16,0,Math.PI*2); pctx.fill(); }
+  function canvasPos(e){
+    const rect = paintCanvas.getBoundingClientRect();
+    const sx = paintCanvas.width/rect.width, sy = paintCanvas.height/rect.height;
+    const cx=(e.touches? e.touches[0].clientX : e.clientX)-rect.left;
+    const cy=(e.touches? e.touches[0].clientY : e.clientY)-rect.top;
+    return [cx*sx, cy*sy];
+  }
+  let painting=false;
+  paintCanvas.addEventListener('pointerdown', e=>{ painting=true; const [x,y]=canvasPos(e); paintAt(x,y); });
+  paintCanvas.addEventListener('pointermove', e=>{ if(!painting) return; const [x,y]=canvasPos(e); paintAt(x,y); });
+  window.addEventListener('pointerup', ()=> painting=false);
+  document.getElementById('clearPaintBtn').addEventListener('click', initPaintCanvas);
+  document.getElementById('usePaintBtn').addEventListener('click', ()=>{
+    withGeneratingState(document.getElementById('usePaintBtn'), ()=> chooseShape(sampleInsideGrid(pctx)));
+  });
+  document.getElementById('useArrowBtn').addEventListener('click', ()=>{
+    withGeneratingState(document.getElementById('useArrowBtn'), ()=> chooseShape(rasterArrow()));
+  });
+
+  function withGeneratingState(btn, fn){
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'GENERATING…';
+    setTimeout(()=>{
+      try{
+        fn();
+      }catch(err){
+        console.error(err);
+        alert('Something went wrong generating that puzzle. Try a different shape, size, or arrow length.');
+      }finally{
+        btn.disabled = false;
+        btn.textContent = original;
+      }
+    }, 20);
+  }
+
+  function chooseShape(grid){
+    insideGrid = grid;
+    document.getElementById('shapePanel').style.display = 'none';
+    document.getElementById('gameHud').style.display = 'flex';
+    document.getElementById('gameToolbar').style.display = 'flex';
+    level = 1;
+    buildLevel();
+  }
+  document.getElementById('changeShapeBtn').addEventListener('click', ()=>{
+    document.getElementById('shapePanel').style.display = 'flex';
+    document.getElementById('gameHud').style.display = 'none';
+    document.getElementById('gameToolbar').style.display = 'none';
+    boardEl.innerHTML = '';
+  });
+
+  // ---------- tiling into multi-cell pieces ----------
+  function buildPieces(){
+    const insideCells = [];
+    for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) if(insideGrid[r][c]) insideCells.push([r,c]);
+    const unassigned = new Set(insideCells.map(([r,c])=> r+','+c));
+    const order = shuffle(insideCells.slice());
+    const [minLen, maxLenCap] = LEN_RANGES[lenPreset];
+    const pieces = [];
+    for(const [r,c] of order){
+      const key = r+','+c;
+      if(!unassigned.has(key)) continue;
+      const preferHorizontal = Math.random() < 0.5;
+      const targetLen = minLen + Math.floor(Math.random()*(maxLenCap-minLen+1));
+      let cells = [[r,c]];
+      function growHoriz(){
+        let cc=c+1;
+        while(cells.length<targetLen && cc<COLS && insideGrid[r][cc] && unassigned.has(r+','+cc)){ cells.push([r,cc]); cc++; }
+      }
+      function growVert(){
+        let rr=r+1;
+        while(cells.length<targetLen && rr<ROWS && insideGrid[rr] && insideGrid[rr][c] && unassigned.has(rr+','+c)){ cells.push([rr,c]); rr++; }
+      }
+      if(preferHorizontal){ growHoriz(); if(cells.length===1) growVert(); }
+      else { growVert(); if(cells.length===1) growHoriz(); }
+      const orientation = cells.length>1 ? (cells[1][0]===cells[0][0] ? 'h' : 'v') : (Math.random()<0.5?'h':'v');
+      cells.forEach(([rr,cc])=> unassigned.delete(rr+','+cc));
+      pieces.push({ cells, orientation, dir:null, removed:false });
+    }
+    return pieces;
+  }
+
+  function pathForDirection(piece, dir){
+    const path = [];
+    if(dir==='right'){
+      const maxC = Math.max(...piece.cells.map(x=>x[1])); const r = piece.cells[0][0];
+      let cc=maxC+1; while(cc<COLS && insideGrid[r][cc]){ path.push([r,cc]); cc++; }
+    } else if(dir==='left'){
+      const minC = Math.min(...piece.cells.map(x=>x[1])); const r = piece.cells[0][0];
+      let cc=minC-1; while(cc>=0 && insideGrid[r][cc]){ path.push([r,cc]); cc--; }
+    } else if(dir==='down'){
+      const maxR = Math.max(...piece.cells.map(x=>x[0])); const c = piece.cells[0][1];
+      let rr=maxR+1; while(rr<ROWS && insideGrid[rr][c]){ path.push([rr,c]); rr++; }
+    } else {
+      const minR = Math.min(...piece.cells.map(x=>x[0])); const c = piece.cells[0][1];
+      let rr=minR-1; while(rr>=0 && insideGrid[rr][c]){ path.push([rr,c]); rr--; }
+    }
+    return path;
+  }
+
+  function constructSolvable(){
+    for(let attempt=0; attempt<25; attempt++){
+      const pcs = buildPieces();
+      const remaining = new Set(pcs.map((_,i)=>i));
+      const removedCells = new Set();
+      let stuck = false;
+      while(remaining.size>0){
+        const remainArr = shuffle(Array.from(remaining));
+        let progressed = false;
+        for(const idx of remainArr){
+          const piece = pcs[idx];
+          const dirs = piece.orientation==='h' ? ['left','right'] : ['up','down'];
+          const validDirs = dirs.filter(d => pathForDirection(piece,d).every(([rr,cc]) => removedCells.has(rr+','+cc)));
+          if(validDirs.length>0){
+            piece.dir = validDirs[Math.floor(Math.random()*validDirs.length)];
+            piece.cells.forEach(([rr,cc])=> removedCells.add(rr+','+cc));
+            remaining.delete(idx);
+            progressed = true;
+            break;
+          }
+        }
+        if(!progressed){ stuck = true; break; }
+      }
+      if(!stuck) return pcs;
+    }
+    return null;
+  }
+
+  function isPieceRemovable(idx){
+    const piece = pieces[idx];
+    if(piece.removed) return false;
+    return pathForDirection(piece, piece.dir).every(([rr,cc]) => pieces[pieceIdGrid[rr][cc]].removed);
+  }
+
+  function renderLives(){
+    const row = document.getElementById('livesRow'); row.innerHTML='';
+    for(let i=0;i<START_LIVES;i++){
+      const d = document.createElement('div');
+      d.className = 'life-dot' + (i>=lives?' spent':'');
+      row.appendChild(d);
+    }
+  }
+  function renderHintBtn(){
+    const b = document.getElementById('hintBtn');
+    b.textContent = `HINT (${hints})`; b.disabled = hints<=0;
+  }
+
+  function svgFor(piece){
+    const L = piece.cells.length, unit = 24;
+    let vbW, vbH, d;
+    if(piece.dir==='up'){ vbW=24; vbH=L*unit; const tailY=vbH-3; d=`M12 ${tailY}V4M12 4L5 11M12 4L19 11`; }
+    else if(piece.dir==='down'){ vbW=24; vbH=L*unit; const headY=vbH-4; d=`M12 3V${headY}M12 ${headY}L5 ${headY-7}M12 ${headY}L19 ${headY-7}`; }
+    else if(piece.dir==='left'){ vbW=L*unit; vbH=24; const tailX=vbW-3; d=`M${tailX} 12H4M4 12L11 5M4 12L11 19`; }
+    else { vbW=L*unit; vbH=24; const headX=vbW-4; d=`M3 12H${headX}M${headX} 12L${headX-7} 5M${headX} 12L${headX-7} 19`; }
+    return `<svg viewBox="0 0 ${vbW} ${vbH}"><path d="${d}" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/></svg>`;
+  }
+
+  function buildLevel(){
+    const built = constructSolvable();
+    if(!built){
+      alert("That shape didn't leave a solvable layout — try a bolder or simpler shape, or a shorter arrow length.");
+      document.getElementById('changeShapeBtn').click();
+      return;
+    }
+    pieces = built;
+    pieceIdGrid = Array.from({length:ROWS},()=>new Array(COLS).fill(-1));
+    pieces.forEach((p,i)=> p.cells.forEach(([r,c])=> pieceIdGrid[r][c]=i));
+
+    lives = START_LIVES; hints = START_HINTS; locked = false;
+    document.getElementById('levelValue').textContent = level;
+    renderLives(); renderHintBtn();
+
+    boardEl.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
+    boardEl.style.gridTemplateRows = `repeat(${ROWS}, 1fr)`;
+    boardEl.style.width = 'min(420px, 90vw)';
+    boardEl.innerHTML = '';
+    cellEls = [];
+
+    pieces.forEach((piece, idx)=>{
+      const rs = piece.cells.map(x=>x[0]), cs = piece.cells.map(x=>x[1]);
+      const rMin=Math.min(...rs), rMax=Math.max(...rs), cMin=Math.min(...cs), cMax=Math.max(...cs);
+      const div = document.createElement('div');
+      div.className = 'piece';
+      div.style.gridRow = `${rMin+1} / span ${rMax-rMin+1}`;
+      div.style.gridColumn = `${cMin+1} / span ${cMax-cMin+1}`;
+      div.innerHTML = svgFor(piece);
+      div.addEventListener('click', ()=> handleTap(idx));
+      boardEl.appendChild(div);
+      cellEls.push(div);
+    });
+  }
+
+  function handleTap(idx){
+    if(locked) return;
+    const piece = pieces[idx];
+    if(piece.removed) return;
+    const el = cellEls[idx];
+    if(isPieceRemovable(idx)){
+      piece.removed = true;
+      el.classList.add('gone', `fly-${piece.dir}`);
+      setTimeout(checkWin, 260);
+    } else {
+      el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+      lives--; renderLives();
+      setTimeout(()=> el.classList.remove('shake'), 320);
+      if(lives<=0){
+        locked = true;
+        setTimeout(()=> document.getElementById('loseOverlay').classList.add('show'), 350);
+      }
+    }
+  }
+
+  function checkWin(){
+    if(pieces.some(p=>!p.removed)) return;
+    locked = true;
+    document.getElementById('winText').textContent = `Level ${level} clear.`;
+    setTimeout(()=> document.getElementById('winOverlay').classList.add('show'), 150);
+    try{
+      const best = Math.max(level, parseInt(localStorage.getItem('outbound_best_level')||'0', 10));
+      localStorage.setItem('outbound_best_level', String(best));
+      if (window.Arcadia) Arcadia.submitScore('outbound', 'Outbound', best);
+    }catch(e){}
+  }
+
+  document.getElementById('hintBtn').addEventListener('click', ()=>{
+    if(locked || hints<=0) return;
+    for(let i=0;i<pieces.length;i++){
+      if(!pieces[i].removed && isPieceRemovable(i)){
+        hints--; renderHintBtn();
+        const el = cellEls[i];
+        el.classList.add('hinting');
+        setTimeout(()=> el.classList.remove('hinting'), 900);
+        return;
+      }
+    }
+  });
+
+  document.getElementById('nextLevelBtn').addEventListener('click', ()=>{
+    document.getElementById('winOverlay').classList.remove('show');
+    level++; buildLevel();
+  });
+  document.getElementById('retryBtn').addEventListener('click', ()=>{
+    document.getElementById('loseOverlay').classList.remove('show');
+    buildLevel();
+  });
+
+  applyBoardSize();
+  initPaintCanvas();
+})();
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../../js/firebase-config.js"></script>
+<script src="../../js/arcadia-cloud.js"></script>
+<script src="../../js/arcadia-shell.js"></script>
+</body>
+</html>

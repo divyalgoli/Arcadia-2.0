@@ -1,0 +1,72 @@
+.result-page{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+}
+
+.result-wrap{
+  text-align:center;
+  background:rgba(255,255,255,0.6);
+  border-radius:2rem;
+  padding:2.5rem 2rem;
+  max-width:420px;
+  width:90%;
+  position:relative;
+  z-index:2;
+  box-shadow:var(--shadow-soft);
+}
+
+.trophy-icon{
+  width:70px;
+  height:70px;
+  margin-bottom:.5rem;
+  animation: trophyBounce 1s ease infinite alternate;
+}
+
+.result-title{
+  font-family:'Baloo 2', sans-serif;
+  font-size:2.2rem;
+  margin:.25rem 0;
+  color:var(--candy-choc);
+}
+.result-sub{
+  margin:0 0 1.5rem;
+  font-weight:600;
+  opacity:.85;
+}
+
+.result-scoreboard{
+  display:flex;
+  gap:1rem;
+  justify-content:center;
+  margin-bottom:1.75rem;
+}
+.rs-card{
+  background:var(--candy-cream);
+  border-radius:1.25rem;
+  padding:1rem 1.25rem;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.25rem;
+  box-shadow:var(--shadow-soft);
+  min-width:100px;
+}
+.rs-symbol{font-size:1.8rem;}
+.rs-name{font-size:.8rem; font-weight:700;}
+.rs-num{font-family:'Baloo 2',sans-serif; font-size:1.6rem;}
+
+.result-actions{
+  display:flex;
+  flex-direction:column;
+  gap:.75rem;
+  align-items:center;
+}
+
+.confetti-layer{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
