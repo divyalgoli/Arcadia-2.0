@@ -1,0 +1,58 @@
+# v0 sandbox internal files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+.vercel/
+
+# Environment variables
+.env*.local
+
+# Common ignores
+node_modules
+.next/
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Private keys and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*serviceAccount*.json
+*-adminsdk-*.json
+*credentials*.json
+
+# Firebase local state and debug logs
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+firebase-export-*/
+
+# Archives and operating-system files
+*.zip
+__MACOSX/
+Thumbs.db
+desktop.ini
+
+# Build and debug artifacts
+*.tsbuildinfo
+.turbo/
+coverage/
+npm-debug.log*
+pnpm-debug.log*
+
+# Developer scratch scripts and local test harnesses
+scratch/
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

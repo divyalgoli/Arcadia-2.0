@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Balloon Blast — Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/game.css">
+<link rel="stylesheet" href="css/result.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Shared animated background -->
+  <div class="app-background" aria-hidden="true">
+    <div class="sky"></div>
+    <div class="cloud cloud--1"></div>
+    <div class="cloud cloud--2"></div>
+    <div class="cloud cloud--3"></div>
+    <div class="cloud cloud--4"></div>
+    <div class="mountains">
+      <div class="mountain mountain--back"></div>
+      <div class="mountain mountain--front"></div>
+    </div>
+    <div class="grass"></div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- GAME SCREEN -->
+  <!-- ============================================= -->
+  <section id="game-screen" class="screen" aria-label="Game Screen">
+
+    <!-- TOP BAR -->
+    <header class="top-bar glass-panel">
+      <div class="stat-group">
+        <div class="stat-card">
+          <span class="stat-label">Score</span>
+          <span class="stat-value" id="player-score">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Best</span>
+          <span class="stat-value" id="high-score">0</span>
+        </div>
+      </div>
+
+      <div class="stat-group stat-group--center">
+        <div class="timer-pill">
+          <span class="timer-icon">⏱</span>
+          <span id="timer-value">60</span>s
+        </div>
+        <div class="combo-pill" id="combo-counter">
+          Combo <span id="combo-value">x1</span>
+        </div>
+      </div>
+
+      <div class="stat-group top-bar-actions">
+        <button class="icon-btn" id="pause-btn" title="Pause" aria-label="Pause">⏸</button>
+        <button class="icon-btn" id="restart-btn" title="Restart" aria-label="Restart">⟲</button>
+        <button class="icon-btn" id="game-settings-btn" title="Settings" aria-label="Settings">⚙</button>
+      </div>
+    </header>
+
+    <!-- GAME AREA -->
+    <main class="game-area-wrapper">
+      <div class="game-area" id="game-area">
+        <!-- Balloons will be dynamically injected here by JavaScript -->
+        <p class="game-area-placeholder">Balloons appear here</p>
+      </div>
+    </main>
+
+    <!-- BOTTOM BAR -->
+    <footer class="bottom-bar glass-panel">
+      <div class="bottom-stat">
+        <span class="bottom-label">Difficulty</span>
+        <span class="badge badge--difficulty" id="difficulty-badge">Normal</span>
+      </div>
+      <div class="bottom-stat">
+        <span class="bottom-label">Lives</span>
+        <div class="lives-display" id="lives-display">
+          <span class="life-icon">❤</span>
+          <span class="life-icon">❤</span>
+          <span class="life-icon">❤</span>
+        </div>
+      </div>
+      <div class="bottom-stat">
+        <span class="bottom-label">Level</span>
+        <span class="badge badge--level" id="level-badge">1</span>
+      </div>
+    </footer>
+
+    <!-- Level progress bar -->
+    <div class="level-progress-track" aria-hidden="true">
+      <div class="level-progress-fill" style="width:45%;"></div>
+    </div>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- GAME OVER / RESULT MODAL -->
+  <!-- ============================================= -->
+  <div id="game-over-modal" class="modal-overlay hidden">
+    <div class="modal glass-panel modal--result">
+      <div class="trophy-wrap">
+        <div class="trophy-glow"></div>
+        <span class="trophy-icon">🏆</span>
+      </div>
+      <h2 class="modal-title">Game Over!</h2>
+      <p class="modal-subtitle">Great popping streak!</p>
+
+      <div class="score-summary">
+        <div class="score-box">
+          <span class="score-box-label">Final Score</span>
+          <span class="score-box-value" id="final-score">0</span>
+        </div>
+        <div class="score-box score-box--best">
+          <span class="score-box-label">Best Score</span>
+          <span class="score-box-value" id="best-score">0</span>
+        </div>
+      </div>
+
+      <div class="score-summary">
+        <div class="score-box">
+          <span class="score-box-label">Best Streak</span>
+          <span class="score-box-value" id="best-combo">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-box-label">Accuracy</span>
+          <span class="score-box-value" id="accuracy">0%</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn--primary" id="play-again-btn">Play Again</button>
+        <a class="btn btn--secondary" href="index.html" id="home-btn">Home</a>
+        <button class="btn btn--ghost btn--share" id="share-score-btn">
+          <span class="btn-icon">↗</span> Share Score
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- SETTINGS MODAL -->
+  <!-- ============================================= -->
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal glass-panel modal--settings">
+      <button class="modal-close-btn" id="settings-close-btn" aria-label="Close">✕</button>
+      <h2 class="modal-title">Settings</h2>
+      <div class="settings-list">
+        <div class="settings-row">
+          <span class="settings-row-label">Music</span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <span class="settings-row-label">Sound Effects</span>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <span class="settings-row-label">Difficulty</span>
+          <div class="segmented-control">
+            <button class="segment" data-value="easy">Easy</button>
+            <button class="segment segment--active" data-value="normal">Normal</button>
+            <button class="segment" data-value="hard">Hard</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <span class="settings-row-label">Theme</span>
+          <div class="theme-selector">
+            <button class="theme-swatch theme-swatch--sky" title="Sky Theme" aria-label="Sky Theme"></button>
+            <button class="theme-swatch theme-swatch--sunset" title="Sunset Theme" aria-label="Sunset Theme"></button>
+            <button class="theme-swatch theme-swatch--candy" title="Candy Theme" aria-label="Candy Theme"></button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <span class="settings-row-label">High Score</span>
+          <button class="btn btn--danger btn--small" id="reset-highscore-btn">Reset</button>
+        </div>
+      </div>
+      <button class="btn btn--primary" id="settings-close-bottom-btn">Done</button>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ACHIEVEMENT POPUP (toast style) -->
+  <!-- ============================================= -->
+  <div class="achievement-popup hidden" id="achievement-popup">
+    <span class="achievement-icon">⭐</span>
+    <div class="achievement-text">
+      <span class="achievement-title">Achievement Unlocked!</span>
+      <span class="achievement-desc">Popped 50 balloons in a row</span>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- LOADING SPINNER -->
+  <!-- ============================================= -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="spinner"></div>
+    <p class="loading-text">Loading...</p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="../../js/firebase-config.js"></script>
+    <script src="../../js/arcadia-cloud.js"></script>
+    <script src="../../js/arcadia-shell.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/balloons.js"></script>
+  <script src="js/difficulty.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/movement.js"></script>
+  <script src="js/collision.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/powerups.js"></script>
+  <script src="js/boss.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

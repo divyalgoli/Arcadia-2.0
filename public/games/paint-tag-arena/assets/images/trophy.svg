@@ -1,0 +1,22 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="soft-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#263238" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <circle cx="64" cy="66" r="54" fill="#FFFFFF" filter="url(#soft-shadow)"/>
+  <circle cx="64" cy="66" r="54" fill="none" stroke="#EAB308" stroke-width="5"/>
+  
+  <path d="M40 40 C24 40 24 62 40 64" fill="none" stroke="#EAB308" stroke-width="6"/>
+  <path d="M88 40 C104 40 104 62 88 64" fill="none" stroke="#EAB308" stroke-width="6"/>
+  <path d="M42 34 H86 V54 C86 72 76 82 64 82 C52 82 42 72 42 54 Z"
+        fill="#FACC15" stroke="#263238" stroke-width="4"/>
+  <rect x="58" y="82" width="12" height="10" fill="#EAB308"/>
+  <rect x="46" y="92" width="36" height="8" rx="3" fill="#EAB308" stroke="#263238" stroke-width="2"/>
+  <rect x="40" y="100" width="48" height="10" rx="3" fill="#E35F00" stroke="#263238" stroke-width="2"/>
+  <polygon points="64,44 68,54 78,54 70,60 73,70 64,64 55,70 58,60 50,54 60,54" fill="#FFFFFF"/>
+  <circle cx="30" cy="30" r="4" fill="#FF7A00"/>
+  <circle cx="98" cy="26" r="3" fill="#22C55E"/>
+  <circle cx="100" cy="46" r="3.5" fill="#A855F7"/>
+
+</svg>

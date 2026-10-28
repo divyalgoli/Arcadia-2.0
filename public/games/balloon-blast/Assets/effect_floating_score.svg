@@ -1,0 +1,10 @@
+<svg viewBox="0 0 260 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="scoreGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff9c4"/>
+      <stop offset="100%" stop-color="#ffd23f"/>
+    </linearGradient>
+  </defs>
+  <text x="130" y="80" font-family="Arial, sans-serif" font-size="64" font-weight="bold"
+        fill="url(#scoreGlow)" stroke="#a86b00" stroke-width="3" text-anchor="middle">+5</text>
+</svg>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Fruit Slash - 2D Landscape Web Game</title>
+    <meta name="description" content="Fruit Slash - A high-speed 2D landscape reflex game where you slash fruits and dodge dangerous monsters!">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;900&family=Poppins:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body>
+
+    <div id="app">
+
+        <!-- Rotate Device Prompt (Mobile Portrait Only) -->
+        <div id="rotate-device-overlay">
+            <div class="rotate-icon">📱🔄</div>
+            <p>Please rotate your device to LANDSCAPE to play Fruit Slash!</p>
+        </div>
+
+        <!-- Main Responsive Game Container -->
+        <div id="game-container">
+
+            <!-- MAIN MENU OVERLAY -->
+            <div id="menu-overlay" class="ui-overlay">
+                <div class="game-title-container">
+                    <h1 class="game-title">Fruit Slash</h1>
+                    <div class="slash-subtitle">Anime Magic Slicing Action</div>
+                    <div id="menu-player-badge" class="player-profile-badge">👤 Player: NinjaSlash</div>
+                </div>
+
+                <div class="play-fruit-prompt">
+                    <div class="pulse-text">SLASH FRUIT TO PLAY!</div>
+                </div>
+
+                <div class="menu-bottom-bar">
+                    <a href="../../index.html" class="secondary-btn" id="menu-exit-portal-btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">🏠 Arcadia</a>
+                    <button id="menu-settings-btn" class="secondary-btn">⚙️ Settings</button>
+                    <button id="menu-highscores-btn" class="secondary-btn">🏆 Leaderboards</button>
+                </div>
+            </div>
+
+            <!-- MODE SELECT OVERLAY -->
+            <div id="mode-select-overlay" class="ui-overlay hidden">
+                <div class="game-title-container">
+                    <h1 class="game-title">Select Game Mode</h1>
+                    <div class="slash-subtitle">Slash a fruit to choose</div>
+                </div>
+
+                <div class="mode-fruits-container">
+                    <div class="mode-label">
+                        <h2>Survival Mode</h2>
+                        <p>3 Lives</p>
+                    </div>
+                    <div class="mode-label">
+                        <h2>Time Attack Mode</h2>
+                        <p>60 Seconds</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COUNTDOWN OVERLAY -->
+            <div id="countdown-overlay" class="ui-overlay hidden">
+                <div id="countdown-text" class="countdown-number">3</div>
+            </div>
+
+            <!-- GAMEPLAY HUD OVERLAY -->
+            <div id="gameplay-overlay" class="ui-overlay hidden">
+                <div class="hud-panel">
+                    <div id="hud-player-name" class="hud-item" style="color: #00e5ff;">PLAYER: NinjaSlash</div>
+                    <div id="hud-score" class="hud-item">SCORE: 0</div>
+                </div>
+
+                <div class="hud-panel">
+                    <div id="hud-lives" class="hud-item">LIVES: ❤️ ❤️ ❤️</div>
+                    <div id="hud-timer" class="hud-item hidden">TIME: 60s</div>
+                    <button id="hud-pause-btn" class="icon-btn" title="Pause Game">⏸</button>
+                </div>
+
+                <div class="hud-status-bar">
+                    <div id="hud-combo" class="combo-badge hidden">COMBO x1</div>
+                    <div id="hud-powerup-icons" class="powerup-icons"></div>
+                </div>
+            </div>
+
+            <!-- PAUSE MODAL -->
+            <div id="pause-modal" class="modal-overlay hidden">
+                <div class="glass-modal">
+                    <h2 class="modal-title">Game Paused</h2>
+                    <div class="btn-group">
+                        <button id="pause-resume-btn" class="primary-btn">Resume</button>
+                        <button id="pause-restart-btn" class="secondary-btn">Restart</button>
+                        <button id="pause-menu-btn" class="secondary-btn">Main Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME OVER MODAL -->
+            <div id="game-over-modal" class="modal-overlay hidden">
+                <div class="glass-modal">
+                    <div id="go-new-hs-badge" class="badge-new-hs hidden">NEW HIGH SCORE!</div>
+                    <h2 id="go-mode-title" class="modal-title">SURVIVAL MODE</h2>
+
+                    <div style="margin: 20px 0;">
+                        <p style="font-size: 20px; color: #bbb;">Final Score</p>
+                        <p id="go-score" style="font-size: 54px; font-weight: 900; color: #ffd700;">0</p>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <p style="font-size: 16px; color: #bbb;">Best High Score: <strong id="go-highscore" style="color: #00e5ff;">0</strong></p>
+                    </div>
+
+                    <div class="btn-group">
+                        <button id="go-restart-btn" class="primary-btn">Play Again</button>
+                        <button id="go-menu-btn" class="secondary-btn">Main Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SETTINGS MODAL -->
+            <div id="settings-modal" class="modal-overlay hidden">
+                <div class="glass-modal">
+                    <h2 class="modal-title">Settings & Profile</h2>
+
+                    <button id="sound-toggle-btn" class="toggle-btn">SOUND: ON</button>
+
+                    <div style="text-align: left; margin-bottom: 20px;">
+                        <label style="font-size: 14px; font-weight: 700; color: #00e5ff; display: block; margin-bottom: 6px;">PLAYER USERNAME</label>
+                        <input type="text" id="username-input" class="text-input" placeholder="Enter username..." maxlength="14">
+                        <p id="username-status-msg" style="font-size: 13px; margin-top: 4px; color: #aaa;">Username can only be changed once.</p>
+                        <button id="save-username-btn" class="secondary-btn" style="margin-top: 10px; width: 100%;">Save Name</button>
+                    </div>
+
+                    <button id="close-settings-btn" class="secondary-btn" style="width: 100%;">Close</button>
+                </div>
+            </div>
+
+            <!-- LEADERBOARD MODAL -->
+            <div id="leaderboard-modal" class="modal-overlay hidden">
+                <div class="glass-modal" style="max-width: 600px;">
+                    <h2 class="modal-title">Leaderboards</h2>
+
+                    <div class="tab-group">
+                        <button id="tab-survival" class="tab-btn active">Survival Mode</button>
+                        <button id="tab-timeattack" class="tab-btn">Time Attack Mode</button>
+                    </div>
+
+                    <div style="max-height: 260px; overflow-y: auto; margin-bottom: 20px;">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Player</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-list">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button id="close-leaderboard-btn" class="secondary-btn" style="width: 100%;">Close</button>
+                </div>
+            </div>
+
+        </div> <!-- #game-container -->
+
+    </div> <!-- #app -->
+
+    <!-- Main Standalone JavaScript Bundle -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="../../js/firebase-config.js"></script>
+        <script src="../../js/arcadia-cloud.js"></script>
+        <script src="../../js/arcadia-shell.js"></script>
+    <script src="js/bundle.js"></script>
+
+</body>
+</html>

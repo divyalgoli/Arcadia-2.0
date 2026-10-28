@@ -1,0 +1,38 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Balloon Blast thumbnail">
+  <defs>
+    <linearGradient id="bb-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#170a2e"/>
+      <stop offset="55%" stop-color="#2a0f45"/>
+      <stop offset="100%" stop-color="#3a0f3a"/>
+    </linearGradient>
+    <filter id="bb-glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="400" height="300" fill="url(#bb-bg)"/>
+  <circle cx="330" cy="60" r="120" fill="#ff3d9a" opacity="0.12"/>
+  <circle cx="40" cy="250" r="100" fill="#3ee8ff" opacity="0.10"/>
+  <g opacity="0.9">
+    <ellipse cx="120" cy="150" rx="34" ry="42" fill="#ff5470" filter="url(#bb-glow)"/>
+    <path d="M120 192 L114 202 L126 202 Z" fill="#ff5470"/>
+    <line x1="120" y1="202" x2="120" y2="250" stroke="#ffb3c1" stroke-width="1.5" opacity="0.6"/>
+  </g>
+  <g opacity="0.95">
+    <ellipse cx="205" cy="105" rx="30" ry="38" fill="#ffd23e" filter="url(#bb-glow)"/>
+    <path d="M205 143 L200 152 L210 152 Z" fill="#ffd23e"/>
+    <line x1="205" y1="152" x2="205" y2="215" stroke="#fff0b3" stroke-width="1.5" opacity="0.6"/>
+  </g>
+  <g opacity="0.95">
+    <ellipse cx="285" cy="165" rx="32" ry="40" fill="#3ee8ff" filter="url(#bb-glow)"/>
+    <path d="M285 205 L279 215 L291 215 Z" fill="#3ee8ff"/>
+    <line x1="285" y1="215" x2="285" y2="260" stroke="#c6f7ff" stroke-width="1.5" opacity="0.6"/>
+  </g>
+  <g fill="#ffffff" opacity="0.8">
+    <circle cx="90" cy="90" r="2.5"/>
+    <circle cx="250" cy="60" r="2"/>
+    <circle cx="340" cy="150" r="2.5"/>
+    <circle cx="60" cy="190" r="2"/>
+  </g>
+  <text x="24" y="272" font-family="Outfit, Arial, sans-serif" font-size="15" font-weight="700" fill="#ffffff" opacity="0.85" letter-spacing="1">BALLOON BLAST</text>
+</svg>

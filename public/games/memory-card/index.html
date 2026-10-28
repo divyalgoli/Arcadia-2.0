@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <title>Memory Card Game - Test Your Memory Skills</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body class="light-theme">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🧠</span>
+                <span class="logo-text">MemoryCard</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <a href="../../index.html" class="btn btn-secondary" style="padding:6px 14px;font-size:0.875rem;text-decoration:none;">← Arcadia</a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <span class="logo-image" style="font-size: 5rem; display: inline-block;">🧠</span>
+                </div>
+                <h1 class="hero-title">Memory Card Game</h1>
+                <p class="hero-subtitle">Challenge Your Memory and Test Your Skills</p>
+                <p class="hero-description">Match pairs of cards and achieve the highest score. Track your progress on the leaderboard and compete with friends.</p>
+                
+                <!-- CTA Buttons -->
+                <div class="cta-buttons">
+                    <a href="game.html" class="btn btn-primary" id="startButton">
+                        <span class="btn-icon">▶</span>
+                        <span>Start Game</span>
+                    </a>
+                    <a href="leaderboard.html" class="btn btn-secondary" id="leaderboardBtn">
+                        <span class="btn-icon">🏆</span>
+                        <span>Leaderboard</span>
+                    </a>
+                    <a href="settings.html" class="btn btn-secondary" id="settingsBtn">
+                        <span class="btn-icon">⚙️</span>
+                        <span>Settings</span>
+                    </a>
+                    <button class="btn btn-secondary" id="friendsModeBtn">
+                        <span class="btn-icon">👥</span>
+                        <span>Friends Mode</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="about-container">
+                <h2 class="section-title">How to Play</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-icon">1️⃣</div>
+                        <h3>Choose Difficulty</h3>
+                        <p>Select your preferred game difficulty level - Easy, Medium, or Hard.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">2️⃣</div>
+                        <h3>Flip Cards</h3>
+                        <p>Click on cards to reveal their images. Remember what you see!</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">3️⃣</div>
+                        <h3>Match Pairs</h3>
+                        <p>Find matching pairs by remembering card positions.</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-icon">4️⃣</div>
+                        <h3>Win & Rank</h3>
+                        <p>Complete all matches, beat your time, and join the leaderboard!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2 class="section-title">Game Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">⏱️</span>
+                    <h4>Real-time Timer</h4>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📊</span>
+                    <h4>Score Tracking</h4>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎯</span>
+                    <h4>Multiple Difficulties</h4>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🏅</span>
+                    <h4>Leaderboard</h4>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎨</span>
+                    <h4>Dark & Light Themes</h4>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">📱</span>
+                    <h4>Fully Responsive</h4>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About Game</h4>
+                <p>A modern memory matching game built with HTML5, CSS3, and Vanilla JavaScript.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Development Team</h4>
+                <p>Member 1: UI/UX Design</p>
+                <p>Member 2: Game Logic</p>
+                <p>Member 3: Backend/Storage</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#" class="footer-link">Home</a>
+                <a href="game.html" class="footer-link">Play Game</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Memory Card Game. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Password Modal for Friends Mode -->
+    <div class="modal-overlay" id="passwordModalOverlay"></div>
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2>🔐 Friends Mode</h2>
+            <p>Enter the password to access Friends Mode.</p>
+            <input type="password" id="passwordInput" placeholder="Enter password" maxlength="50">
+            <div id="passwordError" class="error-message" style="display: none; color: red; margin-top: 10px; text-align: center;">Incorrect password. Please try again.</div>
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn btn-primary" id="verifyPasswordBtn" style="flex: 1;">Verify</button>
+                <button class="btn btn-secondary" id="cancelPasswordBtn" style="flex: 1;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/password.js"></script>
+    <script src="js/friendsMode.js"></script>
+    <script>
+        // Friends Mode button handler
+        document.getElementById('friendsModeBtn').addEventListener('click', () => {
+            document.getElementById('passwordModal').classList.add('active');
+            document.getElementById('passwordModalOverlay').classList.add('active');
+            document.getElementById('passwordInput').focus();
+            document.getElementById('passwordError').style.display = 'none';
+        });
+
+        // Password verification
+        function handlePasswordVerification() {
+            const inputPassword = document.getElementById('passwordInput').value.trim();
+            if (verifyPassword(inputPassword)) {
+                activateFriendsMode();
+            } else {
+                document.getElementById('passwordError').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        document.getElementById('verifyPasswordBtn').addEventListener('click', handlePasswordVerification);
+        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handlePasswordVerification();
+        });
+
+        // Cancel button
+        document.getElementById('cancelPasswordBtn').addEventListener('click', () => {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordModalOverlay').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        });
+
+        // Close modal on overlay click
+        document.getElementById('passwordModalOverlay').addEventListener('click', () => {
+            document.getElementById('passwordModal').classList.remove('active');
+            document.getElementById('passwordModalOverlay').classList.remove('active');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').style.display = 'none';
+        });
+    </script>
+    <script src="../../js/arcadia-shell.js"></script>
+</body>
+</html>

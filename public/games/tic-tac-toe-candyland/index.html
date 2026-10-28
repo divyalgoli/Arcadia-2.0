@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(!location.pathname.endsWith('/')&&!location.pathname.endsWith('.html'))location.replace(location.pathname+'/'+location.search+location.hash);</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Candy Land Tic Tac Toe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="../../css/mobile.css">
+</head>
+<body class="home-page">
+
+  <div class="candy-floaters" id="floaters"></div>
+
+  <main class="home-wrap">
+    <h1 class="title">
+      <span class="title-word wobble">Candy</span>
+      <span class="title-word wobble delay1">Land</span>
+      <span class="title-sub">Tic Tac Toe</span>
+    </h1>
+
+    <div class="hero-symbols">
+      <span class="hero-symbol spin-slow">🍭</span>
+      <span class="hero-vs">vs</span>
+      <span class="hero-symbol spin-slow-rev">🍬</span>
+    </div>
+
+    <section class="panel" id="mode-panel">
+      <h2 class="panel-title">Who's playing?</h2>
+      <div class="choice-row">
+        <button class="candy-btn" data-mode="ai">🤖 Vs Computer</button>
+        <button class="candy-btn" data-mode="two">👧🧒 Two Players</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="difficulty-panel">
+      <h2 class="panel-title">Pick a level</h2>
+      <div class="choice-row">
+        <button class="candy-btn small" data-difficulty="easy">🍡 Easy</button>
+        <button class="candy-btn small" data-difficulty="medium">🍩 Medium</button>
+        <button class="candy-btn small" data-difficulty="hard">🍫 Hard</button>
+      </div>
+    </section>
+
+    <section class="panel" id="start-panel">
+      <button class="candy-btn big" id="start-btn">Start Game 🎉</button>
+    </section>
+
+    <div class="bottom-row">
+      <div style="display:flex;gap:10px;">
+        <a class="icon-btn" href="../../index.html" id="portal-btn" title="Back to Arcadia" aria-label="Back to Arcadia" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">
+          <img src="assets/icons/back.svg" alt="Back to Arcadia">
+        </a>
+        <button class="icon-btn" id="settings-btn" title="Settings" aria-label="Settings">
+          <img src="assets/icons/settings.svg" alt="Settings">
+        </button>
+      </div>
+      <div class="best-streak">
+        🏆 Best Streak: <span id="best-streak-num">0</span>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal hidden" id="settings-modal">
+    <div class="modal-card">
+      <h3>Settings</h3>
+      <label class="switch-row">
+        <span>Sound</span>
+        <input type="checkbox" id="sound-toggle" checked>
+      </label>
+      <label class="switch-row">
+        <span>Music</span>
+        <input type="checkbox" id="music-toggle" checked>
+      </label>
+      <button class="candy-btn small" id="close-settings">Close</button>
+    </div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="../../js/arcadia-shell.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

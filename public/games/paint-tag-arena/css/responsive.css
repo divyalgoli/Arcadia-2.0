@@ -1,0 +1,420 @@
+/* ================================================================
+   PAINT TAG ARENA — RESPONSIVE STYLESHEET
+   Scope: ONLY breakpoint-based layout adjustments.
+   Breakpoints: Desktop (default, >1200px), Laptop (~1024px),
+   Tablet (~768px), Large Phones (~480px), Small Phones (~360px).
+================================================================= */
+
+/* ----------------------------------------------------------------
+   LAPTOP (max-width: 1200px)
+------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .game-main {
+    padding: var(--space-5);
+    gap: var(--space-5);
+  }
+
+  .arena {
+    max-width: 860px;
+  }
+
+  .menu-glass-panel {
+    max-width: 500px;
+    padding: var(--space-7) var(--space-6);
+  }
+
+  .game-logo {
+    font-size: var(--fs-2xl);
+  }
+}
+
+/* ----------------------------------------------------------------
+   TABLET (max-width: 1024px)
+------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .hud {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "p1 p2"
+      "center center";
+  }
+
+  .player-card-1 { grid-area: p1; }
+  .player-card-2 { grid-area: p2; }
+  .hud-center { grid-area: center; flex-direction: row; justify-content: space-between; }
+
+  .bottom-bar {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .control-buttons {
+    justify-content: center;
+  }
+
+  .powerup-panel {
+    text-align: center;
+  }
+
+  .powerup-slots {
+    justify-content: center;
+  }
+
+  .game-navbar {
+    gap: var(--space-4);
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ----------------------------------------------------------------
+   LARGE PHONES (max-width: 768px)
+------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .game-header {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .game-navbar {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  .game-main {
+    padding: var(--space-4);
+    gap: var(--space-4);
+  }
+
+  .hud {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "center"
+      "p1"
+      "p2";
+  }
+
+  .player-card,
+  .player-card-2 {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .player-card-2 .player-name-row,
+  .player-card-2 .stat-row,
+  .player-card-2 .player-score {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .player-card-2 .stat-label {
+    text-align: left;
+  }
+
+  .arena {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+  }
+
+  .menu-glass-panel {
+    padding: var(--space-6) var(--space-5);
+    max-width: 100%;
+  }
+
+  .game-logo {
+    font-size: var(--fs-xl);
+  }
+
+  .modal-panel {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .modal-title {
+    font-size: var(--fs-xl);
+  }
+
+  .modal-stats {
+    gap: var(--space-4);
+  }
+
+  .character-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+
+  .leaderboard-row {
+    padding: var(--space-2) var(--space-3);
+  }
+}
+
+/* ----------------------------------------------------------------
+   SMALL PHONES (max-width: 480px)
+------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .game-header {
+    padding: var(--space-3);
+  }
+
+  .header-logo .logo-text {
+    font-size: var(--fs-xs);
+  }
+
+  .game-navbar {
+    gap: var(--space-3);
+  }
+
+  .nav-link {
+    font-size: 0.7rem;
+  }
+
+  .game-main {
+    padding: var(--space-3);
+  }
+
+  .player-card {
+    padding: var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .player-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: var(--fs-md);
+  }
+
+  .stat-label {
+    width: 38px;
+    font-size: 0.65rem;
+  }
+
+  .timer {
+    font-size: var(--fs-lg);
+  }
+
+  .hud-center {
+    padding: var(--space-3);
+  }
+
+  .arena-placeholder {
+    padding: var(--space-4);
+  }
+
+  .arena-placeholder-title {
+    font-size: var(--fs-md);
+  }
+
+  .arena-corner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .bottom-bar {
+    gap: var(--space-3);
+  }
+
+  .control-buttons {
+    flex-wrap: wrap;
+  }
+
+  .btn-control {
+    flex: 1 1 auto;
+    justify-content: center;
+    font-size: 0.68rem;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .powerup-slot {
+    width: 44px;
+    height: 44px;
+    font-size: var(--fs-md);
+  }
+
+  .menu-nav {
+    gap: var(--space-2);
+  }
+
+  .btn {
+    padding: var(--space-3) var(--space-5);
+    font-size: 0.8rem;
+  }
+
+  .menu-subtitle {
+    font-size: var(--fs-xs);
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .character-avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+
+  .game-footer {
+    flex-direction: column;
+    gap: var(--space-2);
+    text-align: center;
+    padding: var(--space-4);
+  }
+}
+
+/* ----------------------------------------------------------------
+   SMALL PHONES (max-width: 360px)
+------------------------------------------------------------------- */
+@media (max-width: 360px) {
+  .game-logo {
+    font-size: var(--fs-lg);
+  }
+
+  .menu-glass-panel {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .player-name {
+    font-size: var(--fs-sm);
+  }
+
+  .score-value {
+    font-size: var(--fs-sm);
+  }
+
+  .round-value {
+    font-size: var(--fs-sm);
+  }
+
+  .timer {
+    font-size: var(--fs-md);
+  }
+
+  .character-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-title {
+    font-size: var(--fs-lg);
+  }
+
+  .leaderboard-row .lb-name {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* ----------------------------------------------------------------
+   TOUCH CONTROLS — on-screen dual joystick + dash buttons.
+   Hidden by default; shown only on touch/coarse-pointer devices
+   (phones & tablets), where WASD/IJKL keyboard input isn't available.
+------------------------------------------------------------------- */
+.touch-controls {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .touch-controls {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    z-index: 40;
+    pointer-events: none;
+  }
+
+  .touch-stick-zone {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+    width: 132px;
+    height: 132px;
+    pointer-events: auto;
+    touch-action: none;
+  }
+
+  .touch-stick-p1 { left: calc(env(safe-area-inset-left, 0px) + 18px); }
+  .touch-stick-p2 { right: calc(env(safe-area-inset-right, 0px) + 18px); }
+
+  .touch-stick-base {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(38, 50, 56, 0.16);
+    border: 3px solid rgba(255, 255, 255, 0.65);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+
+  .touch-stick-thumb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-white);
+    border: 3px solid var(--panel-border-soft);
+    box-shadow: var(--shadow-sm);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .touch-stick-p1 .touch-stick-thumb { border-color: var(--color-orange); }
+  .touch-stick-p2 .touch-stick-thumb { border-color: var(--color-blue); }
+
+  .touch-dash-btn {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 60px);
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: none;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: var(--fs-xs, 0.75rem);
+    letter-spacing: 0.5px;
+    color: var(--color-white);
+    pointer-events: auto;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+
+  .touch-dash-p1 {
+    left: calc(env(safe-area-inset-left, 0px) + 160px);
+    background: var(--color-orange);
+    box-shadow: var(--shadow-btn-orange);
+  }
+
+  .touch-dash-p2 {
+    right: calc(env(safe-area-inset-right, 0px) + 160px);
+    background: var(--color-blue);
+    box-shadow: var(--shadow-btn-blue);
+  }
+
+  .touch-dash-btn:active {
+    transform: translateY(3px);
+    box-shadow: var(--shadow-btn-flat);
+  }
+
+  /* Keep the on-screen sticks clear of the arena/HUD content */
+  .game-main {
+    padding-bottom: 170px;
+  }
+}

@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Ping Pong — Local 2 Player</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/mobile.css">
+<style>
+:root{
+  /* ===== Light theme tokens ===== */
+  --bg-0:#EFE58A;
+  --bg-1:#E3D65C;
+  --table:#DD9265;
+  --table-2:#C97A50;
+  --table-line:#FBF3E4;
+  --ink:#1C1A14;
+  --paddle-a:#3B7EA1;
+  --paddle-a-dark:#285C79;
+  --paddle-b:#C8503F;
+  --paddle-b-dark:#9C3B2C;
+  --ball:#FBF3E4;
+  --ball-shadow:#c9bd85;
+  --panel:#FBF3E4;
+  --panel-2:#F3E7C9;
+  --text:#211D14;
+  --text-soft:#5B5644;
+  --accent:#3B7EA1;
+  --accent-2:#C8503F;
+  --shadow:rgba(28,26,20,0.28);
+  --focus:#1c1a14;
+}
+
+*{box-sizing:border-box;}
+html,body{
+  margin:0; padding:0; height:100%;
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 85% -10%, color-mix(in srgb, var(--bg-0) 60%, white 15%) 0%, transparent 45%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1));
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+h1,h2,h3,.display{ font-family:'Baloo 2', sans-serif; }
+
+button{ font-family:inherit; cursor:pointer; }
+button:focus-visible, .icon-btn:focus-visible, .switch:focus-visible{
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+#app{ position:relative; width:100vw; height:100vh; height:100dvh; overflow:hidden; }
+
+.screen{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  opacity:0; visibility:hidden;
+  transform:translateY(14px) scale(0.99);
+  transition: opacity .38s cubic-bezier(.4,0,.2,1), transform .38s cubic-bezier(.4,0,.2,1), visibility .38s;
+  pointer-events:none;
+}
+.screen.active{
+  opacity:1; visibility:visible; transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+
+/* Reusable pill-shaped on/off switch (used by the sound toggle) */
+.switch{
+  width:42px; height:24px; border-radius:999px; background:var(--table);
+  border:2px solid var(--ink); position:relative; padding:0; flex-shrink:0;
+  transition: background .3s;
+}
+.switch::after{
+  content:''; position:absolute; top:1px; left:1px; width:16px; height:16px;
+  border-radius:50%; background:var(--ball); border:2px solid var(--ink);
+  transition: transform .28s cubic-bezier(.4,0,.2,1);
+}
+.switch.is-on{ background:var(--accent); }
+.switch.is-on::after{ transform:translateX(18px); }
+.switch:not(.is-on){ opacity:0.6; }
+
+/* ============ HOME SCREEN ============ */
+#screen-home{
+  align-items:center; justify-content:center;
+  padding: 4vh 6vw;
+}
+.home-wrap{
+  width:100%; max-width:1180px;
+  display:grid; grid-template-columns: 1.05fr 0.95fr; align-items:center; gap:4vw;
+}
+.home-left{ display:flex; flex-direction:column; gap:22px; }
+.logo-title{
+  font-size:clamp(48px, 8vw, 92px);
+  line-height:0.92; font-weight:800; letter-spacing:0.5px;
+  color:var(--panel);
+  text-shadow:
+    3px 3px 0 var(--ink),
+    -1px -1px 0 var(--ink), 1px -1px 0 var(--ink), -1px 1px 0 var(--ink),
+    0 10px 0 rgba(0,0,0,0.12);
+  text-transform:uppercase;
+  margin:0;
+}
+.tagline{
+  font-size:clamp(14px,1.6vw,17px); color:var(--text-soft); font-weight:600;
+  max-width:420px; margin:0;
+}
+.menu{ display:flex; flex-direction:column; gap:12px; margin-top:6px; max-width:360px; }
+.menu-btn{
+  display:flex; align-items:center; gap:12px;
+  border:2.5px solid var(--ink); border-radius:16px;
+  background:var(--panel); color:var(--text);
+  padding:14px 18px; font-size:17px; font-weight:700;
+  box-shadow:0 5px 0 var(--ink);
+  transition: transform .15s cubic-bezier(.4,0,.2,1), box-shadow .15s, background .15s;
+}
+.menu-btn .ico{
+  width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  background:var(--accent); color:var(--panel); flex-shrink:0; font-size:17px;
+  border:2px solid var(--ink);
+}
+.menu-btn:hover{ transform:translate(2px,3px); box-shadow:0 2px 0 var(--ink); }
+.menu-btn:active{ transform:translate(4px,5px); box-shadow:0 0 0 var(--ink); }
+.menu-btn.primary{ background:var(--accent-2); color:var(--panel); }
+.menu-btn.primary .ico{ background:var(--panel); color:var(--accent-2); }
+
+.home-right{ position:relative; display:flex; align-items:center; justify-content:center; }
+.hero-stage{ width:min(46vw, 480px); aspect-ratio:1/1; position:relative; }
+
+/* ============ BUTTONS shared ============ */
+.icon-btn{
+  width:44px; height:44px; border-radius:12px;
+  border:2.5px solid var(--ink); background:var(--panel); color:var(--text);
+  display:flex; align-items:center; justify-content:center; font-size:18px;
+  box-shadow:0 4px 0 var(--ink);
+  transition: transform .15s, box-shadow .15s;
+}
+.icon-btn:hover{ transform:translate(1px,2px); box-shadow:0 2px 0 var(--ink); }
+.icon-btn:active{ transform:translate(2px,4px); box-shadow:0 0 0 var(--ink); }
+
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 16px 22px; gap:12px; flex-shrink:0;
+}
+.topbar h2{ margin:0; font-size:clamp(20px,3vw,28px); }
+.topbar-left{ display:flex; align-items:center; gap:12px; }
+
+/* ============ SUBPAGES (instructions / leaderboard / settings) ============ */
+.subpage-body{
+  flex:1; overflow-y:auto; padding: 4px 24px 32px;
+  display:flex; justify-content:center;
+}
+.card{
+  background:var(--panel); border:2.5px solid var(--ink); border-radius:20px;
+  box-shadow:0 8px 0 var(--shadow); padding:26px 28px; max-width:720px; width:100%;
+  margin-bottom:20px;
+}
+.card h3{ margin-top:0; font-size:20px; display:flex; align-items:center; gap:10px;}
+.card p, .card li{ color:var(--text-soft); line-height:1.6; font-size:15px; }
+.kbd{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-width:30px; padding:2px 8px; border:2px solid var(--ink); border-radius:8px;
+  background:var(--panel-2); font-weight:700; font-size:13px; color:var(--text);
+  box-shadow:0 2px 0 var(--ink);
+}
+.control-row{ display:flex; align-items:center; gap:10px; margin:8px 0; flex-wrap:wrap;}
+.control-row .who{ font-weight:700; width:110px; flex-shrink:0; }
+.pill{
+  display:inline-block; padding:4px 12px; border-radius:999px; font-size:12px; font-weight:700;
+  background:var(--accent); color:var(--panel); margin-left:8px; vertical-align:middle;
+}
+
+/* Leaderboard */
+.lb-row{
+  display:flex; align-items:center; gap:14px; padding:12px 14px; border-radius:14px;
+  border:2px solid var(--ink); margin-bottom:10px; background:var(--panel-2);
+}
+.lb-rank{
+  width:32px; height:32px; border-radius:50%; background:var(--accent-2); color:var(--panel);
+  display:flex; align-items:center; justify-content:center; font-weight:800; border:2px solid var(--ink);
+  flex-shrink:0;
+}
+.lb-name{ font-weight:700; flex:1; }
+.lb-score{ font-weight:800; font-family:'Baloo 2'; font-size:18px; }
+.empty-state{ text-align:center; color:var(--text-soft); padding: 30px 10px; }
+
+/* Settings */
+.setting-row{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:14px 0; border-bottom:2px dashed color-mix(in srgb, var(--ink) 22%, transparent);
+}
+.setting-row:last-child{ border-bottom:none; }
+.setting-label{ font-weight:700; }
+.setting-sub{ font-size:12.5px; color:var(--text-soft); font-weight:500; margin-top:2px;}
+input[type="range"]{
+  -webkit-appearance:none; width:150px; height:8px; border-radius:999px;
+  background:var(--panel-2); border:2px solid var(--ink);
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%;
+  background:var(--accent); border:2px solid var(--ink); cursor:pointer; margin-top:-1px;
+}
+
+/* ============ GAME SCREEN ============ */
+#screen-game{ padding:0; }
+.game-topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 12px 18px; flex-shrink:0; gap:10px;
+}
+.score-panel{
+  display:flex; align-items:center; gap:14px; background:var(--panel);
+  border:2.5px solid var(--ink); border-radius:16px; padding:8px 18px;
+  box-shadow:0 4px 0 var(--ink);
+}
+.score-side{ display:flex; flex-direction:column; align-items:center; min-width:64px; }
+.score-side .p-name{ font-size:11px; font-weight:800; letter-spacing:0.5px; color:var(--text-soft); text-transform:uppercase;}
+.score-side.a .p-name{ color:var(--paddle-a-dark); }
+.score-side.b .p-name{ color:var(--paddle-b-dark); }
+.score-num{
+  font-family:'Baloo 2'; font-size:32px; font-weight:800; line-height:1;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.score-num.bump{ transform:scale(1.5); }
+.score-mid{ font-weight:700; color:var(--text-soft); font-size:13px; padding:0 2px;}
+
+.game-stage-wrap{
+  flex:1; display:flex; align-items:center; justify-content:center;
+  padding: 0 14px 14px; min-height:0;
+}
+.game-stage{
+  position:relative; width:100%; height:100%;
+  max-width:1100px; max-height:100%;
+  border-radius:22px; overflow:hidden;
+  border:3px solid var(--ink); box-shadow:0 10px 0 var(--shadow);
+  touch-action:none;
+}
+#gameCanvas{ display:block; width:100%; height:100%; }
+
+.hint-banner{
+  position:absolute; bottom:12px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.55); color:#fff; padding:6px 16px; border-radius:999px;
+  font-size:12.5px; font-weight:600; pointer-events:none; opacity:0.92;
+  transition:opacity .6s; white-space:nowrap;
+}
+
+.overlay{
+  position:absolute; inset:0; z-index:10; display:flex; align-items:center; justify-content:center;
+  background:rgba(15,13,8,0.5); backdrop-filter: blur(3px);
+  opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s;
+}
+.overlay.show{ opacity:1; visibility:visible; }
+.overlay-card{
+  background:var(--panel); border:3px solid var(--ink); border-radius:24px;
+  padding:34px 40px; text-align:center; box-shadow:0 12px 0 var(--shadow);
+  transform:scale(0.85); transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+  max-width:90vw;
+}
+.overlay.show .overlay-card{ transform:scale(1); }
+.overlay-card h2{ margin:0 0 6px; font-size:clamp(26px,5vw,38px); }
+.overlay-card p{ color:var(--text-soft); margin:0 0 20px; font-weight:600;}
+.overlay-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn{
+  border:2.5px solid var(--ink); border-radius:14px; padding:12px 22px; font-weight:800;
+  font-size:15px; background:var(--panel-2); color:var(--text); box-shadow:0 5px 0 var(--ink);
+  transition:transform .15s, box-shadow .15s;
+}
+.btn:hover{ transform:translate(1px,2px); box-shadow:0 3px 0 var(--ink); }
+.btn:active{ transform:translate(2px,4px); box-shadow:0 0 0 var(--ink); }
+.btn.accent{ background:var(--accent-2); color:var(--panel); }
+
+.countdown-num{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Baloo 2'; font-size:min(20vw,140px); font-weight:800; color:var(--panel);
+  text-shadow:0 6px 0 var(--ink); pointer-events:none; opacity:0; z-index:5;
+}
+.countdown-num.show{ animation: countPulse .78s cubic-bezier(.34,1.56,.64,1); }
+@keyframes countPulse{
+  0%{ opacity:0; transform:scale(0.4);}
+  30%{ opacity:1; transform:scale(1.08);}
+  70%{ opacity:1; transform:scale(1);}
+  100%{ opacity:0; transform:scale(0.9);}
+}
+
+/* touch control zones (mobile) */
+.touch-zones{ position:absolute; inset:0; display:flex; z-index:3; }
+.touch-zones div{ flex:1; }
+
+/* Rotate-device hint — only relevant on narrow phones held in portrait,
+   where the left/right paddle layout has very little width to work with. */
+.rotate-hint{
+  position:absolute; top:10px; left:50%; transform:translateX(-50%);
+  background:rgba(0,0,0,0.55); color:#fff; padding:6px 14px; border-radius:999px;
+  font-size:12px; font-weight:600; pointer-events:none; z-index:4;
+  opacity:0; transition:opacity .6s; display:none; white-space:nowrap;
+}
+@media (max-width:700px) and (orientation:portrait){
+  .rotate-hint{ display:block; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 880px){
+  .home-wrap{ grid-template-columns:1fr; text-align:center; gap:4vh; }
+  .home-left{ align-items:center; }
+  .menu{ align-items:stretch; margin:0 auto; }
+  .hero-stage{ width:min(70vw,340px); }
+  .tagline{ max-width:100%; }
+}
+@media (max-width: 520px){
+  .logo-title{ font-size:15vw; }
+  .score-panel{ padding:6px 10px; gap:8px; }
+  .score-num{ font-size:24px; }
+  .card{ padding:18px 16px; }
+  .topbar h2{ font-size:19px; }
+  .icon-btn{ width:48px; height:48px; }
+}
+
+/* iOS Safari auto-zooms the page when a focused text input has a font-size
+   under 16px — force 16px on the name fields so focusing them on a phone
+   doesn't suddenly zoom the whole layout in. */
+#nameA, #nameB{ font-size:16px; }
+
+/* ============ MOBILE RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .home-wrap{ grid-template-columns: 1fr; gap: 2vh; }
+  .home-left{ align-items: center; text-align: center; }
+  .menu{ margin-left: auto; margin-right: auto; width: 100%; max-width: 280px; }
+  .home-right{ margin-top: 20px; }
+  .hero-stage{ width: min(60vw, 280px); aspect-ratio: 1/1; }
+  
+  .game-topbar{ flex-wrap: wrap; padding: 10px 12px; }
+  .score-panel{ font-size: 14px; }
+  .score-num{ font-size: 20px; }
+  .icon-btn{ width: 40px; height: 40px; font-size: 16px; }
+}
+
+@media (max-width: 480px) {
+  .logo-title{ font-size: 36px; line-height: 1; }
+  .tagline{ font-size: 13px; }
+  .menu-btn{ padding: 12px 14px; font-size: 14px; }
+  .menu-btn .ico{ width: 28px; height: 28px; font-size: 14px; }
+  
+  .game-topbar{ padding: 8px 10px; }
+  .score-panel{ padding: 4px 8px; gap: 6px; }
+  .score-side{ min-width: 50px; }
+  .score-num{ font-size: 18px; }
+  .p-name{ font-size: 9px; }
+  
+  .card{ padding: 14px 12px; font-size: 14px; }
+  .control-row .who{ width: 80px; }
+  .hint-banner{ font-size: 11px; padding: 4px 12px; }
+  
+  .overlay-card{ padding: 24px 20px; }
+  .overlay-card h2{ font-size: 22px; }
+  .btn{ padding: 10px 16px; font-size: 13px; }
+}
+
+/* Touch-friendly controls hint on mobile */
+@media (max-width: 768px) {
+  .hint-banner{ display: flex !important; }
+}
+
+/* Canvas responsiveness */
+@media (orientation: landscape) and (max-height: 500px) {
+  .game-topbar{ padding: 6px 10px; }
+  .score-panel{ gap: 4px; padding: 2px 6px; }
+  .score-num{ font-size: 16px; }
+  .game-stage-wrap{ padding: 0 8px 8px; }
+}
+
+/* Portrait orientation game adjustments */
+@media (max-width: 768px) and (orientation: portrait) {
+  .rotate-hint{ display: block !important; }
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="screen-home">
+    <div class="home-wrap">
+      <div class="home-left">
+        <h1 class="logo-title">Ping<br>Pong</h1>
+        <p class="tagline">Fast, local two-player table tennis. Grab a friend, share the keyboard (or the screen), and rally to 11.</p>
+        <nav class="menu">
+          <button class="menu-btn primary" data-nav="game"><span class="ico">▶</span> Play Game</button>
+          <button class="menu-btn" data-nav="instructions"><span class="ico">ℹ</span> Game Instructions</button>
+          <button class="menu-btn" data-nav="leaderboard"><span class="ico">🏆</span> Leaderboard</button>
+          <button class="menu-btn" data-nav="settings"><span class="ico">⚙</span> Settings</button>
+          <button class="menu-btn" id="exitBtn"><span class="ico">⏻</span> Exit</button>
+        </nav>
+      </div>
+      <div class="home-right">
+        <div class="hero-stage" id="heroStage"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTRUCTIONS ============ -->
+  <section class="screen" id="screen-instructions">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Game Instructions</h2>
+      </div>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:720px;">
+        <div class="card">
+          <h3>🖥️ Desktop controls</h3>
+          <div class="control-row"><span class="who">Player 1</span> <span class="kbd">W</span> up · <span class="kbd">S</span> down <span class="pill" style="background:var(--paddle-a)">Left paddle</span></div>
+          <div class="control-row"><span class="who">Player 2</span> <span class="kbd">↑</span> up · <span class="kbd">↓</span> down <span class="pill" style="background:var(--paddle-b)">Right paddle</span></div>
+          <div class="control-row"><span class="who">Anytime</span> <span class="kbd">Space</span> pause / resume</div>
+        </div>
+        <div class="card">
+          <h3>📱 Touch controls</h3>
+          <p>On tablet or mobile, each player drags a finger up and down on their own half of the table — left half moves the left paddle, right half moves the right paddle.</p>
+        </div>
+        <div class="card">
+          <h3>🏓 Rules of play</h3>
+          <ul>
+            <li>The ball serves automatically toward a random side after every point.</li>
+            <li>Hit the ball back with your paddle before it passes you — miss it and the other player scores.</li>
+            <li>Where the ball strikes your paddle changes its angle: hit with the edge to add spin.</li>
+            <li>First player to reach <strong>11 points</strong> wins the match.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEADERBOARD ============ -->
+  <section class="screen" id="screen-leaderboard">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Leaderboard</h2>
+      </div>
+      <button class="icon-btn" id="clearLbBtn" title="Clear session results">🗑</button>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:600px;">
+        <div class="card">
+          <h3>🏆 This session's results</h3>
+          <p style="margin-top:-8px;">Match wins recorded since you opened the app.</p>
+          <div id="lbList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section class="screen" id="screen-settings">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn" data-nav="home" aria-label="Back">←</button>
+        <h2>Settings</h2>
+      </div>
+    </div>
+    <div class="subpage-body">
+      <div style="width:100%; max-width:600px;">
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Ball speed</div>
+              <div class="setting-sub" id="speedLabel">Medium</div>
+            </div>
+            <input type="range" id="speedSlider" min="1" max="3" step="1" value="2">
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Paddle size</div>
+              <div class="setting-sub" id="paddleLabel">Medium</div>
+            </div>
+            <input type="range" id="paddleSlider" min="1" max="3" step="1" value="2">
+          </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Sound effects</div>
+              <div class="setting-sub">Hit and score beeps</div>
+            </div>
+            <button class="switch" id="soundSwitch" aria-label="Toggle sound"></button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>👤 Player names</h3>
+          <div class="control-row" style="gap:14px;">
+            <span class="who" style="color:var(--paddle-a-dark)">Player 1</span>
+            <input id="nameA" maxlength="12" value="Player 1" style="flex:1; min-width:120px; border:2px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:inherit; font-weight:700; background:var(--panel-2); color:var(--text);">
+          </div>
+          <div class="control-row" style="gap:14px;">
+            <span class="who" style="color:var(--paddle-b-dark)">Player 2</span>
+            <input id="nameB" maxlength="12" value="Player 2" style="flex:1; min-width:120px; border:2px solid var(--ink); border-radius:10px; padding:8px 10px; font-family:inherit; font-weight:700; background:var(--panel-2); color:var(--text);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section class="screen" id="screen-game">
+    <div class="game-topbar">
+      <button class="icon-btn" id="gameBackBtn" aria-label="Back to menu">←</button>
+      <div class="score-panel">
+        <div class="score-side a">
+          <div class="p-name" id="hudNameA">Player 1</div>
+          <div class="score-num" id="scoreA">0</div>
+        </div>
+        <div class="score-mid">–</div>
+        <div class="score-side b">
+          <div class="p-name" id="hudNameB">Player 2</div>
+          <div class="score-num" id="scoreB">0</div>
+        </div>
+      </div>
+      <button class="icon-btn" id="pauseBtn" aria-label="Pause">⏸</button>
+    </div>
+    <div class="game-stage-wrap">
+      <div class="game-stage" id="gameStage">
+        <canvas id="gameCanvas"></canvas>
+        <div class="touch-zones">
+          <div id="zoneLeft"></div>
+          <div id="zoneRight"></div>
+        </div>
+        <div class="countdown-num" id="countdownNum"></div>
+        <div class="hint-banner" id="hintBanner">W/S and ↑/↓ to move · Space to pause</div>
+        <div class="rotate-hint" id="rotateHint">🔄 Rotate your device for a wider table</div>
+
+        <div class="overlay" id="pauseOverlay">
+          <div class="overlay-card">
+            <h2>Paused</h2>
+            <p>Take a breather.</p>
+            <div class="overlay-actions">
+              <button class="btn accent" id="resumeBtn">Resume</button>
+              <button class="btn" id="pauseHomeBtn">Home</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="overlay" id="winOverlay">
+          <div class="overlay-card">
+            <h2 id="winTitle">Player 1 Wins!</h2>
+            <p id="winSub">11 – 7</p>
+            <div class="overlay-actions">
+              <button class="btn accent" id="rematchBtn">Rematch</button>
+              <button class="btn" id="winHomeBtn">Home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="../../js/mobile-utils.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     NAVIGATION
+  ============================================================ */
+  const screens = document.querySelectorAll('.screen');
+  function showScreen(name){
+    screens.forEach(s => s.classList.toggle('active', s.id === 'screen-' + name));
+    if(name === 'game'){ startMatch(true); }
+    else {
+      Game.running = false;
+      clearInterval(Game.countdownTimer);
+      Game.countdownTimer = null;
+    }
+  }
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    el.addEventListener('click', ()=> showScreen(el.getAttribute('data-nav')));
+  });
+  document.getElementById('gameBackBtn').addEventListener('click', ()=> showScreen('home'));
+  document.getElementById('pauseHomeBtn').addEventListener('click', ()=> showScreen('home'));
+  document.getElementById('winHomeBtn').addEventListener('click', ()=> showScreen('home'));
+  document.getElementById('exitBtn').addEventListener('click', ()=>{
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Baloo 2, sans-serif;font-size:28px;color:#5B5644;background:#EFE58A;text-align:center;padding:20px;">Thanks for playing Ping Pong! 🏓<br>You can close this tab now.</div>';
+    window.close();
+    setTimeout(()=> window.close(), 100);
+  });
+
+  /* ============================================================
+     SETTINGS STATE
+  ============================================================ */
+  const Settings = { speed: 2, paddleSize: 2, sound: true, nameA: 'Player 1', nameB: 'Player 2' };
+  const speedLabels = {1:'Slow',2:'Medium',3:'Fast'};
+  const paddleLabels = {1:'Small',2:'Medium',3:'Large'};
+  const speedSlider = document.getElementById('speedSlider');
+  const paddleSlider = document.getElementById('paddleSlider');
+  speedSlider.addEventListener('input', ()=>{
+    Settings.speed = +speedSlider.value;
+    document.getElementById('speedLabel').textContent = speedLabels[Settings.speed];
+  });
+  paddleSlider.addEventListener('input', ()=>{
+    Settings.paddleSize = +paddleSlider.value;
+    document.getElementById('paddleLabel').textContent = paddleLabels[Settings.paddleSize];
+    Game.applyPaddleSize();
+  });
+  const soundSwitch = document.getElementById('soundSwitch');
+  soundSwitch.classList.add('is-on');
+  soundSwitch.addEventListener('click', ()=>{
+    Settings.sound = !Settings.sound;
+    soundSwitch.classList.toggle('is-on', Settings.sound);
+  });
+  const nameA = document.getElementById('nameA');
+  const nameB = document.getElementById('nameB');
+  function syncNames(){
+    Settings.nameA = nameA.value.trim() || 'Player 1';
+    Settings.nameB = nameB.value.trim() || 'Player 2';
+    document.getElementById('hudNameA').textContent = Settings.nameA;
+    document.getElementById('hudNameB').textContent = Settings.nameB;
+  }
+  nameA.addEventListener('input', syncNames);
+  nameB.addEventListener('input', syncNames);
+
+  /* ============================================================
+     SOUND (WebAudio, no assets needed)
+  ============================================================ */
+  let actx = null;
+  function beep(freq, dur, vol){
+    if(!Settings.sound) return;
+    try{
+      if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = actx.createOscillator(); const g = actx.createGain();
+      o.type = 'square'; o.frequency.value = freq;
+      g.gain.value = vol || 0.06;
+      o.connect(g); g.connect(actx.destination);
+      o.start();
+      g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + (dur||0.08));
+      o.stop(actx.currentTime + (dur||0.08));
+    }catch(e){}
+  }
+
+  /* ============================================================
+     LEADERBOARD (session memory only)
+  ============================================================ */
+  const Leaderboard = { entries: [] };
+  function addResult(winnerName, scoreLine){
+    Leaderboard.entries.unshift({ name: winnerName, score: scoreLine });
+    Leaderboard.entries = Leaderboard.entries.slice(0, 20);
+    renderLeaderboard();
+  }
+  function renderLeaderboard(){
+    const list = document.getElementById('lbList');
+    if(!Leaderboard.entries.length){
+      list.innerHTML = '<div class="empty-state">No matches played yet this session — win a game to see it here 🏓</div>';
+      return;
+    }
+    list.innerHTML = Leaderboard.entries.map((e,i)=>`
+      <div class="lb-row">
+        <div class="lb-rank">${i+1}</div>
+        <div class="lb-name">${e.name}</div>
+        <div class="lb-score">${e.score}</div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('clearLbBtn').addEventListener('click', ()=>{
+    Leaderboard.entries = []; renderLeaderboard();
+  });
+  renderLeaderboard();
+
+  /* ============================================================
+     HERO ILLUSTRATION (home screen) — swoosh motif, css-animated
+  ============================================================ */
+  document.getElementById('heroStage').innerHTML = `
+  <svg viewBox="0 0 400 400" style="width:100%;height:100%;overflow:visible;">
+    <g transform="rotate(-24 200 200)">
+      <rect x="60" y="90" width="280" height="220" rx="18" fill="var(--table)" stroke="var(--ink)" stroke-width="8"/>
+      <line x1="200" y1="98" x2="200" y2="302" stroke="var(--table-line)" stroke-width="5"/>
+      <line x1="60" y1="200" x2="340" y2="200" stroke="var(--table-line)" stroke-width="3" opacity="0.85" stroke-dasharray="10 8"/>
+      <circle cx="300" cy="140" r="16" fill="none" stroke="var(--ink)" stroke-width="7" opacity="0.5"/>
+    </g>
+    <g id="heroBall">
+      <path d="M120 300 C 160 260, 220 260, 250 190" stroke="var(--panel)" stroke-width="26" fill="none" stroke-linecap="round" opacity="0.55"/>
+      <circle cx="250" cy="190" r="17" fill="var(--ball)" stroke="var(--ink)" stroke-width="6"/>
+    </g>
+    <g transform="translate(60 300) rotate(-24)">
+      <circle cx="0" cy="0" r="46" fill="var(--paddle-a)" stroke="var(--ink)" stroke-width="8"/>
+      <rect x="-9" y="40" width="18" height="46" rx="8" fill="var(--paddle-a-dark)" stroke="var(--ink)" stroke-width="7"/>
+    </g>
+  </svg>`;
+
+  /* ============================================================
+     GAME ENGINE
+  ============================================================ */
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const stage = document.getElementById('gameStage');
+
+  const Game = {
+    W:0, H:0, dpr:1,
+    ball:{x:0,y:0,vx:0,vy:0,r:10,trail:[]},
+    pA:{y:0,h:110,w:16,vy:0},
+    pB:{y:0,h:110,w:16,vy:0},
+    score:{a:0,b:0},
+    running:false, paused:false, serving:true,
+    keys:{}, touchA:null, touchB:null,
+    winScore:11,
+    particles:[],
+    countdownTimer:null,
+    applyPaddleSize(){
+      const sizes = {1:80,2:110,3:150};
+      this.pA.h = sizes[Settings.paddleSize];
+      this.pB.h = sizes[Settings.paddleSize];
+    }
+  };
+
+  function resizeCanvas(){
+    const rect = stage.getBoundingClientRect();
+    const prevW = Game.W, prevH = Game.H;
+    Game.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = rect.width * Game.dpr;
+    canvas.height = rect.height * Game.dpr;
+    Game.W = rect.width; Game.H = rect.height;
+    ctx.setTransform(Game.dpr,0,0,Game.dpr,0,0);
+
+    if(Game.running && prevW > 0 && prevH > 0){
+      const ratioH = Game.H / prevH;
+      Game.pA.y = Math.max(0, Math.min(Game.H - Game.pA.h, Game.pA.y * ratioH));
+      Game.pB.y = Math.max(0, Math.min(Game.H - Game.pB.h, Game.pB.y * ratioH));
+      Game.ball.x = Game.ball.x * (Game.W / prevW);
+      Game.ball.y = Game.ball.y * ratioH;
+    } else {
+      Game.pA.y = Game.H/2 - Game.pA.h/2;
+      Game.pB.y = Game.H/2 - Game.pB.h/2;
+    }
+  }
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', resizeCanvas);
+
+  function resetBall(direction){
+    Game.ball.x = Game.W/2; Game.ball.y = Game.H/2;
+    const speedBase = [3.2,4.6,6.4][Settings.speed-1];
+    const angle = (Math.random()*0.6 - 0.3);
+    Game.ball.vx = speedBase * (direction || (Math.random()<0.5?-1:1));
+    Game.ball.vy = speedBase * Math.sin(angle) * 1.4;
+    Game.ball.trail = [];
+  }
+
+  function startMatch(fresh){
+    Game.applyPaddleSize();
+    resizeCanvas();
+    if(fresh){
+      Game.score.a = 0; Game.score.b = 0;
+      updateScoreHud();
+      document.getElementById('winOverlay').classList.remove('show');
+      document.getElementById('pauseOverlay').classList.remove('show');
+      syncNames();
+    }
+    Game.paused = false;
+    Game.running = true;
+    resetBall();
+    countdownThenServe();
+    requestAnimationFrame(loop);
+  }
+
+  function countdownThenServe(){
+    Game.serving = true;
+    clearInterval(Game.countdownTimer);
+    const el = document.getElementById('countdownNum');
+    let n = 3;
+    el.textContent = n; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+    Game.countdownTimer = setInterval(()=>{
+      n--;
+      if(n>0){ el.textContent = n; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+      else {
+        clearInterval(Game.countdownTimer);
+        Game.countdownTimer = null;
+        el.textContent='GO'; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+        Game.serving=false;
+      }
+    }, 650);
+  }
+
+  function updateScoreHud(){
+    const a = document.getElementById('scoreA'), b = document.getElementById('scoreB');
+    a.textContent = Game.score.a; b.textContent = Game.score.b;
+  }
+  function bumpScore(which){
+    const el = document.getElementById(which === 'a' ? 'scoreA' : 'scoreB');
+    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+  }
+
+  function spawnBurst(x,y,color){
+    for(let i=0;i<14;i++){
+      const a = Math.random()*Math.PI*2, sp = 1.5+Math.random()*3.5;
+      Game.particles.push({x,y,vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:1, color});
+    }
+  }
+
+  function scorePoint(who){
+    if(who==='a'){ Game.score.a++; bumpScore('a'); }
+    else { Game.score.b++; bumpScore('b'); }
+    updateScoreHud();
+    beep(who==='a'?520:340, 0.18, 0.08);
+    spawnBurst(Game.ball.x, Game.ball.y, who==='a' ? getVar('--paddle-a') : getVar('--paddle-b'));
+
+    if(Game.score.a >= Game.winScore || Game.score.b >= Game.winScore){
+      endMatch(Game.score.a > Game.score.b ? 'a' : 'b');
+    } else {
+      resetBall(who==='a' ? 1 : -1);
+      countdownThenServe();
+    }
+  }
+
+  function getVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function endMatch(winner){
+    Game.running = false;
+    const name = winner==='a' ? Settings.nameA : Settings.nameB;
+    const title = document.getElementById('winTitle');
+    const sub = document.getElementById('winSub');
+    title.textContent = `${name} Wins!`;
+    sub.textContent = `${Game.score.a} – ${Game.score.b}`;
+    document.getElementById('winOverlay').classList.add('show');
+    beep(700,0.4,0.09);
+    addResult(name, `${Game.score.a} – ${Game.score.b}`);
+  }
+
+  document.getElementById('rematchBtn').addEventListener('click', ()=>{
+    document.getElementById('winOverlay').classList.remove('show');
+    startMatch(true);
+  });
+
+  /* ---- Input: keyboard (PC) ---- */
+  function isTypingTarget(el){
+    return !!el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+  }
+  window.addEventListener('keydown', (e)=>{
+    const gameActive = document.getElementById('screen-game').classList.contains('active');
+    const typing = isTypingTarget(document.activeElement);
+    if(typing) return;
+    const k = e.key.toLowerCase();
+    if(gameActive && ['w','s','arrowup','arrowdown',' '].includes(k)) e.preventDefault();
+    Game.keys[k] = true;
+    if(k === ' ' && gameActive){
+      togglePause();
+    }
+  });
+  window.addEventListener('keyup', (e)=>{
+    if(isTypingTarget(document.activeElement)) return;
+    Game.keys[e.key.toLowerCase()] = false;
+  });
+
+  function togglePause(){
+    if(!Game.running) return;
+    Game.paused = !Game.paused;
+    document.getElementById('pauseOverlay').classList.toggle('show', Game.paused);
+  }
+  document.getElementById('pauseBtn').addEventListener('click', togglePause);
+  document.getElementById('resumeBtn').addEventListener('click', togglePause);
+
+  /* ---- Input: touch / pen / mouse drag, split by half of stage (mobile + PC) ---- */
+  function attachPointerControl(zoneEl, key){
+    let activeId = null;
+    zoneEl.addEventListener('pointerdown', (e)=>{
+      activeId = e.pointerId;
+      Game[key] = e.clientY;
+      if(zoneEl.setPointerCapture){ try{ zoneEl.setPointerCapture(e.pointerId); }catch(err){} }
+      e.preventDefault();
+    });
+    zoneEl.addEventListener('pointermove', (e)=>{
+      if(e.pointerId !== activeId) return;
+      Game[key] = e.clientY;
+      e.preventDefault();
+    });
+    function release(e){
+      if(e.pointerId !== activeId) return;
+      activeId = null;
+      Game[key] = null;
+    }
+    zoneEl.addEventListener('pointerup', release);
+    zoneEl.addEventListener('pointercancel', release);
+    zoneEl.addEventListener('pointerleave', release);
+  }
+  attachPointerControl(document.getElementById('zoneLeft'), 'touchA');
+  attachPointerControl(document.getElementById('zoneRight'), 'touchB');
+
+  /* ---- Physics update ---- */
+  function stepBall(){
+    const b = Game.ball;
+
+    if(b.y - b.r < 0){ b.y = b.r; b.vy *= -1; beep(300,0.05,0.03); return true; }
+    if(b.y + b.r > Game.H){ b.y = Game.H - b.r; b.vy *= -1; beep(300,0.05,0.03); return true; }
+
+    const speedCap = [3.2,4.6,6.4][Settings.speed-1] * 2.4;
+
+    const paX = 26;
+    if(b.vx < 0 && b.x - b.r <= paX + Game.pA.w && b.x - b.r > paX - 12 &&
+       b.y > Game.pA.y - b.r && b.y < Game.pA.y + Game.pA.h + b.r){
+      const rel = (b.y - (Game.pA.y + Game.pA.h/2)) / (Game.pA.h/2);
+      const speed = Math.min(Math.hypot(b.vx,b.vy) * 1.045, speedCap);
+      const angle = rel * 0.9;
+      b.vx = Math.abs(Math.cos(angle)*speed);
+      b.vy = Math.sin(angle)*speed;
+      b.x = paX + Game.pA.w + b.r;
+      beep(440,0.06,0.05);
+      spawnBurst(b.x,b.y,getVar('--paddle-a'));
+      return true;
+    }
+    const pbX = Game.W - 26 - Game.pB.w;
+    if(b.vx > 0 && b.x + b.r >= pbX && b.x + b.r < pbX + Game.pB.w + 12 &&
+       b.y > Game.pB.y - b.r && b.y < Game.pB.y + Game.pB.h + b.r){
+      const rel = (b.y - (Game.pB.y + Game.pB.h/2)) / (Game.pB.h/2);
+      const speed = Math.min(Math.hypot(b.vx,b.vy) * 1.045, speedCap);
+      const angle = rel * 0.9;
+      b.vx = -Math.abs(Math.cos(angle)*speed);
+      b.vy = Math.sin(angle)*speed;
+      b.x = pbX - b.r;
+      beep(440,0.06,0.05);
+      spawnBurst(b.x,b.y,getVar('--paddle-b'));
+      return true;
+    }
+    return false;
+  }
+
+  function update(){
+    const rect = stage.getBoundingClientRect();
+
+    const paddleSpeed = 7.2;
+    if(Game.touchA != null){
+      const targetY = (Game.touchA - rect.top) - Game.pA.h/2;
+      Game.pA.y += (targetY - Game.pA.y) * 0.35;
+    } else {
+      if(Game.keys['w']) Game.pA.y -= paddleSpeed;
+      if(Game.keys['s']) Game.pA.y += paddleSpeed;
+    }
+    if(Game.touchB != null){
+      const targetY = (Game.touchB - rect.top) - Game.pB.h/2;
+      Game.pB.y += (targetY - Game.pB.y) * 0.35;
+    } else {
+      if(Game.keys['arrowup']) Game.pB.y -= paddleSpeed;
+      if(Game.keys['arrowdown']) Game.pB.y += paddleSpeed;
+    }
+    Game.pA.y = Math.max(0, Math.min(Game.H - Game.pA.h, Game.pA.y));
+    Game.pB.y = Math.max(0, Math.min(Game.H - Game.pB.h, Game.pB.y));
+
+    if(Game.serving || Game.paused) return;
+
+    const b = Game.ball;
+    b.trail.unshift({x:b.x, y:b.y});
+    if(b.trail.length > 10) b.trail.pop();
+
+    const speedNow = Math.hypot(b.vx, b.vy);
+    const steps = Math.max(1, Math.ceil(speedNow / 8));
+    const stepVx = b.vx / steps, stepVy = b.vy / steps;
+    for(let i=0; i<steps; i++){
+      b.x += stepVx; b.y += stepVy;
+      if(b.x < -30 || b.x > Game.W + 30) break;
+      if(stepBall()) break;
+    }
+
+    if(b.x < -30) scorePoint('b');
+    if(b.x > Game.W + 30) scorePoint('a');
+
+    Game.particles.forEach(p=>{ p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life -= 0.035; });
+    Game.particles = Game.particles.filter(p=>p.life>0);
+  }
+
+  /* ---- Draw ---- */
+  function draw(){
+    const cInk = getVar('--ink'), cTable = getVar('--table'), cTable2 = getVar('--table-2');
+    const cLine = getVar('--table-line'), cBall = getVar('--ball'), cShadow = getVar('--ball-shadow');
+    const cA = getVar('--paddle-a'), cAd = getVar('--paddle-a-dark');
+    const cB = getVar('--paddle-b'), cBd = getVar('--paddle-b-dark');
+
+    ctx.clearRect(0,0,Game.W,Game.H);
+
+    const g = ctx.createLinearGradient(0,0,Game.W,Game.H);
+    g.addColorStop(0, cTable); g.addColorStop(1, cTable2);
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,Game.W,Game.H);
+
+    ctx.strokeStyle = cLine; ctx.globalAlpha = 0.7; ctx.lineWidth = 3;
+    ctx.setLineDash([14,12]);
+    ctx.beginPath(); ctx.moveTo(Game.W/2,8); ctx.lineTo(Game.W/2,Game.H-8); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = cLine; ctx.globalAlpha = 0.25; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(Game.W-10, 10, 34, 0, Math.PI*2); ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    Game.ball.trail.forEach((t,i)=>{
+      const a = (1 - i/Game.ball.trail.length) * 0.35;
+      ctx.beginPath();
+      ctx.fillStyle = cBall;
+      ctx.globalAlpha = a;
+      ctx.arc(t.x, t.y, Game.ball.r * (1 - i/Game.ball.trail.length*0.5), 0, Math.PI*2);
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    drawPaddle(26, Game.pA.y, Game.pA.w, Game.pA.h, cA, cAd, cInk, false);
+    drawPaddle(Game.W-26-Game.pB.w, Game.pB.y, Game.pB.w, Game.pB.h, cB, cBd, cInk, true);
+
+    ctx.beginPath();
+    ctx.fillStyle = cBall;
+    ctx.strokeStyle = cInk; ctx.lineWidth = 3;
+    ctx.arc(Game.ball.x, Game.ball.y, Game.ball.r, 0, Math.PI*2);
+    ctx.fill(); ctx.stroke();
+
+    Game.particles.forEach(p=>{
+      ctx.globalAlpha = Math.max(p.life,0);
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,3.4,0,Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function drawPaddle(x,y,w,h,color,dark,ink,mirrored){
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = ink;
+    ctx.lineWidth = 3;
+    roundRect(ctx, x, y, w, h, 8);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = dark;
+    ctx.globalAlpha = 0.5;
+    roundRect(ctx, x + (mirrored?0:w*0.55), y, w*0.45, h, 8);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  function loop(){
+    if(!document.getElementById('screen-game').classList.contains('active')) return;
+    if(Game.running && !Game.paused){ update(); }
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  showScreen('home');
+  const observer = new MutationObserver(()=>{
+    if(document.getElementById('screen-game').classList.contains('active')){
+      const hb = document.getElementById('hintBanner');
+      hb.style.opacity = '0.92';
+      clearTimeout(window.__hintTimer);
+      window.__hintTimer = setTimeout(()=>{ hb.style.opacity = '0'; }, 3200);
+
+      const rh = document.getElementById('rotateHint');
+      if(rh){
+        rh.style.opacity = '0.92';
+        clearTimeout(window.__rotateHintTimer);
+        window.__rotateHintTimer = setTimeout(()=>{ rh.style.opacity = '0'; }, 3200);
+      }
+    }
+  });
+  observer.observe(document.getElementById('screen-game'), {attributes:true, attributeFilter:['class']});
+
+})();
+
+</script>
+</body>
+</html>

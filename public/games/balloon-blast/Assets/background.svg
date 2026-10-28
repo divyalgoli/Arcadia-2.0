@@ -1,0 +1,126 @@
+<svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5ec8ff"/>
+      <stop offset="60%" stop-color="#a6e3ff"/>
+      <stop offset="100%" stop-color="#e9fbff"/>
+    </linearGradient>
+    <linearGradient id="grass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8be05c"/>
+      <stop offset="100%" stop-color="#4aa62f"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff9c4"/>
+      <stop offset="60%" stop-color="#ffe066"/>
+      <stop offset="100%" stop-color="#ffd23f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="treeLeaf" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#9ce870"/>
+      <stop offset="100%" stop-color="#379237"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect x="0" y="0" width="1600" height="900" fill="url(#sky)"/>
+
+  <!-- Sun -->
+  <circle cx="1420" cy="140" r="160" fill="url(#sun)"/>
+  <circle cx="1420" cy="140" r="65" fill="#fff4b0"/>
+
+  <!-- Clouds -->
+  <g fill="#ffffff" opacity="0.95">
+    <ellipse cx="230" cy="140" rx="90" ry="42"/>
+    <ellipse cx="300" cy="120" rx="70" ry="36"/>
+    <ellipse cx="160" cy="120" rx="60" ry="32"/>
+
+    <ellipse cx="820" cy="90" rx="80" ry="36"/>
+    <ellipse cx="880" cy="75" rx="60" ry="30"/>
+    <ellipse cx="760" cy="80" rx="55" ry="28"/>
+
+    <ellipse cx="1180" cy="260" rx="75" ry="34"/>
+    <ellipse cx="1230" cy="245" rx="55" ry="28"/>
+  </g>
+
+  <!-- Distant trees along the horizon (left and right, keeping center clear) -->
+  <g>
+    <!-- Left tree cluster -->
+    <rect x="95" y="620" width="26" height="120" fill="#7a4a23"/>
+    <circle cx="108" cy="590" r="80" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+    <circle cx="60" cy="630" r="55" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+
+    <rect x="220" y="650" width="20" height="95" fill="#7a4a23"/>
+    <circle cx="230" cy="625" r="62" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+
+    <!-- Right tree cluster -->
+    <rect x="1460" y="610" width="28" height="130" fill="#7a4a23"/>
+    <circle cx="1474" cy="580" r="85" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+    <circle cx="1420" cy="620" r="58" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+
+    <rect x="1350" y="655" width="18" height="90" fill="#7a4a23"/>
+    <circle cx="1359" cy="630" r="55" fill="url(#treeLeaf)" stroke="#2e6b2e" stroke-width="4"/>
+  </g>
+
+  <!-- Grass field -->
+  <path d="M0 700 Q400 660 800 700 T1600 700 L1600 900 L0 900 Z" fill="url(#grass)"/>
+  <!-- Grass texture blades -->
+  <g stroke="#2e6b2e" stroke-width="3" opacity="0.5">
+    <path d="M80 760 Q85 740 90 760"/>
+    <path d="M150 780 Q155 760 160 780"/>
+    <path d="M1400 770 Q1405 750 1410 770"/>
+    <path d="M1480 790 Q1485 770 1490 790"/>
+    <path d="M60 820 Q65 800 70 820"/>
+    <path d="M1520 820 Q1525 800 1530 820"/>
+  </g>
+
+  <!-- Flowers scattered along the edges, center kept empty for gameplay -->
+  <g>
+    <!-- Left side flowers -->
+    <g transform="translate(70,760)">
+      <circle r="14" fill="#ff6fa8"/>
+      <circle cx="18" r="14" fill="#ff6fa8"/>
+      <circle cx="9" cy="-16" r="14" fill="#ff6fa8"/>
+      <circle cx="9" cy="16" r="14" fill="#ff6fa8"/>
+      <circle cx="9" cy="0" r="10" fill="#ffe066"/>
+    </g>
+    <g transform="translate(150,820)">
+      <circle r="12" fill="#ffffff"/>
+      <circle cx="16" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="-14" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="14" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="0" r="8" fill="#ffe066"/>
+    </g>
+    <g transform="translate(220,780)">
+      <circle r="12" fill="#ff9a3f"/>
+      <circle cx="16" r="12" fill="#ff9a3f"/>
+      <circle cx="8" cy="-14" r="12" fill="#ff9a3f"/>
+      <circle cx="8" cy="14" r="12" fill="#ff9a3f"/>
+      <circle cx="8" cy="0" r="8" fill="#7a4a23"/>
+    </g>
+
+    <!-- Right side flowers -->
+    <g transform="translate(1480,770)">
+      <circle r="14" fill="#c66fff"/>
+      <circle cx="18" r="14" fill="#c66fff"/>
+      <circle cx="9" cy="-16" r="14" fill="#c66fff"/>
+      <circle cx="9" cy="16" r="14" fill="#c66fff"/>
+      <circle cx="9" cy="0" r="10" fill="#ffe066"/>
+    </g>
+    <g transform="translate(1400,830)">
+      <circle r="12" fill="#ff6fa8"/>
+      <circle cx="16" r="12" fill="#ff6fa8"/>
+      <circle cx="8" cy="-14" r="12" fill="#ff6fa8"/>
+      <circle cx="8" cy="14" r="12" fill="#ff6fa8"/>
+      <circle cx="8" cy="0" r="8" fill="#ffe066"/>
+    </g>
+    <g transform="translate(1340,790)">
+      <circle r="12" fill="#ffffff"/>
+      <circle cx="16" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="-14" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="14" r="12" fill="#ffffff"/>
+      <circle cx="8" cy="0" r="8" fill="#ffe066"/>
+    </g>
+  </g>
+
+  <!-- NOTE: Large center area (approx x:300-1300, y:0-700) is intentionally left
+       empty/clear for gameplay (balloons spawning and floating upward). -->
+</svg>

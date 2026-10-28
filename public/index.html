@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Arcadia — Play Free Browser Games</title>
+<meta name="description" content="Arcadia is a modern browser game portal — jump straight into free arcade, puzzle and action games with no downloads required.">
+<meta name="author" content="Om Mateti, Divyal Goli, Varun Yemul, Amey Bandi">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" href="assets/icons/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/icons/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#071323">
+
+<!-- Open Graph / Facebook / Discord / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Arcadia">
+<meta property="og:title" content="Arcadia — Play Free Browser Games">
+<meta property="og:description" content="Arcadia is a modern browser game portal — jump straight into free arcade, puzzle and action games with no downloads required.">
+<meta property="og:image" content="assets/social/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://your-domain-here.com">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Arcadia — Play Free Browser Games">
+<meta name="twitter:description" content="Arcadia is a modern browser game portal — jump straight into free arcade, puzzle and action games with no downloads required.">
+<meta name="twitter:image" content="assets/social/og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+
+<!-- Aurora background blobs -->
+<div id="aurora-bg" aria-hidden="true">
+  <div class="blob blob-sky"></div>
+  <div class="blob blob-cyan"></div>
+  <div class="blob blob-lavender"></div>
+  <div class="blob blob-pink"></div>
+  <div class="blob blob-mint"></div>
+</div>
+
+<!-- Loading screen -->
+<div id="loading-screen">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Loading Arcadia…</div>
+</div>
+
+<!-- Page transition overlay (shown briefly before opening a game) -->
+<div id="page-transition"><div class="pt-ring"></div></div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ================= NAVBAR ================= -->
+<header id="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="assets/icons/logo.png" alt="Arcadia logo">
+      <span class="brand-name">Arcad<span>ia</span></span>
+    </a>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="#top">Home</a>
+      <a href="#all-games">Games</a>
+      <a href="#categories">Categories</a>
+      <a href="#featured">New Releases</a>
+      <a href="#all-games" data-cat-link="Sports">Multiplayer</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <label class="nav-search" for="nav-search-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="nav-search-input" placeholder="Search games…" aria-label="Search games">
+    </label>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="dot"></span>
+      </button>
+      <a class="nav-avatar" id="nav-avatar" href="#" title="Your profile">N</a>
+      <a class="btn btn-ghost btn-sm" id="login-btn" href="#">Log In</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal">
+        <span class="eyebrow">Free · No Downloads · Play Instantly</span>
+        <h1 class="hero-title">Play Amazing<br><span class="grad">Browser Games</span></h1>
+        <p class="hero-sub">Arcadia is a hand-picked library of browser games — pop balloons, out-rally your rival, out-think the AI, or out-run the arena. Everything runs straight in your browser.</p>
+        <div class="hero-actions">
+          <a href="#all-games" class="btn btn-primary" id="hero-play-now">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg>
+            Play Now
+          </a>
+          <a href="#all-games" class="btn btn-ghost">Explore Games</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b id="stat-games">6</b><span>Games in library</span></div>
+          <div class="hero-stat"><b>100%</b><span>Free to play</span></div>
+          <div class="hero-stat"><b>0</b><span>Installs required</span></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal reveal-delay-2" aria-hidden="true">
+        <div class="floating-card fc-1" style="--r:-9deg">
+          <img src="assets/thumbnails/fruit-slash.jpg" alt="">
+          <div class="fc-label">Fruit Slash</div>
+        </div>
+        <div class="floating-card fc-2" style="--r:7deg">
+          <img src="assets/thumbnails/balloon-blast.svg" alt="">
+          <div class="fc-label">Balloon Blast</div>
+        </div>
+        <div class="floating-card fc-3" style="--r:5deg">
+          <img src="assets/thumbnails/memory-card.jpg" alt="">
+          <div class="fc-label">Memory Card</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECENTLY PLAYED ================= -->
+  <section class="section" id="recent-section" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Jump back in</span>
+          <h2 class="section-title">Recently Played</h2>
+        </div>
+      </div>
+      <div class="recent-rail" id="recent-rail"></div>
+    </div>
+  </section>
+
+  <!-- ================= CATEGORIES ================= -->
+  <section class="section" id="categories" style="padding-bottom:0;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Browse by mood</span>
+          <h2 class="section-title">Categories</h2>
+        </div>
+      </div>
+      <div class="category-bar" id="category-pills-top"></div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURED CAROUSEL ================= -->
+  <section class="section" id="featured">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Hand-picked</span>
+          <h2 class="section-title">Featured Games</h2>
+          <p class="section-sub">The games our players keep coming back to.</p>
+        </div>
+        <a href="#all-games" class="link-arrow">View all games →</a>
+      </div>
+      <div class="carousel-wrap">
+        <button class="carousel-arrow prev" id="carousel-prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="carousel-track" id="featured-grid"></div>
+        <button class="carousel-arrow next" id="carousel-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA BAND ================= -->
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h3>Can't decide what to play?</h3>
+        <p>Hit shuffle and let Arcadia pick your next game for you.</p>
+      </div>
+      <button class="btn btn-primary" id="surprise-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.2" fill="currentColor" stroke="none"/></svg>
+        Surprise Me
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= TRENDING (masonry) ================= -->
+  <section class="section" id="trending">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Right now</span>
+          <h2 class="section-title">Trending Games</h2>
+          <p class="section-sub">What the community is playing most this week.</p>
+        </div>
+      </div>
+      <div class="trend-grid" id="trend-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= ALL GAMES ================= -->
+  <section class="section" id="all-games">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Full library</span>
+          <h2 class="section-title">All Games</h2>
+          <p class="section-sub" id="results-count">6 games</p>
+        </div>
+      </div>
+      <div class="category-bar" id="category-bar"></div>
+      <div class="game-grid" id="all-grid" style="margin-top:28px;"></div>
+    </div>
+  </section>
+
+  <!-- ================= LEADERBOARD ================= -->
+  <section class="section" id="leaderboard">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Hall of Fame</span>
+          <h2 class="section-title">Per-Game Leaderboards</h2>
+          <p class="section-sub">Compare records, winning margins, streaks, and scores across every Arcadia title.</p>
+        </div>
+      </div>
+      <div class="lb-game-tabs" id="lb-game-tabs" role="tablist" aria-label="Game Leaderboards"></div>
+      <div class="leaderboard-panel" id="leaderboard-panel"></div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-panel">
+        <div>
+          <span class="eyebrow">About Arcadia</span>
+          <h2 class="section-title" style="margin-bottom:14px;">Built for players, by players.</h2>
+          <p>Arcadia is a modern browser game portal. Every game runs instantly, right in your browser — no installs, no accounts, no waiting. We hand-pick and craft each game to feel fast, fair and fun.</p>
+        </div>
+        <div class="about-stats">
+          <div><b id="about-games">6</b><span>Games</span></div>
+          <div><b>100%</b><span>Free</span></div>
+          <div><b>0</b><span>Installs</span></div>
+          <div><b>24/7</b><span>Uptime</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-panel">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <img src="assets/icons/logo.png" alt="Arcadia logo">
+            <span class="brand-name">Arcad<span>ia</span></span>
+          </a>
+          <p>A modern browser game portal. Every game on Arcadia runs instantly, right in your browser — no installs, no waiting.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#featured">Featured Games</a>
+          <a href="#all-games">All Games</a>
+          <a href="#leaderboard">Leaderboard</a>
+          <a href="#recent-section">Recently Played</a>
+        </div>
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <a href="#all-games" data-cat-link="Arcade">Arcade</a>
+          <a href="#all-games" data-cat-link="Puzzle">Puzzle</a>
+          <a href="#all-games" data-cat-link="Action">Action</a>
+          <a href="#all-games" data-cat-link="Sports">Sports</a>
+        </div>
+        <div class="footer-col">
+          <h4>About</h4>
+          <a href="#about">About Arcadia</a>
+          <a href="#top">Contact</a>
+          <a href="#top">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="footer-year">2026</span> Arcadia. All games belong to their respective creators. <span class="footer-credits">· Crafted by Om Mateti, Divyal Goli, Varun Yemul &amp; Amey Bandi</span></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= PLAYER PROFILE MODAL ================= -->
+<div id="profile-modal" class="profile-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+  <div class="profile-modal-backdrop" id="profile-modal-backdrop"></div>
+  <div class="profile-modal-panel">
+    <button class="profile-modal-close" id="profile-modal-close" aria-label="Close profile">&times;</button>
+    
+    <!-- Player Header Card -->
+    <div class="profile-header-card">
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profile-avatar">🎮</div>
+      </div>
+      <div class="profile-identity">
+        <div class="profile-title-row">
+          <h2 id="profile-modal-title" class="profile-name"><span id="profile-name">Guest Player</span></h2>
+          <span class="profile-badge-chip" id="profile-badge-chip">Bronze</span>
+        </div>
+        <p class="profile-subtitle" id="profile-subtitle"><span class="status-dot guest"></span> Local Profile</p>
+        <div class="profile-rank-row">
+          <span class="profile-level-badge">Level <strong id="profile-level">1</strong></span>
+          <span class="profile-rank-title" id="profile-rank">Rookie</span>
+        </div>
+      </div>
+      <div class="profile-auth-actions" id="profile-auth-actions"></div>
+    </div>
+
+    <!-- XP Progress Bar Card -->
+    <div class="profile-xp-card">
+      <div class="profile-xp-info-row">
+        <div class="profile-xp-total">
+          <span class="profile-stat-sub">Lifetime XP</span>
+          <strong id="profile-total-xp">0 XP</strong>
+        </div>
+        <div class="profile-xp-req">
+          <span class="profile-stat-sub">Next Level</span>
+          <span><strong id="profile-cur-xp">0</strong> / <span id="profile-next-xp">300</span> XP</span>
+        </div>
+      </div>
+      <div class="profile-xp-bar-container" id="profile-xp-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Level progress">
+        <div class="profile-xp-bar-fill" id="profile-xp-fill" style="width: 0%;"></div>
+      </div>
+      <div class="profile-xp-sub-row">
+        <span class="profile-xp-pct" id="profile-xp-percent">0%</span>
+        <span class="profile-daily-status">Daily Cap: <strong id="profile-daily-xp">0 / 2,500 XP</strong></span>
+      </div>
+    </div>
+
+    <!-- Platform Stats Grid -->
+    <div class="profile-stats-grid">
+      <div class="profile-stat-box">
+        <span class="profile-stat-num" id="profile-stat-sessions">0</span>
+        <span class="profile-stat-lbl">Sessions Played</span>
+      </div>
+      <div class="profile-stat-box">
+        <span class="profile-stat-num" id="profile-stat-games">0 / 10</span>
+        <span class="profile-stat-lbl">Games Explored</span>
+      </div>
+      <div class="profile-stat-box">
+        <span class="profile-stat-num" id="profile-stat-achievements">0 / 18</span>
+        <span class="profile-stat-lbl">Achievements</span>
+      </div>
+      <div class="profile-stat-box">
+        <span class="profile-stat-num" id="profile-stat-favorite">None yet</span>
+        <span class="profile-stat-lbl">Most Played</span>
+      </div>
+    </div>
+
+    <!-- Achievements Section -->
+    <div class="profile-ach-section">
+      <div class="profile-ach-header">
+        <div class="profile-ach-title-wrap">
+          <h3 class="profile-section-heading">Arcade Achievements</h3>
+          <span class="profile-ach-counter" id="profile-ach-unlocked-count">0 / 18</span>
+        </div>
+        <div class="ach-filter-tabs" role="tablist" aria-label="Achievement Filter">
+          <button type="button" class="ach-tab active" data-ach-tab="all">All (<span id="ach-tab-count-all">18</span>)</button>
+          <button type="button" class="ach-tab" data-ach-tab="unlocked">Unlocked (<span id="ach-tab-count-unlocked">0</span>)</button>
+          <button type="button" class="ach-tab" data-ach-tab="locked">Locked (<span id="ach-tab-count-locked">18</span>)</button>
+        </div>
+      </div>
+      <div class="profile-ach-list" id="profile-achievements-list" tabindex="0" aria-label="Achievements list">
+        <!-- Rendered dynamically by arcadia-profile.js -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= PROGRESSION NOTIFICATION TOAST CONTAINER ================= -->
+<div id="progression-toast-container" class="progression-toast-container" aria-live="polite" role="status"></div>
+
+<!-- ================= GUEST PROGRESSION MIGRATION MODAL ================= -->
+<div id="migration-modal" class="migration-modal" aria-hidden="true">
+  <div class="migration-modal-backdrop" id="migration-modal-backdrop"></div>
+  <div class="migration-modal-panel" role="dialog" aria-modal="true" aria-labelledby="migration-modal-title">
+    <button class="migration-modal-close" id="migration-close-btn" aria-label="Close">&times;</button>
+    <div class="migration-header">
+      <div class="migration-icon">☁️</div>
+      <h3 id="migration-modal-title">Sync Your Progress</h3>
+      <p class="migration-subtitle">We found guest gameplay progress on this browser. Would you like to merge it with your account?</p>
+    </div>
+
+    <div class="migration-comparison-grid">
+      <div class="migration-card guest-card">
+        <div class="migration-card-badge">Guest Progress</div>
+        <div class="migration-card-content" id="migration-guest-info">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      <div class="migration-card cloud-card">
+        <div class="migration-card-badge">Account Cloud</div>
+        <div class="migration-card-content" id="migration-cloud-info">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <div class="migration-result-card">
+      <div class="migration-result-title">Result After Merge (High-Water Mark)</div>
+      <div class="migration-result-content" id="migration-merged-info">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+
+    <div class="migration-actions">
+      <button type="button" class="btn-primary migration-btn" id="migration-confirm-btn">Merge &amp; Sync to Cloud</button>
+      <button type="button" class="btn-secondary migration-btn" id="migration-skip-btn">Keep Cloud Only</button>
+      <button type="button" class="btn-ghost migration-btn" id="migration-later-btn">Decide Later</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= AUTH MODAL ================= -->
+<div id="auth-modal" class="auth-modal" aria-hidden="true">
+  <div class="auth-modal-backdrop" id="auth-modal-backdrop"></div>
+  <div class="auth-modal-panel" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title">
+    <button class="auth-modal-close" id="auth-modal-close" aria-label="Close">&times;</button>
+    <h3 id="auth-modal-title">Welcome to Arcadia</h3>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" data-auth-tab="login">Log In</button>
+      <button type="button" class="auth-tab" data-auth-tab="signup">Sign Up</button>
+    </div>
+    <form id="auth-form-login" class="auth-form">
+      <label>Email<input type="email" id="login-email" required autocomplete="email"></label>
+      <label>Password<input type="password" id="login-password" required autocomplete="current-password" minlength="6"></label>
+      <p class="auth-error" id="login-error"></p>
+      <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+    <form id="auth-form-signup" class="auth-form" hidden>
+      <label>Display name<input type="text" id="signup-name" required maxlength="24"></label>
+      <label>Email<input type="email" id="signup-email" required autocomplete="email"></label>
+      <label>Password<input type="password" id="signup-password" required autocomplete="new-password" minlength="6"></label>
+      <p class="auth-error" id="signup-error"></p>
+      <button type="submit" class="btn btn-primary">Create Account</button>
+    </form>
+    <p class="auth-modal-note">Signing in lets your best scores appear on the global Leaderboard below, tagged with whichever game you set them in.</p>
+  </div>
+</div>
+
+<script src="js/mobile-utils.js"></script>
+<script src="js/games-data.js"></script>
+<script src="js/storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/arcadia-cloud.js"></script>
+<script src="js/arcadia-progression.js"></script>
+<script src="js/arcadia-profile.js"></script>
+<script src="js/arcadia-sync.js"></script>
+<script src="js/main.js"></script>
+<script src="js/auth-ui.js"></script>
+<script>
+  // Footer / nav category links reuse the same filter pills
+  document.querySelectorAll('[data-cat-link]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var cat = a.getAttribute('data-cat-link');
+      var btn = document.querySelector('.pill[data-cat="' + cat + '"]');
+      if (btn) btn.click();
+      else document.getElementById('all-games')?.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  // Surprise Me — jump to a random game
+  document.getElementById('surprise-btn').addEventListener('click', function(){
+    var pick = GAMES[Math.floor(Math.random() * GAMES.length)];
+    GHStorage.recordPlay(pick.slug);
+    document.getElementById('page-transition').classList.add('active');
+    setTimeout(function(){ window.location.href = 'games/' + pick.slug + '/'; }, 320);
+  });
+  // Notifications / avatar / login — placeholder interactions
+  document.getElementById('notif-btn').addEventListener('click', function(){
+    ArcadiaToast('You have no new notifications');
+  });
+  // Nav avatar / login button behavior is wired by js/auth-ui.js
+  // Sticky navbar shadow on scroll
+  var siteNav = document.getElementById('site-nav');
+  window.addEventListener('scroll', function(){
+    siteNav.classList.toggle('scrolled', window.scrollY > 8);
+  });
+</script>
+</body>
+</html>

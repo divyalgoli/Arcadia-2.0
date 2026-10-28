@@ -1,0 +1,13 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="soft-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#263238" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <circle cx="64" cy="66" r="54" fill="#FFFFFF" filter="url(#soft-shadow)"/>
+  <circle cx="64" cy="66" r="54" fill="none" stroke="#A855F7" stroke-width="5"/>
+  
+  <path d="M40 40 L62 64 L40 88" fill="none" stroke="#A855F7" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M66 40 L88 64 L66 88" fill="none" stroke="#9333EA" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>

@@ -1,0 +1,30 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="popFlash" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#ffe27a" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffe27a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="150" cy="150" r="120" fill="url(#popFlash)"/>
+  <!-- Torn rubber shards -->
+  <g fill="#ff4d4d" stroke="#8a0000" stroke-width="3">
+    <path d="M150 60 L165 95 L140 100 Z"/>
+    <path d="M225 110 L195 130 L215 150 Z"/>
+    <path d="M230 190 L195 185 L205 210 Z"/>
+    <path d="M150 240 L135 205 L165 205 Z"/>
+    <path d="M70 190 L100 205 L90 175 Z"/>
+    <path d="M75 110 L110 120 L95 145 Z"/>
+  </g>
+  <!-- Radiating pop lines -->
+  <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.9">
+    <line x1="150" y1="150" x2="150" y2="40"/>
+    <line x1="150" y1="150" x2="240" y2="90"/>
+    <line x1="150" y1="150" x2="260" y2="150"/>
+    <line x1="150" y1="150" x2="240" y2="210"/>
+    <line x1="150" y1="150" x2="150" y2="260"/>
+    <line x1="150" y1="150" x2="60" y2="210"/>
+    <line x1="150" y1="150" x2="40" y2="150"/>
+    <line x1="150" y1="150" x2="60" y2="90"/>
+  </g>
+</svg>

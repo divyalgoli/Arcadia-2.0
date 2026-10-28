@@ -1,0 +1,64 @@
+{
+  "name": "Cyber Maze",
+  "description": "A medium-sized maze with narrow corridors, multiple escape routes, and a contested power-up zone at its center.",
+  "width": 1600,
+  "height": 900,
+
+  "spawnPoints": [
+    { "id": 1, "x": 100, "y": 100 },
+    { "id": 2, "x": 1500, "y": 100 },
+    { "id": 3, "x": 100, "y": 800 },
+    { "id": 4, "x": 1500, "y": 800 }
+  ],
+
+  "walls": [
+    { "x": 0, "y": 0, "width": 1600, "height": 20 },
+    { "x": 0, "y": 880, "width": 1600, "height": 20 },
+    { "x": 0, "y": 0, "width": 20, "height": 900 },
+    { "x": 1580, "y": 0, "width": 20, "height": 900 },
+    { "x": 200, "y": 150, "width": 20, "height": 300 },
+    { "x": 200, "y": 550, "width": 20, "height": 250 },
+    { "x": 400, "y": 100, "width": 250, "height": 20 },
+    { "x": 400, "y": 400, "width": 20, "height": 200 },
+    { "x": 600, "y": 400, "width": 250, "height": 20 },
+    { "x": 850, "y": 150, "width": 20, "height": 300 },
+    { "x": 850, "y": 550, "width": 20, "height": 250 },
+    { "x": 1000, "y": 250, "width": 250, "height": 20 },
+    { "x": 1200, "y": 250, "width": 20, "height": 250 },
+    { "x": 1000, "y": 650, "width": 300, "height": 20 },
+    { "x": 1380, "y": 150, "width": 20, "height": 350 },
+    { "x": 550, "y": 650, "width": 250, "height": 20 },
+    { "x": 300, "y": 750, "width": 200, "height": 20 },
+    { "x": 700, "y": 200, "width": 20, "height": 150 }
+  ],
+
+  "obstacles": [
+    { "type": "pillar", "x": 750, "y": 430, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 850, "y": 430, "width": 40, "height": 40 },
+    { "type": "box", "x": 300, "y": 300, "width": 60, "height": 60 },
+    { "type": "box", "x": 1300, "y": 300, "width": 60, "height": 60 },
+    { "type": "barrier", "x": 500, "y": 550, "width": 100, "height": 20 },
+    { "type": "barrier", "x": 1000, "y": 550, "width": 100, "height": 20 },
+    { "type": "box", "x": 150, "y": 650, "width": 60, "height": 60 },
+    { "type": "box", "x": 1450, "y": 650, "width": 60, "height": 60 },
+    { "type": "pillar", "x": 700, "y": 750, "width": 40, "height": 40 },
+    { "type": "pillar", "x": 900, "y": 750, "width": 40, "height": 40 }
+  ],
+
+  "powerUpSpawns": [
+    { "type": "speed", "x": 800, "y": 450 },
+    { "type": "shield", "x": 800, "y": 350 },
+    { "type": "doubleDash", "x": 800, "y": 550 },
+    { "type": "freeze", "x": 250, "y": 200 },
+    { "type": "speed", "x": 1350, "y": 700 }
+  ],
+
+  "safeZones": [
+    { "x": 450, "y": 250, "radius": 45 },
+    { "x": 1150, "y": 650, "radius": 45 }
+  ],
+
+  "teleports": [
+    { "id": 1, "fromX": 50, "fromY": 450, "toX": 1550, "toY": 450 }
+  ]
+}
